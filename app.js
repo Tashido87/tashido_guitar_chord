@@ -225,7 +225,16 @@ const STORAGE_KEY = "tashido_guitar_chordbook_v2";
 // State
 let songs = [];
 let currentSongId = null;
-let currentView = "all"; // 'all', 'fav', 'recent'
+let currentView = "all"; // 'all', 'fav', 'recent', 'my', 'en', 'artists'
+let currentAppView = "home"; // 'home' or 'song'
+let homeFilter = "all"; // 'all', 'my', 'en', 'fav'
+let homeCatalogLimit = 12; // Smart pagination limit for large catalog
+let recentPracticedIds = [];
+try {
+  recentPracticedIds = JSON.parse(localStorage.getItem("tashido_recent_played") || "[]");
+} catch (e) {
+  recentPracticedIds = [];
+}
 let transposeSteps = 0;
 let isAutoScrolling = false;
 let scrollIntervalId = null;
@@ -233,6 +242,42 @@ let scrollSpeed = 3;
 let editingSongId = null;
 let showChords = true;
 let isTwoColumns = false;
+
+// Apple Music Style Gradient Covers & Glyphs
+const COVER_GRADIENTS = [
+  "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
+  "linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)",
+  "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+  "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
+  "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
+  "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)",
+  "linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)",
+  "linear-gradient(135deg, #f97316 0%, #ea580c 100%)"
+];
+
+function getSongGradient(song) {
+  if (!song || !song.title) return COVER_GRADIENTS[0];
+  let hash = 0;
+  for (let i = 0; i < song.title.length; i++) {
+    hash = (hash << 5) - hash + song.title.charCodeAt(i);
+    hash |= 0;
+  }
+  return COVER_GRADIENTS[Math.abs(hash) % COVER_GRADIENTS.length];
+}
+
+function getSongCoverGlyph(song) {
+  const lang = getSongLanguage(song);
+  if (lang === "my") return "🇲🇲";
+  return "🎸";
+}
+
+function recordSongPracticed(id) {
+  if (!id) return;
+  recentPracticedIds = [id, ...recentPracticedIds.filter(x => x !== id)].slice(0, 16);
+  try {
+    localStorage.setItem("tashido_recent_played", JSON.stringify(recentPracticedIds));
+  } catch (e) {}
+}
 
 // Audio Context (Web Audio API)
 let audioCtx = null;
@@ -589,7 +634,7 @@ function getSongLanguage(s) {
  * Filter songs according to search input and active view
  */
 function getFilteredSongs() {
-  const query = ($("searchInput").value || "").trim().toLowerCase();
+  const query = ($("searchInput")?.value || "").trim().toLowerCase();
   let list = [...songs];
 
   if (currentView === "my") {
@@ -599,7 +644,15 @@ function getFilteredSongs() {
   } else if (currentView === "fav") {
     list = list.filter(s => s.fav);
   } else if (currentView === "recent") {
-    list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    const orderMap = new Map();
+    recentPracticedIds.forEach((id, idx) => orderMap.set(id, idx));
+    list.sort((a, b) => {
+      const idxA = orderMap.has(a.id) ? orderMap.get(a.id) : 9999;
+      const idxB = orderMap.has(b.id) ? orderMap.get(b.id) : 9999;
+      return idxA - idxB;
+    });
+  } else if (currentView === "artists") {
+    list.sort((a, b) => (a.artist || "").localeCompare(b.artist || ""));
   }
 
   if (query) {
@@ -613,59 +666,320 @@ function getFilteredSongs() {
 }
 
 /**
- * Render Sidebar Song List
+ * Render Apple Music Style Home Card
+ */
+function renderHomeCard(s) {
+  const grad = getSongGradient(s);
+  const glyph = getSongCoverGlyph(s);
+  const lang = getSongLanguage(s);
+  const flag = lang === "my" ? "🇲🇲" : "🇬🇧";
+  const key = s.key || "C";
+  return `
+    <div class="home-card" data-id="${s.id}">
+      <div class="home-card-cover" style="background:${grad}">
+        <span>${glyph}</span>
+        <div class="home-card-play-overlay">
+          <div class="home-card-play-btn">▶</div>
+        </div>
+      </div>
+      <div class="home-card-info">
+        <div class="home-card-title" title="${escapeXml(s.title)}">${escapeXml(s.title)}</div>
+        <div class="home-card-artist">${flag} ${escapeXml(s.artist || "Unknown Artist")}</div>
+        <div class="home-card-meta">
+          <span class="home-meta-badge">Key ${escapeXml(key)}</span>
+          ${s.capo ? `<span class="home-meta-badge">Capo ${s.capo}</span>` : ""}
+          ${s.fav ? `<span style="color:var(--rose);font-size:0.8rem;margin-left:auto;">♥</span>` : ""}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Render Apple Music Style Home View
+ */
+function renderHomeView() {
+  const homeView = $("homeView");
+  if (!homeView) return;
+
+  // Filter Pills active state
+  document.querySelectorAll(".home-pill").forEach(pill => {
+    pill.classList.toggle("active", pill.dataset.homeFilter === homeFilter);
+  });
+
+  const query = ($("searchInput")?.value || "").trim().toLowerCase();
+
+  // 1. Recently Practiced / Jump Back In
+  const recentSection = $("homeRecentSection");
+  const recentGrid = $("homeRecentGrid");
+  if (recentSection && recentGrid) {
+    let recentSongs = recentPracticedIds
+      .map(id => songs.find(s => s.id === id))
+      .filter(Boolean);
+
+    if (recentSongs.length === 0) {
+      recentSongs = songs.slice(0, 4);
+    }
+
+    if (homeFilter === "my") recentSongs = recentSongs.filter(s => getSongLanguage(s) === "my");
+    else if (homeFilter === "en") recentSongs = recentSongs.filter(s => getSongLanguage(s) === "en");
+    else if (homeFilter === "fav") recentSongs = recentSongs.filter(s => s.fav);
+
+    if (query) {
+      recentSongs = recentSongs.filter(s =>
+        (s.title + " " + (s.artist || "")).toLowerCase().includes(query)
+      );
+    }
+
+    if (recentSongs.length === 0) {
+      recentSection.style.display = "none";
+    } else {
+      recentSection.style.display = "block";
+      recentGrid.innerHTML = recentSongs.slice(0, 4).map(renderHomeCard).join("");
+    }
+  }
+
+  // 2. Myanmar Acoustic
+  const myanmarSection = $("homeMyanmarSection");
+  const myanmarGrid = $("homeMyanmarGrid");
+  if (myanmarSection && myanmarGrid) {
+    if (homeFilter === "en") {
+      myanmarSection.style.display = "none";
+    } else {
+      let myanmarSongs = songs.filter(s => getSongLanguage(s) === "my");
+      if (homeFilter === "fav") myanmarSongs = myanmarSongs.filter(s => s.fav);
+      if (query) {
+        myanmarSongs = myanmarSongs.filter(s =>
+          (s.title + " " + (s.artist || "")).toLowerCase().includes(query)
+        );
+      }
+      if (myanmarSongs.length === 0) {
+        myanmarSection.style.display = "none";
+      } else {
+        myanmarSection.style.display = "block";
+        myanmarGrid.innerHTML = myanmarSongs.slice(0, 6).map(renderHomeCard).join("");
+      }
+    }
+  }
+
+  // 3. English Acoustic
+  const englishSection = $("homeEnglishSection");
+  const englishGrid = $("homeEnglishGrid");
+  if (englishSection && englishGrid) {
+    if (homeFilter === "my") {
+      englishSection.style.display = "none";
+    } else {
+      let englishSongs = songs.filter(s => getSongLanguage(s) === "en");
+      if (homeFilter === "fav") englishSongs = englishSongs.filter(s => s.fav);
+      if (query) {
+        englishSongs = englishSongs.filter(s =>
+          (s.title + " " + (s.artist || "")).toLowerCase().includes(query)
+        );
+      }
+      if (englishSongs.length === 0) {
+        englishSection.style.display = "none";
+      } else {
+        englishSection.style.display = "block";
+        englishGrid.innerHTML = englishSongs.slice(0, 6).map(renderHomeCard).join("");
+      }
+    }
+  }
+
+  // 4. All Songs Catalog (Smart slice for hundreds of songs)
+  const allSection = $("homeAllSection");
+  const allGrid = $("homeAllGrid");
+  const catalogCount = $("homeCatalogCount");
+  const catalogSummary = $("homeCatalogSummary");
+  const loadMoreBox = $("homeLoadMoreBox");
+
+  if (allSection && allGrid) {
+    let catalogSongs = [...songs];
+    if (homeFilter === "my") catalogSongs = catalogSongs.filter(s => getSongLanguage(s) === "my");
+    else if (homeFilter === "en") catalogSongs = catalogSongs.filter(s => getSongLanguage(s) === "en");
+    else if (homeFilter === "fav") catalogSongs = catalogSongs.filter(s => s.fav);
+
+    if (query) {
+      catalogSongs = catalogSongs.filter(s =>
+        (s.title + " " + (s.artist || "") + " " + (s.genre || "")).toLowerCase().includes(query)
+      );
+    }
+
+    if (catalogCount) catalogCount.textContent = catalogSongs.length;
+    const visibleSongs = catalogSongs.slice(0, homeCatalogLimit);
+
+    if (catalogSummary) {
+      catalogSummary.textContent = `Showing ${Math.min(visibleSongs.length, catalogSongs.length)} of ${catalogSongs.length} songs`;
+    }
+
+    if (visibleSongs.length === 0) {
+      allGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--ink-muted);">No songs match this filter.</div>`;
+    } else {
+      allGrid.innerHTML = visibleSongs.map(renderHomeCard).join("");
+    }
+
+    if (loadMoreBox) {
+      loadMoreBox.style.display = visibleSongs.length < catalogSongs.length ? "block" : "none";
+    }
+  }
+
+  // Attach card click handlers across all grids
+  homeView.querySelectorAll(".home-card").forEach(card => {
+    card.onclick = () => {
+      const id = card.dataset.id;
+      if (id) openSongView(id);
+    };
+  });
+}
+
+/**
+ * Switch to Apple Music Style Home View
+ */
+function openHomeView() {
+  currentAppView = "home";
+  const homeView = $("homeView");
+  const songView = $("songView");
+  const appContainer = document.querySelector(".app-container");
+
+  if (homeView) homeView.style.display = "flex";
+  if (songView) songView.style.display = "none";
+  if (appContainer) appContainer.classList.add("home-mode");
+
+  // Highlight active nav item
+  document.querySelectorAll(".nav-item[data-view]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.view === currentView);
+  });
+
+  renderHomeView();
+  renderSongList();
+}
+
+/**
+ * Switch to Song Practice View (Lyrics & Chords)
+ */
+function openSongView(songId) {
+  currentAppView = "song";
+  if (songId) {
+    currentSongId = songId;
+    recordSongPracticed(songId);
+    transposeSteps = 0;
+    if ($("trVal")) $("trVal").textContent = "0";
+  }
+
+  const homeView = $("homeView");
+  const songView = $("songView");
+  const appContainer = document.querySelector(".app-container");
+
+  if (homeView) homeView.style.display = "none";
+  if (songView) songView.style.display = "block";
+  if (appContainer) appContainer.classList.remove("home-mode");
+
+  render();
+  const lyricsBox = $("lyricsCard");
+  if (lyricsBox) lyricsBox.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/**
+ * Render Sidebar Song List (Apple Music Queue with Drag & Drop Reorder)
  */
 function renderSongList() {
   const list = getFilteredSongs();
   const container = $("songList");
+  if (!container) return;
 
   if (!list.length) {
     container.innerHTML = `<div style="color:var(--ink-faint);font-size:0.8rem;text-align:center;padding:20px 0;">No songs found.</div>`;
   } else {
     container.innerHTML = list
-      .map(s => {
-        const isActive = s.id === currentSongId;
-        const transposedKey = transposeChord(s.key || "C", transposeSteps);
+      .map((s, idx) => {
+        const isActive = currentAppView === "song" && s.id === currentSongId;
+        const grad = getSongGradient(s);
+        const glyph = getSongCoverGlyph(s);
         const lang = getSongLanguage(s);
         const flag = lang === "my" ? "🇲🇲" : "🇬🇧";
         return `
-          <button class="song-item-btn ${isActive ? "active" : ""}" data-id="${s.id}">
-            <div class="song-item-title">
-              <span>${escapeXml(s.title)}</span>
-              ${s.fav ? '<span style="color:var(--rose);font-size:0.8rem;">♥</span>' : ""}
+          <button class="song-item-btn ${isActive ? "active" : ""}" draggable="true" data-id="${s.id}" data-index="${idx}" title="Drag to reorder queue">
+            <div class="song-item-thumb" style="background:${grad}">
+              <span>${glyph}</span>
             </div>
-            <div class="song-item-meta">
-              <span>${flag} ${escapeXml(s.artist || "Unknown")}</span>
-              <span>•</span>
-              <span>Key ${escapeXml(transposedKey)}</span>
+            <div class="song-item-content">
+              <div class="song-item-title">${escapeXml(s.title)}</div>
+              <div class="song-item-artist">${flag} ${escapeXml(s.artist || "Unknown")} • Key ${escapeXml(s.key || "C")}</div>
             </div>
+            ${
+              isActive
+                ? `<div class="playing-bars"><span></span><span></span><span></span></div>`
+                : s.fav
+                ? '<span style="color:var(--rose);font-size:0.8rem;margin-left:4px;">♥</span>'
+                : ""
+            }
           </button>
         `;
       })
       .join("");
 
+    // Click handler to open song
     container.querySelectorAll(".song-item-btn").forEach(btn => {
       btn.onclick = () => {
-        currentSongId = btn.dataset.id;
-        transposeSteps = 0;
-        $("trVal").textContent = "0";
-        render();
-        const lyricsBox = $("lyricsCard");
-        if (lyricsBox) lyricsBox.scrollTo({ top: 0, behavior: "smooth" });
+        openSongView(btn.dataset.id);
+      };
+
+      // HTML5 Drag and Drop for Queue Reordering
+      btn.ondragstart = e => {
+        btn.classList.add("dragging");
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", btn.dataset.index);
+      };
+
+      btn.ondragend = () => {
+        btn.classList.remove("dragging");
+        container.querySelectorAll(".song-item-btn").forEach(b => b.classList.remove("drag-over"));
+      };
+
+      btn.ondragover = e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+        btn.classList.add("drag-over");
+      };
+
+      btn.ondragleave = () => {
+        btn.classList.remove("drag-over");
+      };
+
+      btn.ondrop = e => {
+        e.preventDefault();
+        btn.classList.remove("drag-over");
+        const fromIdx = parseInt(e.dataTransfer.getData("text/plain"), 10);
+        const toIdx = parseInt(btn.dataset.index, 10);
+
+        if (!isNaN(fromIdx) && !isNaN(toIdx) && fromIdx !== toIdx) {
+          const sourceSong = list[fromIdx];
+          const targetSong = list[toIdx];
+          if (sourceSong && targetSong) {
+            const actualFromIdx = songs.findIndex(s => s.id === sourceSong.id);
+            const actualToIdx = songs.findIndex(s => s.id === targetSong.id);
+            if (actualFromIdx !== -1 && actualToIdx !== -1) {
+              const [moved] = songs.splice(actualFromIdx, 1);
+              songs.splice(actualToIdx, 0, moved);
+              saveSongs();
+              renderSongList();
+              if (currentAppView === "home") renderHomeView();
+            }
+          }
+        }
       };
     });
   }
 
   // Update counts
-  $("countAll").textContent = songs.length;
+  if ($("countAll")) $("countAll").textContent = songs.length;
   if ($("countMyanmar")) $("countMyanmar").textContent = songs.filter(s => getSongLanguage(s) === "my").length;
   if ($("countEnglish")) $("countEnglish").textContent = songs.filter(s => getSongLanguage(s) === "en").length;
-  $("countFav").textContent = songs.filter(s => s.fav).length;
+  if ($("countFav")) $("countFav").textContent = songs.filter(s => s.fav).length;
 
   // Render Genre Chips
   const genres = {};
   songs.forEach(s => {
-    const g = s.genre || "Other";
+    const g = s.genre || "Acoustic";
     genres[g] = (genres[g] || 0) + 1;
   });
 
@@ -686,6 +1000,7 @@ function renderSongList() {
         $("searchInput").value = chip.dataset.genre;
         currentView = "all";
         renderSongList();
+        if (currentAppView === "home") renderHomeView();
       };
     });
   }
@@ -697,7 +1012,7 @@ function renderSongList() {
 function renderChordGrid() {
   const song = getCurrentSong();
   const container = $("chordGrid");
-  if (!song) return;
+  if (!song || !container) return;
 
   const chords = getUniqueChords(song);
   if (!chords.length) {
@@ -726,32 +1041,39 @@ function render() {
   if (!song) return;
 
   // Hero Card Data
-  $("heroTitle").textContent = song.title;
-  $("heroArtist").textContent = song.artist || "Unknown Artist";
-  $("heroGenre").textContent = song.genre || "Acoustic";
-  $("heroYear").textContent = song.year || "2024";
-  $("heroCapo").textContent = `Capo ${song.capo || 0}`;
-  $("capoVal").textContent = song.capo || 0;
+  if ($("heroTitle")) $("heroTitle").textContent = song.title;
+  if ($("heroArtist")) $("heroArtist").textContent = song.artist || "Unknown Artist";
+  if ($("heroGenre")) $("heroGenre").textContent = song.genre || "Acoustic";
+  if ($("heroYear")) $("heroYear").textContent = song.year || "2024";
+  if ($("heroCapo")) $("heroCapo").textContent = `Capo ${song.capo || 0}`;
+  if ($("capoVal")) $("capoVal").textContent = song.capo || 0;
+
+  if ($("heroCover")) {
+    $("heroCover").style.background = getSongGradient(song);
+    $("heroCover").textContent = getSongCoverGlyph(song);
+  }
 
   const lang = getSongLanguage(song);
   if ($("heroLang")) $("heroLang").textContent = lang === "my" ? "🇲🇲 Myanmar" : lang === "en" ? "🇬🇧 English" : "🌐 Other";
 
   const currentKey = transposeChord(song.key || "C", transposeSteps);
-  $("heroKey").textContent = `Key ${currentKey}`;
+  if ($("heroKey")) $("heroKey").textContent = `Key ${currentKey}`;
 
   // Favorite button
   const favBtn = $("favBtn");
-  if (song.fav) {
-    favBtn.textContent = "♥";
-    favBtn.classList.add("active");
-  } else {
-    favBtn.textContent = "♡";
-    favBtn.classList.remove("active");
+  if (favBtn) {
+    if (song.fav) {
+      favBtn.textContent = "♥";
+      favBtn.classList.add("active");
+    } else {
+      favBtn.textContent = "♡";
+      favBtn.classList.remove("active");
+    }
   }
 
   // Floating Bar Data
-  $("barTitle").textContent = song.title;
-  $("barArtist").textContent = song.artist || "Unknown";
+  if ($("barTitle")) $("barTitle").textContent = song.title;
+  if ($("barArtist")) $("barArtist").textContent = song.artist || "Unknown";
 
   renderSongList();
   renderLyrics();
@@ -1408,18 +1730,75 @@ function strumAllSongChords() {
  * Event Bindings Setup
  */
 function setupEventListeners() {
-  // Navigation tabs (All, Favorites, Recent)
+  // Navigation tabs (All, Favorites, Recent, Artists)
   document.querySelectorAll(".nav-item[data-view]").forEach(btn => {
     btn.onclick = () => {
       currentView = btn.dataset.view;
+      if (currentView === "all" || currentView === "fav") {
+        homeFilter = currentView;
+      }
       document.querySelectorAll(".nav-item[data-view]").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      renderSongList();
+      openHomeView();
     };
   });
 
+  // Categories Sub-menu Toggle
+  const catBtn = $("categoriesToggleBtn");
+  const catMenu = $("categoriesSubMenu");
+  const catArrow = $("categoriesArrow");
+  if (catBtn && catMenu) {
+    catBtn.onclick = () => {
+      catMenu.classList.toggle("open");
+      if (catArrow) catArrow.textContent = catMenu.classList.contains("open") ? "▴" : "▾";
+    };
+  }
+
+  // Sub-categories items (English, Myanmar)
+  document.querySelectorAll(".sub-nav-item[data-view]").forEach(btn => {
+    btn.onclick = () => {
+      const v = btn.dataset.view;
+      currentView = v;
+      homeFilter = v;
+      openHomeView();
+    };
+  });
+
+  // Apple Music Home View Filter Pills
+  document.querySelectorAll(".home-pill[data-home-filter]").forEach(pill => {
+    pill.onclick = () => {
+      homeFilter = pill.dataset.homeFilter;
+      renderHomeView();
+    };
+  });
+
+  // Home View "Load More Songs"
+  if ($("homeLoadMoreBtn")) {
+    $("homeLoadMoreBtn").onclick = () => {
+      homeCatalogLimit += 12;
+      renderHomeView();
+    };
+  }
+
+  // Back to Library button from Song View
+  if ($("heroBackBtn")) {
+    $("heroBackBtn").onclick = () => openHomeView();
+  }
+
+  // Brand logo click navigates to Home
+  const brandLogo = document.querySelector(".brand");
+  if (brandLogo) {
+    brandLogo.style.cursor = "pointer";
+    brandLogo.onclick = () => openHomeView();
+  }
+
   // Search input
-  $("searchInput").oninput = renderSongList;
+  if ($("searchInput")) {
+    $("searchInput").oninput = () => {
+      renderSongList();
+      if (currentAppView === "home") renderHomeView();
+    };
+  }
 
   // Add / Edit Song Buttons
   $("addSongBtn").onclick = () => openSongModal(null);
@@ -1704,7 +2083,7 @@ function setupEventListeners() {
 window.addEventListener("DOMContentLoaded", () => {
   loadSongs();
   setupEventListeners();
-  render();
+  openHomeView();
 
   // Set default font size to 15px
   if ($("lyricsContainer")) $("lyricsContainer").style.fontSize = "15px";

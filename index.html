@@ -15,25 +15,27 @@
       
       <!-- Brand Header -->
       <div class="brand-header">
-        <div class="brand-logo">
+        <div class="brand-logo" id="homeLogoBtn" title="Go to Home Library" style="cursor:pointer;">
           <div class="brand-icon">🎸</div>
-          <span>Tashido Chord</span>
+          <div>
+            <div style="font-weight:700;font-size:1.05rem;line-height:1.2;">ChordBook</div>
+            <div style="font-size:0.68rem;color:var(--ink-muted);font-weight:400;">Songs. Chords. Always with you.</div>
+          </div>
         </div>
-        <span class="app-version-badge">Clean v2.0</span>
       </div>
 
       <!-- Search Input -->
       <div class="search-box">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="searchInput" placeholder="Search songs, artists, keys...">
+        <input type="text" id="searchInput" placeholder="Search songs, artists...">
       </div>
 
       <!-- Navigation Views -->
       <nav class="nav-section">
-        <button class="nav-item active" data-view="all">
+        <button class="nav-item active" data-view="all" id="navAllBtn">
           <div class="nav-item-content">
             <span>🎵</span>
             <span>All Songs</span>
@@ -41,53 +43,62 @@
           <span class="badge-count" id="countAll">0</span>
         </button>
 
-        <button class="nav-item" data-view="my">
+        <button class="nav-item" data-view="fav" id="navFavBtn">
           <div class="nav-item-content">
-            <span>🇲🇲</span>
-            <span>Myanmar Songs</span>
-          </div>
-          <span class="badge-count" id="countMyanmar">0</span>
-        </button>
-
-        <button class="nav-item" data-view="en">
-          <div class="nav-item-content">
-            <span>🇬🇧</span>
-            <span>English Songs</span>
-          </div>
-          <span class="badge-count" id="countEnglish">0</span>
-        </button>
-
-        <button class="nav-item" data-view="fav">
-          <div class="nav-item-content">
-            <span style="color:var(--rose)">♥</span>
+            <span style="color:var(--rose)">🤍</span>
             <span>Favorites</span>
           </div>
           <span class="badge-count" id="countFav">0</span>
         </button>
 
-        <button class="nav-item" data-view="recent">
+        <button class="nav-item" data-view="recent" id="navRecentBtn">
           <div class="nav-item-content">
             <span>⏱</span>
-            <span>Recently Added</span>
+            <span>Recently Played</span>
           </div>
         </button>
+
+        <button class="nav-item" data-view="artists" id="navArtistsBtn">
+          <div class="nav-item-content">
+            <span>👤</span>
+            <span>Artists</span>
+          </div>
+        </button>
+
+        <button class="nav-item" id="categoriesToggleBtn">
+          <div class="nav-item-content">
+            <span>📁</span>
+            <span>Categories</span>
+          </div>
+          <span style="font-size:0.75rem;color:var(--ink-faint);" id="categoriesArrow">▾</span>
+        </button>
+
+        <!-- Sub-categories dropdown -->
+        <div class="sub-nav-section" id="categoriesSubMenu">
+          <button class="sub-nav-item" data-view="en">
+            <span>🇬🇧 English Songs</span>
+            <span class="badge-count" id="countEnglish">0</span>
+          </button>
+          <button class="sub-nav-item" data-view="my">
+            <span>🇲🇲 Myanmar Songs</span>
+            <span class="badge-count" id="countMyanmar">0</span>
+          </button>
+          <div class="tag-list" id="genreTags" style="padding:4px 0;"></div>
+        </div>
       </nav>
 
-      <!-- Genres / Tags -->
-      <div class="section-label">
-        <span>Categories & Genres</span>
+      <!-- Songs Queue Header -->
+      <div class="sidebar-queue-header">
+        <span>SONGS QUEUE</span>
+        <span style="font-size:0.7rem;color:var(--ink-faint);" title="Drag songs to reorder strum list">⇅ Reorder</span>
       </div>
-      <div class="tag-list" id="genreTags"></div>
 
-      <!-- Songs List -->
-      <div class="section-label">
-        <span>Song Library</span>
-      </div>
+      <!-- Songs List (Draggable Queue) -->
       <div class="song-list" id="songList"></div>
 
       <!-- Add Song Button -->
-      <button class="btn btn-primary" id="addSongBtn" style="width:100%;margin-top:4px;">
-        <span>+ Add New Song</span>
+      <button class="btn btn-primary add-song-gradient-btn" id="addSongBtn">
+        <span>+ Add Song</span>
       </button>
 
       <!-- Sidebar Footer (Export / Backup & Firebase Cloud) -->
@@ -105,62 +116,117 @@
             <input type="file" id="importFileInput" accept=".json" style="display:none">
           </label>
         </div>
-        <div style="font-size:0.7rem;color:var(--ink-faint);text-align:center;line-height:1.4">
-          Runs 100% offline in browser.<br>Data saved securely in LocalStorage &amp; Cloud.
-        </div>
       </div>
 
     </aside>
 
-    <!-- CENTER COLUMN: Song View & Lyrics -->
+    <!-- CENTER COLUMN: Apple Music Home View or Song Practice View -->
     <main class="main-content">
 
-      <!-- Song Hero Card (Clean White Aesthetic) -->
-      <section class="song-hero">
-        <div class="hero-left">
-          <div class="hero-cover">🎸</div>
-          <div class="hero-info">
-            <h1 class="hero-title" id="heroTitle">Song Title</h1>
-            <div class="hero-artist">
-              <span id="heroArtist">Artist Name</span>
-            </div>
-            <div class="hero-badges">
-              <span class="meta-pill" id="heroLang">🇲🇲 Myanmar</span>
-              <span class="meta-pill" id="heroGenre">Acoustic</span>
-              <span class="meta-pill key-pill" id="heroKey">Key C</span>
-              <span class="meta-pill capo-pill" id="heroCapo">Capo 0</span>
-              <span class="meta-pill" id="heroYear">2024</span>
-            </div>
+      <!-- 1. APPLE MUSIC STYLE HOME VIEW -->
+      <div class="home-view" id="homeView">
+        <div class="home-header">
+          <div>
+            <h1 class="home-title">Library</h1>
+            <div class="home-subtitle">Browse your acoustic songs &amp; chords</div>
+          </div>
+          <div class="home-filter-pills">
+            <button class="home-pill active" data-home-filter="all">All Songs</button>
+            <button class="home-pill" data-home-filter="my">🇲🇲 Myanmar</button>
+            <button class="home-pill" data-home-filter="en">🇬🇧 English</button>
+            <button class="home-pill" data-home-filter="fav">🤍 Favorites</button>
           </div>
         </div>
 
-        <div class="hero-actions">
-          <button class="circle-btn" id="favBtn" title="Toggle Favorite">♡</button>
-          <button class="circle-btn" id="editSongBtn" title="Edit this song">✏️</button>
-          <button class="circle-btn" id="printBtn" title="Print chord sheet">🖨️</button>
-          <button class="circle-btn play-action" id="heroPlayBtn" title="Start / Pause Auto-Scroll">▶</button>
-        </div>
-      </section>
+        <!-- Section: Recently Practiced / Jump Back In -->
+        <section id="homeRecentSection">
+          <div class="home-section-header">
+            <h2 class="home-section-title"><span>⏱</span> Recently Practiced</h2>
+          </div>
+          <div class="home-grid" id="homeRecentGrid"></div>
+        </section>
 
-      <!-- Lyrics Toolbar -->
-      <div class="lyrics-toolbar">
-        <div class="lyrics-toolbar-group">
-          <span>💡 Click any chord tag above words to hear the acoustic strum!</span>
-        </div>
-        <div class="lyrics-toolbar-group">
-          <button class="view-toggle-btn" id="colToggleBtn">2 Columns</button>
-        </div>
+        <!-- Section: Myanmar Acoustic Songs -->
+        <section id="homeMyanmarSection">
+          <div class="home-section-header">
+            <h2 class="home-section-title"><span>🇲🇲</span> Myanmar Acoustic</h2>
+          </div>
+          <div class="home-grid" id="homeMyanmarGrid"></div>
+        </section>
+
+        <!-- Section: English Acoustic Favorites -->
+        <section id="homeEnglishSection">
+          <div class="home-section-header">
+            <h2 class="home-section-title"><span>🇬🇧</span> English Acoustic</h2>
+          </div>
+          <div class="home-grid" id="homeEnglishGrid"></div>
+        </section>
+
+        <!-- Section: All Songs Catalog (Organized with Smart Limit) -->
+        <section id="homeAllSection">
+          <div class="home-section-header">
+            <h2 class="home-section-title"><span>🎸</span> All Songs (<span id="homeCatalogCount">0</span>)</h2>
+            <div style="font-size:0.78rem;color:var(--ink-muted);" id="homeCatalogSummary"></div>
+          </div>
+          <div class="home-grid" id="homeAllGrid"></div>
+          <div style="text-align:center;margin-top:20px;" id="homeLoadMoreBox">
+            <button class="btn btn-outline btn-sm" id="homeLoadMoreBtn">Load More Songs ▾</button>
+          </div>
+        </section>
       </div>
 
-      <!-- Main Lyrics Card -->
-      <article class="lyrics-card" id="lyricsCard">
-        <div id="lyricsContainer"></div>
-      </article>
+      <!-- 2. SONG PRACTICE VIEW (Lyrics & Chords) -->
+      <div class="song-view" id="songView" style="display:none;">
+
+        <!-- Song Hero Card (Clean White Aesthetic) -->
+        <section class="song-hero">
+          <div class="hero-left">
+            <button class="btn btn-outline btn-sm hero-back-btn" id="heroBackBtn" title="Back to Library">
+              <span>← Library</span>
+            </button>
+            <div class="hero-cover" id="heroCover">🎸</div>
+            <div class="hero-info">
+              <h1 class="hero-title" id="heroTitle">Song Title</h1>
+              <div class="hero-artist">
+                <span id="heroArtist">Artist Name</span>
+              </div>
+              <div class="hero-badges">
+                <span class="meta-pill" id="heroLang">🇲🇲 Myanmar</span>
+                <span class="meta-pill key-pill" id="heroKey">Key C</span>
+                <span class="meta-pill capo-pill" id="heroCapo">Capo 0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <button class="circle-btn" id="favBtn" title="Toggle Favorite">♡</button>
+            <button class="circle-btn" id="editSongBtn" title="Edit this song">✏️</button>
+            <button class="circle-btn" id="printBtn" title="Print chord sheet">🖨️</button>
+            <button class="circle-btn play-action" id="heroPlayBtn" title="Start / Pause Auto-Scroll">▶</button>
+          </div>
+        </section>
+
+        <!-- Lyrics Toolbar -->
+        <div class="lyrics-toolbar">
+          <div class="lyrics-toolbar-group">
+            <span>💡 Click any chord tag above words to hear the acoustic strum!</span>
+          </div>
+          <div class="lyrics-toolbar-group">
+            <button class="view-toggle-btn" id="colToggleBtn">2 Columns</button>
+          </div>
+        </div>
+
+        <!-- Main Lyrics Card -->
+        <article class="lyrics-card" id="lyricsCard">
+          <div id="lyricsContainer"></div>
+        </article>
+
+      </div>
 
     </main>
 
     <!-- RIGHT SIDEBAR: Practice Tools & Chords -->
-    <aside class="right-sidebar">
+    <aside class="right-sidebar" id="rightSidebar">
 
       <!-- Playing & Practice Tools -->
       <section class="tool-panel">
@@ -220,40 +286,6 @@
           <span>Chords in Song</span>
         </div>
         <div class="chords-grid" id="chordGrid"></div>
-      </section>
-
-      <!-- Interactive Guitar Tuner Reference -->
-      <section class="tool-panel">
-        <div class="panel-title">
-          <span>Guitar Tuner Tone</span>
-          <span class="panel-title-badge">Standard E</span>
-        </div>
-        <div class="tuner-strings">
-          <button class="tuner-btn" data-note="E2">
-            <span>E</span>
-            <small>6th</small>
-          </button>
-          <button class="tuner-btn" data-note="A2">
-            <span>A</span>
-            <small>5th</small>
-          </button>
-          <button class="tuner-btn" data-note="D3">
-            <span>D</span>
-            <small>4th</small>
-          </button>
-          <button class="tuner-btn" data-note="G3">
-            <span>G</span>
-            <small>3rd</small>
-          </button>
-          <button class="tuner-btn" data-note="B3">
-            <span>B</span>
-            <small>2nd</small>
-          </button>
-          <button class="tuner-btn" data-note="E4">
-            <span>e</span>
-            <small>1st</small>
-          </button>
-        </div>
       </section>
 
       <!-- Practice Metronome -->

@@ -104,6 +104,15 @@ a {
   padding: 16px 20px 84px; /* leaves room for bottom player bar */
   height: 100vh;
   box-sizing: border-box;
+  transition: grid-template-columns 0.2s ease;
+}
+
+.app-container.home-mode {
+  grid-template-columns: 290px minmax(0, 1fr);
+}
+
+.app-container.home-mode .right-sidebar {
+  display: none !important;
 }
 
 /* Clean Cards */
@@ -304,20 +313,38 @@ a {
   border-radius: 4px;
 }
 
+/* ==========================================================================
+   SIDEBAR SONG ITEMS (Apple Music Queue Style)
+   ========================================================================== */
+.sidebar-queue-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  padding: 10px 4px 2px;
+}
+
 .song-item-btn {
   display: flex;
-  flex-direction: column;
-  gap: 3px;
+  align-items: center;
+  gap: 10px;
   width: 100%;
   text-align: left;
   background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 10px 14px;
-  cursor: pointer;
+  border-radius: 12px;
+  padding: 7px 10px;
+  cursor: grab;
   transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
-  overflow: hidden;
+  user-select: none;
+}
+
+.song-item-btn:active {
+  cursor: grabbing;
 }
 
 .song-item-btn:hover {
@@ -327,44 +354,363 @@ a {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-/* Elegant, refined active state - subtle left indicator pill and soft slate/indigo wash */
 .song-item-btn.active {
-  background: #f8fafc;
-  border-color: #cbd5e1;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.08);
 }
 
-.song-item-btn.active::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: var(--brand);
-  border-radius: 0 3px 3px 0;
+.song-item-btn.drag-over {
+  border-top: 2.5px solid var(--brand);
 }
 
-.song-item-btn.active .song-item-title span:first-child {
+.song-item-thumb {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.song-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.song-item-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.25;
+}
+
+.song-item-btn.active .song-item-title {
   color: var(--brand);
   font-weight: 700;
 }
 
-.song-item-title {
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--ink-primary);
+.song-item-artist {
+  font-size: 0.73rem;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+/* Sound Wave Equalizer animation for active song */
+.playing-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+.playing-bars span {
+  width: 2.5px;
+  background: var(--brand);
+  border-radius: 1px;
+  animation: soundWave 0.8s ease-in-out infinite alternate;
+}
+
+.playing-bars span:nth-child(1) { height: 40%; animation-delay: 0.1s; }
+.playing-bars span:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+.playing-bars span:nth-child(3) { height: 60%; animation-delay: 0.2s; }
+
+@keyframes soundWave {
+  0% { height: 25%; }
+  100% { height: 100%; }
+}
+
+/* Apple Music Gradient Button for + Add Song */
+.add-song-gradient-btn {
+  width: 100%;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%) !important;
+  color: #ffffff !important;
+  border: 0 !important;
+  padding: 10px 16px !important;
+  font-weight: 700 !important;
+  border-radius: var(--radius-pill) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25) !important;
+  transition: all 0.15s ease !important;
+}
+
+.add-song-gradient-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35) !important;
+}
+
+/* Sub-categories menu */
+.sub-nav-section {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: 8px;
+  margin-top: 2px;
+  border-left: 2px solid var(--border-subtle);
+  margin-left: 14px;
+}
+
+.sub-nav-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  text-align: left;
 }
 
-.song-item-meta {
-  font-size: 0.75rem;
+.sub-nav-item:hover, .sub-nav-item.active {
+  background: #ffffff;
+  color: var(--brand);
+}
+
+/* ==========================================================================
+   APPLE MUSIC STYLE HOME VIEW
+   ========================================================================== */
+.home-view {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%;
+  overflow-y: auto;
+  padding: 4px 6px 40px 0;
+}
+
+.home-view::-webkit-scrollbar {
+  width: 6px;
+}
+.home-view::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+}
+
+.home-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink-primary);
+  margin-bottom: 2px;
+}
+
+.home-subtitle {
+  font-size: 0.88rem;
   color: var(--ink-muted);
+}
+
+.home-filter-pills {
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: wrap;
+}
+
+.home-pill {
+  border: 1px solid var(--border);
+  background: #ffffff;
+  border-radius: var(--radius-pill);
+  padding: 5px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.home-pill:hover, .home-pill.active {
+  background: var(--ink-primary);
+  color: #ffffff;
+  border-color: var(--ink-primary);
+}
+
+.home-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.home-section-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Card Grids */
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  gap: 16px;
+}
+
+.home-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  box-shadow: var(--shadow-xs);
+}
+
+.home-card:hover {
+  transform: translateY(-4px);
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.08);
+}
+
+.home-card-cover {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.home-card-play-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.home-card:hover .home-card-play-overlay {
+  opacity: 1;
+}
+
+.home-card-play-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(0.9);
+  transition: transform 0.15s ease;
+}
+
+.home-card:hover .home-card-play-btn {
+  transform: scale(1);
+}
+
+.home-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.home-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-card-artist {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.home-meta-badge {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  color: var(--ink-secondary);
+}
+
+/* Hero Back to Library Button */
+.hero-back-btn {
+  margin-right: 6px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: var(--radius-pill);
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hero-back-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--brand);
+  border-color: #cbd5e1;
+}
+
+/* Song View container */
+.song-view {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  overflow: hidden;
 }
 
 /* Playlist / Tag chips */
