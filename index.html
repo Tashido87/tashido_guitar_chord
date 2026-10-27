@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tashido Guitar Chord — Clean Acoustic Songbook</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- LEFT SIDEBAR: Library & Navigation -->
+    <aside class="sidebar">
+      
+      <!-- Brand Header -->
+      <div class="brand-header">
+        <div class="brand-logo">
+          <div class="brand-icon">🎸</div>
+          <span>Tashido Chord</span>
+        </div>
+        <span class="app-version-badge">Clean v2.0</span>
+      </div>
+
+      <!-- Search Input -->
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search songs, artists, keys...">
+      </div>
+
+      <!-- Navigation Views -->
+      <nav class="nav-section">
+        <button class="nav-item active" data-view="all">
+          <div class="nav-item-content">
+            <span>🎵</span>
+            <span>All Songs</span>
+          </div>
+          <span class="badge-count" id="countAll">0</span>
+        </button>
+
+        <button class="nav-item" data-view="my">
+          <div class="nav-item-content">
+            <span>🇲🇲</span>
+            <span>Myanmar Songs</span>
+          </div>
+          <span class="badge-count" id="countMyanmar">0</span>
+        </button>
+
+        <button class="nav-item" data-view="en">
+          <div class="nav-item-content">
+            <span>🇬🇧</span>
+            <span>English Songs</span>
+          </div>
+          <span class="badge-count" id="countEnglish">0</span>
+        </button>
+
+        <button class="nav-item" data-view="fav">
+          <div class="nav-item-content">
+            <span style="color:var(--rose)">♥</span>
+            <span>Favorites</span>
+          </div>
+          <span class="badge-count" id="countFav">0</span>
+        </button>
+
+        <button class="nav-item" data-view="recent">
+          <div class="nav-item-content">
+            <span>⏱</span>
+            <span>Recently Added</span>
+          </div>
+        </button>
+      </nav>
+
+      <!-- Genres / Tags -->
+      <div class="section-label">
+        <span>Categories & Genres</span>
+      </div>
+      <div class="tag-list" id="genreTags"></div>
+
+      <!-- Songs List -->
+      <div class="section-label">
+        <span>Song Library</span>
+      </div>
+      <div class="song-list" id="songList"></div>
+
+      <!-- Add Song Button -->
+      <button class="btn btn-primary" id="addSongBtn" style="width:100%;margin-top:4px;">
+        <span>+ Add New Song</span>
+      </button>
+
+      <!-- Sidebar Footer (Export / Backup & Firebase Cloud) -->
+      <div class="sidebar-footer">
+        <button type="button" class="btn btn-outline btn-sm cloud-sync-btn" id="openFirebaseModalBtn" title="Firebase Cloud Database Sync">
+          <span class="cloud-status-dot" id="cloudStatusDot"></span>
+          <span id="cloudStatusText">☁️ Firebase Cloud Sync</span>
+        </button>
+        <div class="backup-actions">
+          <button class="btn btn-outline btn-sm" id="exportBtn" style="flex:1" title="Download backup JSON">
+            Backup JSON
+          </button>
+          <label class="btn btn-outline btn-sm" style="flex:1;cursor:pointer;margin:0;text-align:center" title="Restore songs from JSON">
+            Import JSON
+            <input type="file" id="importFileInput" accept=".json" style="display:none">
+          </label>
+        </div>
+        <div style="font-size:0.7rem;color:var(--ink-faint);text-align:center;line-height:1.4">
+          Runs 100% offline in browser.<br>Data saved securely in LocalStorage &amp; Cloud.
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- CENTER COLUMN: Song View & Lyrics -->
+    <main class="main-content">
+
+      <!-- Song Hero Card (Clean White Aesthetic) -->
+      <section class="song-hero">
+        <div class="hero-left">
+          <div class="hero-cover">🎸</div>
+          <div class="hero-info">
+            <h1 class="hero-title" id="heroTitle">Song Title</h1>
+            <div class="hero-artist">
+              <span id="heroArtist">Artist Name</span>
+            </div>
+            <div class="hero-badges">
+              <span class="meta-pill" id="heroLang">🇲🇲 Myanmar</span>
+              <span class="meta-pill" id="heroGenre">Acoustic</span>
+              <span class="meta-pill key-pill" id="heroKey">Key C</span>
+              <span class="meta-pill capo-pill" id="heroCapo">Capo 0</span>
+              <span class="meta-pill" id="heroYear">2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <button class="circle-btn" id="favBtn" title="Toggle Favorite">♡</button>
+          <button class="circle-btn" id="editSongBtn" title="Edit this song">✏️</button>
+          <button class="circle-btn" id="printBtn" title="Print chord sheet">🖨️</button>
+          <button class="circle-btn play-action" id="heroPlayBtn" title="Start / Pause Auto-Scroll">▶</button>
+        </div>
+      </section>
+
+      <!-- Lyrics Toolbar -->
+      <div class="lyrics-toolbar">
+        <div class="lyrics-toolbar-group">
+          <span>💡 Click any chord tag above words to hear the acoustic strum!</span>
+        </div>
+        <div class="lyrics-toolbar-group">
+          <button class="view-toggle-btn" id="colToggleBtn">2 Columns</button>
+        </div>
+      </div>
+
+      <!-- Main Lyrics Card -->
+      <article class="lyrics-card" id="lyricsCard">
+        <div id="lyricsContainer"></div>
+      </article>
+
+    </main>
+
+    <!-- RIGHT SIDEBAR: Practice Tools & Chords -->
+    <aside class="right-sidebar">
+
+      <!-- Playing & Practice Tools -->
+      <section class="tool-panel">
+        <div class="panel-title">
+          <span>Song Controls</span>
+          <span class="panel-title-badge">Instant Sync</span>
+        </div>
+
+        <!-- Transpose -->
+        <div class="tool-row">
+          <span class="tool-label">Transpose</span>
+          <div class="stepper-control">
+            <button class="stepper-btn" id="trMinus" title="Transpose Down">−</button>
+            <span class="stepper-val" id="trVal">0</span>
+            <button class="stepper-btn" id="trPlus" title="Transpose Up">+</button>
+          </div>
+        </div>
+
+        <!-- Capo -->
+        <div class="tool-row">
+          <span class="tool-label">Capo Fret</span>
+          <div class="stepper-control">
+            <button class="stepper-btn" id="capoMinus">−</button>
+            <span class="stepper-val" id="capoVal">0</span>
+            <button class="stepper-btn" id="capoPlus">+</button>
+          </div>
+        </div>
+
+        <!-- Text Size -->
+        <div class="tool-row">
+          <span class="tool-label">Font Size (<span id="fontSizeVal">16px</span>)</span>
+          <input type="range" id="fontSizeInput" min="13" max="24" value="16" style="width:110px">
+        </div>
+
+        <!-- Auto Scroll Switch -->
+        <div class="tool-row">
+          <span class="tool-label">Auto Scroll</span>
+          <button class="switch-control" id="scrollSwitch" title="Toggle Auto Scroll"></button>
+        </div>
+
+        <!-- Show Chords Switch -->
+        <div class="tool-row">
+          <span class="tool-label">Show Chords</span>
+          <button class="switch-control active" id="chordsSwitch" title="Toggle Chords Visibility"></button>
+        </div>
+      </section>
+
+      <!-- Chords in this Song -->
+      <section class="tool-panel">
+        <div class="panel-title">
+          <span>Chords in Song</span>
+          <button class="btn btn-outline btn-sm" id="strumPracticeBtn" style="padding:4px 8px;" title="Strum all chords sequentially">
+            Strum All 🔊
+          </button>
+        </div>
+        <div class="chords-grid" id="chordGrid"></div>
+      </section>
+
+      <!-- Interactive Guitar Tuner Reference -->
+      <section class="tool-panel">
+        <div class="panel-title">
+          <span>Guitar Tuner Tone</span>
+          <span class="panel-title-badge">Standard E</span>
+        </div>
+        <div class="tuner-strings">
+          <button class="tuner-btn" data-note="E2">
+            <span>E</span>
+            <small>6th</small>
+          </button>
+          <button class="tuner-btn" data-note="A2">
+            <span>A</span>
+            <small>5th</small>
+          </button>
+          <button class="tuner-btn" data-note="D3">
+            <span>D</span>
+            <small>4th</small>
+          </button>
+          <button class="tuner-btn" data-note="G3">
+            <span>G</span>
+            <small>3rd</small>
+          </button>
+          <button class="tuner-btn" data-note="B3">
+            <span>B</span>
+            <small>2nd</small>
+          </button>
+          <button class="tuner-btn" data-note="E4">
+            <span>e</span>
+            <small>1st</small>
+          </button>
+        </div>
+      </section>
+
+      <!-- Practice Metronome -->
+      <section class="tool-panel">
+        <div class="panel-title">
+          <span>Metronome</span>
+          <span class="panel-title-badge"><span id="bpmVal">80</span> BPM</span>
+        </div>
+        <div class="metronome-box">
+          <div class="metronome-visual">
+            <div class="beat-dot accent" id="beatDot1"></div>
+            <div class="beat-dot" id="beatDot2"></div>
+            <div class="beat-dot" id="beatDot3"></div>
+            <div class="beat-dot" id="beatDot4"></div>
+          </div>
+          <div class="tool-row" style="padding:0">
+            <span class="tool-label" style="font-size:0.8rem">Tempo</span>
+            <input type="range" id="metronomeBpmInput" min="40" max="220" value="80" style="width:140px">
+          </div>
+          <button class="btn btn-outline btn-sm" id="metronomeToggleBtn" style="width:100%;margin-top:6px;">
+            Start Metronome
+          </button>
+        </div>
+      </section>
+
+    </aside>
+
+  </div>
+
+  <!-- FLOATING BOTTOM PRACTICE BAR -->
+  <footer class="bottom-bar">
+    <div class="bar-song-info">
+      <div class="bar-song-thumb">🎵</div>
+      <div>
+        <div class="bar-song-title" id="barTitle">Song Title</div>
+        <div class="bar-song-artist" id="barArtist">Artist Name</div>
+      </div>
+    </div>
+
+    <div class="bar-controls">
+      <button class="bar-btn" id="prevSongBtn" title="Previous Song">⏮</button>
+      <button class="bar-btn bar-btn-main" id="barPlayBtn" title="Auto-Scroll / Play">▶</button>
+      <button class="bar-btn" id="nextSongBtn" title="Next Song">⏭</button>
+    </div>
+
+    <div class="bar-speed-group">
+      <span>Scroll Speed (<span id="speedVal">3x</span>)</span>
+      <input type="range" id="scrollSpeedInput" min="1" max="10" value="3" style="width:90px">
+    </div>
+  </footer>
+
+  <!-- MODAL: Add / Edit Song -->
+  <div class="modal-overlay" id="songModal">
+    <div class="modal-dialog modal-dialog-lg">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Add New Song</h2>
+        <button class="modal-close-btn" id="closeModalX">✕</button>
+      </div>
+
+      <!-- GEMINI AI PHOTO SCANNER -->
+      <div class="ai-scan-card" id="aiScanCard">
+        <div class="ai-scan-header">
+          <div class="ai-scan-title">
+            <span style="font-size:1.15rem;">✨</span>
+            <div>
+              <b>Scan Chord Sheet Image with Gemini AI</b>
+              <div style="font-size:0.72rem;color:var(--ink-muted);">Auto-extracts Myanmar/English lyrics & chords • Discards watermarks & ads</div>
+            </div>
+            <span class="ai-badge">gemini-flash-latest</span>
+          </div>
+          <button type="button" class="btn-text-sm" id="toggleApiKeyBtn" title="Gemini API Key Settings">⚙️ Key</button>
+        </div>
+
+        <!-- Collapsible API Key settings -->
+        <div class="ai-key-settings" id="aiKeySettings" style="display:none;">
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input type="password" id="geminiApiKeyInput" class="form-input" style="flex:1;padding:6px 10px;font-size:0.8rem;" placeholder="Gemini API Key">
+            <button type="button" class="btn btn-outline btn-sm" id="saveApiKeyBtn">Save</button>
+          </div>
+          <small style="color:var(--ink-muted);font-size:0.72rem;display:block;margin-top:4px;">Default key is pre-configured and saved in your browser.</small>
+        </div>
+
+        <!-- Dropzone -->
+        <div class="ai-dropzone" id="aiDropzone">
+          <input type="file" id="chordImgInput" accept="image/*" style="display:none;">
+          
+          <div class="ai-dropzone-content" id="dropzoneContent">
+            <span style="font-size:2rem;">📸</span>
+            <div>
+              <b>Click to browse or Drag & Drop Chord Sheet Photo</b>
+              <div style="color:var(--ink-muted);font-size:0.75rem;margin-top:3px;">
+                Supports PNG, JPG, WEBP • Or Paste screenshot with <kbd>Ctrl+V</kbd> / <kbd>Cmd+V</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scanning state with animation -->
+          <div class="ai-scanning-state" id="aiScanningState" style="display:none;">
+            <div class="ai-spinner"></div>
+            <div>
+              <b style="color:var(--brand);">Gemini Flash is analyzing photo...</b>
+              <div style="color:var(--ink-muted);font-size:0.75rem;margin-top:2px;">Transcribing lyrics and aligning chords • Discarding watermarks...</div>
+            </div>
+          </div>
+
+          <!-- Preview & Success Banner -->
+          <div class="ai-scan-preview" id="aiScanPreview" style="display:none;">
+            <img id="aiThumbImg" src="" alt="Chord Sheet Preview">
+            <div style="flex:1;min-width:0;">
+              <div class="ai-success-msg">✓ Transcribed successfully!</div>
+              <div style="font-size:0.75rem;color:var(--ink-muted);" id="aiScanMeta">Song details & lyrics populated.</div>
+            </div>
+            <button type="button" class="btn btn-outline btn-sm" id="reUploadBtn">Scan Another Image</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Basic Metadata Grid -->
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label">Song Title *</label>
+          <input type="text" class="form-input" id="fTitle" placeholder="e.g. ဖြေလွှတ်ပစ်လိုက်တဲ့ကြိုး">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Artist</label>
+          <input type="text" class="form-input" id="fArtist" placeholder="e.g. စိုးလွင်လွင်">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Genre</label>
+          <input type="text" class="form-input" id="fGenre" placeholder="e.g. Myanmar Classic, Acoustic">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Original Key</label>
+          <input type="text" class="form-input" id="fKey" placeholder="e.g. G, C, Am">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Capo Fret</label>
+          <input type="number" class="form-input" id="fCapo" min="0" max="12" value="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tempo (BPM)</label>
+          <input type="number" class="form-input" id="fBpm" min="40" max="240" value="80">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Language / ဘာသာစကား</label>
+          <select class="form-input" id="fLanguage">
+            <option value="my">🇲🇲 Myanmar (မြန်မာ)</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="other">🌐 Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Release Year</label>
+          <input type="text" class="form-input" id="fYear" placeholder="e.g. 2024">
+        </div>
+      </div>
+
+      <!-- Lyrics Editor Header with Mode Switcher -->
+      <div class="editor-mode-bar">
+        <div class="editor-tabs">
+          <button type="button" class="editor-tab-btn active" id="tabTextMode">
+            <span>📝 Text Editor</span>
+          </button>
+          <button type="button" class="editor-tab-btn" id="tabVisualMode">
+            <span>🎯 Visual Chord Aligner (Chord နေရာချိန်ညှိရန်)</span>
+          </button>
+        </div>
+        <span style="font-size:0.75rem;color:var(--ink-muted);" id="alignerTip">
+          Chord နေရာလွဲနေပါက ◂ သို့မဟုတ် ▸ နှိပ်ပြီး နေရာရွေ့နိုင်ပါသည်
+        </span>
+      </div>
+
+      <!-- Tab 1: Text Mode -->
+      <div id="textModeContainer">
+        <div class="form-help-box">
+          <b>📝 How to write lyrics with chords:</b> Put chords in brackets right before the syllable, e.g. <code>[G]ကိုယ် ရေးခဲ့သော [Em]သီချင်းတွေ</code>.<br>
+          Sections can be marked like <code>Intro:</code>, <code>Verse 1:</code>, <code>Chorus:</code>, <code>Solo:</code>, or <code>Ending:</code>.
+        </div>
+        <div class="form-group">
+          <textarea class="form-textarea" id="fLyrics" placeholder="Intro:&#10;[G]  [Em]  [Am]  [D]&#10;&#10;Verse 1:&#10;[G]ကိုယ် ရေးခဲ့သော [Em]သီချင်းတွေ..."></textarea>
+        </div>
+      </div>
+
+      <!-- Tab 2: Visual Chord Position Adjuster -->
+      <div id="visualModeContainer" style="display:none;">
+        <div class="aligner-help-banner">
+          <b>🎯 Chord နေရာချိန်ညှိရန် လမ်းညွှန်:</b><br>
+          • <b>◂ / ▸ ခလုတ်များ:</b> Chord တစ်ခုချင်းစီကို ဘယ်/ညာ စာလုံးတစ်လုံးချင်း အလွယ်တကူ ရွှေ့နိုင်ပါသည်။<br>
+          • <b>စာသားကို Click နှိပ်ခြင်း:</b> မည်သည့်စာလုံးပေါ်မဆို Click နှိပ်လိုက်ပါက ရွေးထားသော Chord ထိုနေရာသို့ ချက်ချင်းပြောင်းရွှေ့သွားပါမည်။<br>
+          • <b>✕ ခလုတ်:</b> မလိုချင်သော Chord ကို ဖျက်နိုင်ပါသည်။
+        </div>
+        <div class="visual-aligner-board" id="visualAlignerBoard"></div>
+      </div>
+
+      <div class="modal-actions" style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+        <div>
+          <button type="button" class="btn btn-danger btn-sm" id="modalDeleteSongBtn" style="display:none;">
+            🗑 Delete This Song
+          </button>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button type="button" class="btn btn-outline" id="cancelModalBtn">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveSongModalBtn">Save Song</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Firebase Cloud Database Config -->
+  <div class="modal-overlay" id="firebaseModal">
+    <div class="modal-dialog" style="max-width:560px;">
+      <div class="modal-header">
+        <h2 class="modal-title">☁️ Firebase Cloud Database</h2>
+        <button class="modal-close-btn" id="closeFirebaseModalX">✕</button>
+      </div>
+      <p style="font-size:0.84rem;color:var(--ink-secondary);line-height:1.5;margin-bottom:14px;">
+        Google Firebase Firestore နှင့် ချိတ်ဆက်ပြီး သီချင်းဒေတာများကို Cloud ပေါ်တွင် အမြဲသိမ်းဆည်းထားနိုင်ပါသည်။ Browser data ရှင်းလိုက်သော်လည်း သီချင်းများ မပျက်တော့ဘဲ အခြား Device များမှလည်း ကြည့်ရှုနိုင်မည်ဖြစ်ပါသည်။
+      </p>
+
+      <div class="form-group">
+        <label class="form-label">Firebase Config (JSON or JavaScript Object)</label>
+        <textarea class="form-textarea" id="firebaseConfigInput" style="min-height:130px;font-size:0.8rem;font-family:var(--font-mono);" placeholder='{&#10;  "apiKey": "AIzaSy...",&#10;  "authDomain": "your-app.firebaseapp.com",&#10;  "projectId": "your-project-id",&#10;  "storageBucket": "your-app.appspot.com",&#10;  "messagingSenderId": "...",&#10;  "appId": "..."&#10;}'></textarea>
+      </div>
+
+      <div style="font-size:0.75rem;color:var(--ink-muted);background:var(--bg-subtle);padding:10px 12px;border-radius:var(--radius-md);margin-bottom:16px;line-height:1.4;">
+        💡 <b>Firebase Config ရယူနည်း:</b> <a href="https://console.firebase.google.com" target="_blank" style="color:var(--brand);text-decoration:underline;">Firebase Console</a> &gt; Project Settings &gt; General &gt; Your apps &gt; Web config ကို copy ကူးထည့်ပါ။ Firestore Database ဖွင့်ထားပေးရန် လိုအပ်ပါသည်။
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:space-between;align-items:center;">
+        <div>
+          <button type="button" class="btn btn-danger btn-sm" id="disconnectFirebaseBtn" style="display:none;">Disconnect Cloud</button>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button type="button" class="btn btn-outline" id="cancelFirebaseModalBtn">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveFirebaseConfigBtn">Connect &amp; Sync Songs</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Compat SDK (Loaded for persistent Cloud sync) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <!-- Scripts -->
+  <script src="chords-db.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

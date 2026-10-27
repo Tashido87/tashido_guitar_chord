@@ -1,0 +1,4162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tashido Guitar Chord — Clean Acoustic Songbook</title>
+  <style>
+/* ==========================================================================
+   Tashido Guitar Chord - Modern Clean White Aesthetic
+   ========================================================================== */
+
+:root {
+  /* Color Palette - Clean, elegant, soothing */
+  --bg-app: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-sidebar: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --bg-subtle: #f1f5f9;
+  --bg-muted: #f8fafc;
+  
+  /* Text & Inks */
+  --ink-primary: #0f172a;
+  --ink-secondary: #334155;
+  --ink-muted: #64748b;
+  --ink-faint: #94a3b8;
+  
+  /* Refined Accent Colors - Non-glaring, eye-friendly */
+  --brand: #2563eb;          /* Refined Royal Blue (not harsh cyan/neon) */
+  --brand-hover: #1d4ed8;
+  --brand-light: #eff6ff;    /* Soft blue tint */
+  --brand-border: #bfdbfe;
+  
+  --amber: #d97706;          /* Warm acoustic amber for chord accents */
+  --amber-light: #fef3c7;
+  
+  --emerald: #059669;
+  --emerald-light: #ecfdf5;
+  
+  --rose: #e11d48;
+  --rose-light: #ffe4e6;
+
+  /* Borders & Dividers */
+  --border: #e2e8f0;
+  --border-subtle: #f1f5f9;
+  --border-focus: #93c5fd;
+
+  /* Shadows - Soft, organic, modern */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-float: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 9999px;
+
+  /* Font Families */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", "Fira Code", Menlo, Monaco, Consolas, monospace;
+}
+
+/* Reset & Basics */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 15px;
+  scroll-behavior: smooth;
+  background-color: var(--bg-app);
+  color: var(--ink-primary);
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--ink-primary);
+  line-height: 1.5;
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--brand);
+  text-decoration: none;
+}
+
+/* App Container Layout - Fixed Desktop App Frame */
+.app-container {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr) 330px;
+  gap: 20px;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 16px 20px 84px; /* leaves room for bottom player bar */
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Clean Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* ==========================================================================
+   LEFT SIDEBAR (Song List & Library)
+   ========================================================================== */
+.sidebar {
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px 8px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink-primary);
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  box-shadow: var(--shadow-xs);
+}
+
+.app-version-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--brand);
+  background: var(--brand-light);
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--brand-border);
+}
+
+/* Search Box */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 9px 14px;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-xs);
+}
+
+.search-box:focus-within {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.search-box svg {
+  color: var(--ink-faint);
+  flex-shrink: 0;
+}
+
+.search-box input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  width: 100%;
+  font-size: 0.88rem;
+  color: var(--ink-primary);
+}
+
+.search-box input::placeholder {
+  color: var(--ink-faint);
+}
+
+/* Nav Filter Tabs */
+.nav-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.nav-item-content {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.nav-item:hover {
+  background: #ffffff;
+  color: var(--ink-primary);
+  box-shadow: var(--shadow-xs);
+}
+
+.nav-item.active {
+  background: #ffffff;
+  color: var(--brand);
+  font-weight: 600;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+
+.badge-count {
+  background: var(--bg-subtle);
+  border-radius: var(--radius-pill);
+  padding: 1px 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.nav-item.active .badge-count {
+  background: var(--brand-light);
+  color: var(--brand);
+}
+
+/* Section Header */
+.section-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 10px 8px 4px;
+}
+
+/* Song List in Sidebar */
+.song-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  max-height: 280px;
+  padding-right: 4px;
+}
+
+.song-list::-webkit-scrollbar {
+  width: 4px;
+}
+.song-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.song-item-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  text-align: left;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.song-item-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* Elegant, refined active state - subtle left indicator pill and soft slate/indigo wash */
+.song-item-btn.active {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.song-item-btn.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--brand);
+  border-radius: 0 3px 3px 0;
+}
+
+.song-item-btn.active .song-item-title span:first-child {
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.song-item-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.song-item-meta {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Playlist / Tag chips */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.tag-chip {
+  border: 1px solid var(--border);
+  background: #ffffff;
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tag-chip:hover, .tag-chip.active {
+  background: var(--ink-primary);
+  color: #ffffff;
+  border-color: var(--ink-primary);
+}
+
+/* Action Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-pill);
+  padding: 9px 16px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--brand);
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+.btn-primary:hover {
+  background: var(--brand-hover);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+}
+
+.btn-outline {
+  background: #ffffff;
+  border-color: var(--border);
+  color: var(--ink-secondary);
+}
+
+.btn-outline:hover {
+  border-color: #cbd5e1;
+  background: var(--bg-card-hover);
+  color: var(--ink-primary);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-secondary);
+}
+
+.btn-ghost:hover {
+  background: var(--bg-subtle);
+  color: var(--ink-primary);
+}
+
+.btn-danger {
+  background: #fff;
+  border-color: #fecdd3;
+  color: var(--rose);
+}
+
+.btn-danger:hover {
+  background: var(--rose-light);
+  border-color: var(--rose);
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Cloud Sync Status Button */
+.cloud-sync-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ffffff;
+}
+
+.cloud-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #94a3b8;
+  display: inline-block;
+  transition: background 0.2s ease;
+}
+
+.cloud-status-dot.connected {
+  background: var(--emerald);
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
+}
+
+.backup-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-sm {
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  border-radius: var(--radius-md);
+}
+
+/* ==========================================================================
+   CENTER MAIN COLUMN (Song View & Lyrics)
+   ========================================================================== */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden; /* Only the lyrics card inside scrolls */
+}
+
+/* Modern Clean Song Hero Card */
+.song-hero {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.hero-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.hero-cover {
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-xs);
+}
+
+.hero-info {
+  min-width: 0;
+}
+
+.hero-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hero-artist {
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.meta-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  color: var(--ink-secondary);
+  border: 1px solid var(--border);
+}
+
+.meta-pill.key-pill {
+  background: var(--brand-light);
+  color: var(--brand);
+  border-color: var(--brand-border);
+}
+
+.meta-pill.capo-pill {
+  background: var(--amber-light);
+  color: var(--amber);
+  border-color: #fde68a;
+}
+
+/* Hero Action Controls */
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.circle-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: var(--ink-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow-xs);
+}
+
+.circle-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--ink-primary);
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.circle-btn.active {
+  color: var(--rose);
+  border-color: #fecdd3;
+  background: var(--rose-light);
+}
+
+.circle-btn.play-action {
+  width: 48px;
+  height: 48px;
+  background: var(--brand);
+  color: #ffffff;
+  border-color: var(--brand);
+  font-size: 1.1rem;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+.circle-btn.play-action:hover {
+  background: var(--brand-hover);
+  transform: scale(1.04);
+}
+
+/* Quick Bar above Lyrics */
+.lyrics-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 18px;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  flex-shrink: 0;
+}
+
+.lyrics-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.view-toggle-btn {
+  border: 1px solid var(--border);
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink-secondary);
+}
+
+.view-toggle-btn:hover {
+  background: var(--bg-subtle);
+}
+
+/* Lyrics Display Container - DEDICATED INDEPENDENT SCROLL AREA */
+.lyrics-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px 36px;
+  box-shadow: var(--shadow-sm);
+  flex: 1;
+  min-height: 0; /* Critical for flex child scrolling! */
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Custom sleek scrollbar for lyrics card */
+.lyrics-card::-webkit-scrollbar {
+  width: 7px;
+}
+
+.lyrics-card::-webkit-scrollbar-track {
+  background: var(--bg-sidebar);
+  border-radius: 9999px;
+  margin: 8px 0;
+}
+
+.lyrics-card::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.lyrics-card::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.lyrics-card.two-columns {
+  column-count: 2;
+  column-gap: 40px;
+}
+
+.lyrics-section {
+  margin-bottom: 24px;
+  break-inside: avoid;
+}
+
+.section-pill {
+  display: inline-block;
+  background: var(--bg-subtle);
+  color: var(--ink-secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+}
+}
+
+/* Monospace & aligned lyrics lines */
+.lyrics-line {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.chord-lyric-pair {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: bottom;
+  min-width: 0.35em;
+}
+
+.chord-tag {
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 0.95em;
+  min-height: 1.25em;
+  line-height: 1;
+  cursor: pointer;
+  padding: 1px 3px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.chord-tag:hover {
+  background: var(--brand-light);
+  color: var(--brand-hover);
+  text-decoration: underline;
+}
+
+.lyric-text {
+  white-space: pre;
+  color: var(--ink-primary);
+}
+
+/* When chords are hidden */
+.hide-chords .chord-tag {
+  display: none !important;
+}
+
+.hide-chords .chord-lyric-pair {
+  display: inline;
+}
+
+/* ==========================================================================
+   RIGHT COLUMN (Guitar Tools & Chord Diagrams)
+   ========================================================================== */
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-right: 4px;
+}
+
+.right-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+.right-sidebar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.tool-panel {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.panel-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-title-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-faint);
+}
+
+/* Control Rows */
+.tool-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.88rem;
+}
+
+.tool-row:last-child {
+  border-bottom: 0;
+}
+
+.tool-label {
+  font-weight: 500;
+  color: var(--ink-secondary);
+}
+
+/* Stepper (- Value +) */
+.stepper-control {
+  display: flex;
+  align-items: center;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 2px;
+}
+
+.stepper-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 0;
+  background: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--ink-primary);
+  box-shadow: var(--shadow-xs);
+  transition: all 0.12s ease;
+}
+
+.stepper-btn:hover {
+  background: var(--brand-light);
+  color: var(--brand);
+}
+
+.stepper-val {
+  min-width: 32px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--ink-primary);
+}
+
+/* Modern Clean Toggle Switch */
+.switch-control {
+  width: 44px;
+  height: 24px;
+  background: #cbd5e1;
+  border-radius: var(--radius-pill);
+  border: 0;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+.switch-control::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: var(--shadow-xs);
+  transition: left 0.2s ease;
+}
+
+.switch-control.active {
+  background: var(--brand);
+}
+
+.switch-control.active::after {
+  left: 22px;
+}
+
+/* Range input styling */
+input[type="range"] {
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+
+/* Select dropdown */
+.select-input {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  background: #ffffff;
+  color: var(--ink-primary);
+  outline: 0;
+  max-width: 170px;
+}
+
+.select-input:focus {
+  border-color: var(--brand);
+}
+
+/* Chord Diagrams Grid */
+.chords-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.chord-card {
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 4px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.chord-card:hover {
+  background: #ffffff;
+  border-color: var(--brand);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.chord-play-indicator {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.chord-card:hover .chord-play-indicator {
+  opacity: 1;
+  color: var(--brand);
+}
+
+/* Guitar Tuner Box */
+.tuner-strings {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.tuner-btn {
+  border: 1px solid var(--border);
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  padding: 8px 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transition: all 0.15s ease;
+}
+
+.tuner-btn small {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--ink-faint);
+}
+
+.tuner-btn:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+  background: var(--brand-light);
+}
+
+.tuner-btn.sounding {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #ffffff;
+}
+
+.tuner-btn.sounding small {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Metronome UI */
+.metronome-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.metronome-visual {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 0;
+}
+
+.beat-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: transform 0.08s ease, background 0.08s ease;
+}
+
+.beat-dot.active {
+  background: var(--brand);
+  transform: scale(1.4);
+}
+
+.beat-dot.accent.active {
+  background: var(--amber);
+}
+
+/* ==========================================================================
+   BOTTOM FLOATING CONTROLLER BAR (Smooth Auto-scroll & Practice Strum)
+   ========================================================================== */
+.bottom-bar {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 18px;
+  width: min(920px, calc(100% - 36px));
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: var(--shadow-float);
+  z-index: 100;
+}
+
+.bar-song-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 160px;
+}
+
+.bar-song-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.bar-song-title {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--ink-primary);
+  max-width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar-song-artist {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+}
+
+.bar-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bar-btn {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--ink-secondary);
+  font-size: 1.1rem;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s ease;
+}
+
+.bar-btn:hover {
+  color: var(--ink-primary);
+  background: var(--bg-subtle);
+}
+
+.bar-btn-main {
+  width: 44px;
+  height: 44px;
+  background: var(--ink-primary);
+  color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+}
+
+.bar-btn-main:hover {
+  background: #000000;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.bar-speed-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+/* ==========================================================================
+   MODAL DIALOG (Add/Edit Song & Full Chord Chart)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  place-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-overlay.open {
+  display: grid;
+}
+
+.modal-dialog {
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  width: min(760px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  box-shadow: var(--shadow-float);
+  animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-dialog-lg {
+  width: min(880px, 98vw);
+}
+
+/* ==========================================================================
+   GEMINI AI PHOTO SCANNER COMPONENT
+   ========================================================================== */
+.ai-scan-card {
+  background: #f8fafc;
+  border: 1.5px dashed #93c5fd;
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 20px;
+  transition: all 0.2s ease;
+}
+
+.ai-scan-card:hover {
+  border-color: var(--brand);
+  background: #f0f7ff;
+}
+
+.ai-scan-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.ai-scan-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: var(--ink-primary);
+}
+
+.ai-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  background: var(--brand-light);
+  color: var(--brand);
+  border: 1px solid var(--brand-border);
+}
+
+.btn-text-sm {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.btn-text-sm:hover {
+  background: var(--bg-subtle);
+  color: var(--ink-primary);
+}
+
+.ai-key-settings {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+.ai-dropzone {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ai-dropzone:hover, .ai-dropzone.dragover {
+  border-color: var(--brand);
+  background: var(--brand-light);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.ai-dropzone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Spinner for AI Scanning */
+.ai-scanning-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+}
+
+.ai-spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid #bfdbfe;
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.ai-scan-preview {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+#aiThumbImg {
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+
+.ai-success-msg {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--emerald);
+}
+
+/* ==========================================================================
+   LYRICS MODE BAR & VISUAL CHORD ALIGNER
+   ========================================================================== */
+.editor-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.editor-tabs {
+  display: flex;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 3px;
+  gap: 3px;
+}
+
+.editor-tab-btn {
+  border: 0;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.editor-tab-btn:hover {
+  color: var(--ink-primary);
+}
+
+.editor-tab-btn.active {
+  background: #ffffff;
+  color: var(--brand);
+  box-shadow: var(--shadow-xs);
+}
+
+.aligner-help-banner {
+  background: var(--brand-light);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  color: #1e3a8a;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.visual-aligner-board {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  max-height: 440px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Each line in the visual chord aligner */
+.aligner-line {
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  transition: all 0.12s ease;
+}
+
+.aligner-line:hover {
+  background: #f8fafc;
+  border-color: var(--border);
+}
+
+.aligner-line-section {
+  display: inline-block;
+  background: var(--bg-subtle);
+  color: var(--ink-secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+
+/* Row of chords with nudge arrows */
+.aligner-chord-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+  min-height: 28px;
+}
+
+.aligner-chord-pill {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1.5px solid var(--brand);
+  border-radius: var(--radius-pill);
+  padding: 2px 6px;
+  gap: 4px;
+  box-shadow: var(--shadow-xs);
+  transition: all 0.12s ease;
+}
+
+.aligner-chord-pill.selected {
+  background: var(--brand-light);
+  border-color: var(--brand-hover);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+.nudge-btn {
+  background: #f1f5f9;
+  border: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  transition: all 0.1s ease;
+}
+
+.nudge-btn:hover {
+  background: var(--brand);
+  color: #ffffff;
+}
+
+.chord-name-tag {
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: var(--brand);
+  padding: 0 3px;
+  cursor: pointer;
+}
+
+.remove-chord-btn {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0 2px;
+}
+
+.remove-chord-btn:hover {
+  color: var(--rose);
+}
+
+/* Text row showing Burmese characters and slots */
+.aligner-text-row {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--ink-primary);
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  cursor: text;
+}
+
+.aligner-add-chord-btn {
+  border: 1px dashed var(--border);
+  background: #ffffff;
+  border-radius: var(--radius-pill);
+  padding: 3px 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.aligner-add-chord-btn:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+  background: var(--brand-light);
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.96); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: 0;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--ink-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--ink-primary);
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.form-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+}
+
+.form-input, .form-textarea {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 9px 12px;
+  font-size: 0.88rem;
+  background: #ffffff;
+  color: var(--ink-primary);
+  outline: 0;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.form-textarea {
+  min-height: 220px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.form-help-box {
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 0.8rem;
+  color: var(--ink-secondary);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.form-help-box code {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--brand);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .sidebar, .right-sidebar, .bottom-bar, .hero-actions, .lyrics-toolbar {
+    display: none !important;
+  }
+  .app-container {
+    display: block !important;
+    padding: 0 !important;
+  }
+  .song-hero {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 0 20px 0 !important;
+    border-bottom: 2px solid #000 !important;
+  }
+  .lyrics-card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 20px 0 !important;
+  }
+  .chord-tag {
+    color: #000 !important;
+    font-weight: 800 !important;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  html, body {
+    height: auto;
+    overflow: auto;
+  }
+  .app-container {
+    height: auto;
+    grid-template-columns: 260px 1fr;
+    padding-bottom: 120px;
+  }
+  .sidebar {
+    height: calc(100vh - 40px);
+    position: sticky;
+    top: 20px;
+  }
+  .main-content {
+    height: auto;
+    overflow: visible;
+  }
+  .lyrics-card {
+    height: 70vh;
+  }
+  .right-sidebar {
+    grid-column: 1 / -1;
+    height: auto;
+  }
+}
+
+@media (max-width: 820px) {
+  html, body {
+    height: auto;
+    overflow: auto;
+  }
+  .app-container {
+    height: auto;
+    grid-template-columns: 1fr;
+    padding: 12px 12px 120px;
+  }
+  .sidebar {
+    height: auto;
+    position: static;
+  }
+  .lyrics-card {
+    height: 65vh;
+  }
+  .song-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hero-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .bottom-bar {
+    width: calc(100% - 24px);
+    padding: 8px 14px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- LEFT SIDEBAR: Library & Navigation -->
+    <aside class="sidebar">
+      
+      <!-- Brand Header -->
+      <div class="brand-header">
+        <div class="brand-logo">
+          <div class="brand-icon">🎸</div>
+          <span>Tashido Chord</span>
+        </div>
+        <span class="app-version-badge">Clean v2.0</span>
+      </div>
+
+      <!-- Search Input -->
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search songs, artists, keys...">
+      </div>
+
+      <!-- Navigation Views -->
+      <nav class="nav-section">
+        <button class="nav-item active" data-view="all">
+          <div class="nav-item-content">
+            <span>🎵</span>
+            <span>All Songs</span>
+          </div>
+          <span class="badge-count" id="countAll">0</span>
+        </button>
+
+        <button class="nav-item" data-view="my">
+          <div class="nav-item-content">
+            <span>🇲🇲</span>
+            <span>Myanmar Songs</span>
+          </div>
+          <span class="badge-count" id="countMyanmar">0</span>
+        </button>
+
+        <button class="nav-item" data-view="en">
+          <div class="nav-item-content">
+            <span>🇬🇧</span>
+            <span>English Songs</span>
+          </div>
+          <span class="badge-count" id="countEnglish">0</span>
+        </button>
+
+        <button class="nav-item" data-view="fav">
+          <div class="nav-item-content">
+            <span style="color:var(--rose)">♥</span>
+            <span>Favorites</span>
+          </div>
+          <span class="badge-count" id="countFav">0</span>
+        </button>
+
+        <button class="nav-item" data-view="recent">
+          <div class="nav-item-content">
+            <span>⏱</span>
+            <span>Recently Added</span>
+          </div>
+        </button>
+      </nav>
+
+      <!-- Genres / Tags -->
+      <div class="section-label">
+        <span>Categories & Genres</span>
+      </div>
+      <div class="tag-list" id="genreTags"></div>
+
+      <!-- Songs List -->
+      <div class="section-label">
+        <span>Song Library</span>
+      </div>
+      <div class="song-list" id="songList"></div>
+
+      <!-- Add Song Button -->
+      <button class="btn btn-primary" id="addSongBtn" style="width:100%;margin-top:4px;">
+        <span>+ Add New Song</span>
+      </button>
+
+      <!-- Sidebar Footer (Export / Backup & Firebase Cloud) -->
+      <div class="sidebar-footer">
+        <button type="button" class="btn btn-outline btn-sm cloud-sync-btn" id="openFirebaseModalBtn" title="Firebase Cloud Database Sync">
+          <span class="cloud-status-dot" id="cloudStatusDot"></span>
+          <span id="cloudStatusText">☁️ Firebase Cloud Sync</span>
+        </button>
+        <div class="backup-actions">
+          <button class="btn btn-outline btn-sm" id="exportBtn" style="flex:1" title="Download backup JSON">
+            Backup JSON
+          </button>
+          <label class="btn btn-outline btn-sm" style="flex:1;cursor:pointer;margin:0;text-align:center" title="Restore songs from JSON">
+            Import JSON
+            <input type="file" id="importFileInput" accept=".json" style="display:none">
+          </label>
+        </div>
+        <div style="font-size:0.7rem;color:var(--ink-faint);text-align:center;line-height:1.4">
+          Runs 100% offline in browser.<br>Data saved securely in LocalStorage &amp; Cloud.
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- CENTER COLUMN: Song View & Lyrics -->
+    <main class="main-content">
+
+      <!-- Song Hero Card (Clean White Aesthetic) -->
+      <section class="song-hero">
+        <div class="hero-left">
+          <div class="hero-cover">🎸</div>
+          <div class="hero-info">
+            <h1 class="hero-title" id="heroTitle">Song Title</h1>
+            <div class="hero-artist">
+              <span id="heroArtist">Artist Name</span>
+            </div>
+            <div class="hero-badges">
+              <span class="meta-pill" id="heroLang">🇲🇲 Myanmar</span>
+              <span class="meta-pill" id="heroGenre">Acoustic</span>
+              <span class="meta-pill key-pill" id="heroKey">Key C</span>
+              <span class="meta-pill capo-pill" id="heroCapo">Capo 0</span>
+              <span class="meta-pill" id="heroYear">2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <button class="circle-btn" id="favBtn" title="Toggle Favorite">♡</button>
+          <button class="circle-btn" id="editSongBtn" title="Edit this song">✏️</button>
+          <button class="circle-btn" id="printBtn" title="Print chord sheet">🖨️</button>
+          <button class="circle-btn play-action" id="heroPlayBtn" title="Start / Pause Auto-Scroll">▶</button>
+        </div>
+      </section>
+
+      <!-- Lyrics Toolbar -->
+      <div class="lyrics-toolbar">
+        <div class="lyrics-toolbar-group">
+          <span>💡 Click any chord tag above words to hear the acoustic strum!</span>
+        </div>
+        <div class="lyrics-toolbar-group">
+          <button class="view-toggle-btn" id="colToggleBtn">2 Columns</button>
+        </div>
+      </div>
+
+      <!-- Main Lyrics Card -->
+      <article class="lyrics-card" id="lyricsCard">
+        <div id="lyricsContainer"></div>
+      </article>
+
+    </main>
+
+    <!-- RIGHT SIDEBAR: Practice Tools & Chords -->
+    <aside class="right-sidebar">
+
+      <!-- Playing & Practice Tools -->
+      <section class="tool-panel">
+        <div class="panel-title">
+          <span>Song Controls</span>
+          <span class="panel-title-badge">Instant Sync</span>
+        </div>
+
+        <!-- Transpose -->
+        <div class="tool-row">
+          <span class="tool-label">Transpose</span>
+          <div class="stepper-control">
+            <button class="stepper-btn" id="trMinus" title="Transpose Down">−</button>
+            <span class="stepper-val" id="trVal">0</span>
+            <button class="stepper-btn" id="trPlus" title="Transpose Up">+</button>
+          </div>
+        </div>
+
+        <!-- Capo -->
+        <div class="tool-row">
+          <span class="tool-label">Capo Fret</span>
+          <div class="stepper-control">
+            <button class="stepper-btn" id="capoMinus">−</button>
+            <span class="stepper-val" id="capoVal">0</span>
+            <button class="stepper-btn" id="capoPlus">+</button>
+          </div>
+        </div>
+
+        <!-- Text Size -->
+        <div class="tool-row">
+          <span class="tool-label">Font Size (<span id="fontSizeVal">16px</span>)</span>
+          <input type="range" id="fontSizeInput" min="13" max="24" value="16" style="width:110px">
+        </div>
+
+        <!-- Auto Scroll Switch -->
+        <div class="tool-row">
+          <span class="tool-label">Auto Scroll</span>
+          <button class="switch-control" id="scrollSwitch" title="Toggle Auto Scroll"></button>
+        </div>
+
+        <!-- Show Chords Switch -->
+        <div class="tool-row">
+          <span class="tool-label">Show Chords</span>
+          <button class="switch-control active" id="chordsSwitch" title="Toggle Chords Visibility"></button>
+        </div>
+      </section>
+
+      <!-- Chords in this Song -->
+      <section class="tool-panel">
+        <div class="panel-title">
+          <span>Chords in Song</span>
+          <button class="btn btn-outline btn-sm" id="strumPracticeBtn" style="padding:4px 8px;" title="Strum all chords sequentially">
+            Strum All 🔊
+          </button>
+        </div>
+        <div class="chords-grid" id="chordGrid"></div>
+      </section>
+
+      <!-- Interactive Guitar Tuner Reference -->
+      <section class="tool-panel">
+        <div class="panel-title">
+          <span>Guitar Tuner Tone</span>
+          <span class="panel-title-badge">Standard E</span>
+        </div>
+        <div class="tuner-strings">
+          <button class="tuner-btn" data-note="E2">
+            <span>E</span>
+            <small>6th</small>
+          </button>
+          <button class="tuner-btn" data-note="A2">
+            <span>A</span>
+            <small>5th</small>
+          </button>
+          <button class="tuner-btn" data-note="D3">
+            <span>D</span>
+            <small>4th</small>
+          </button>
+          <button class="tuner-btn" data-note="G3">
+            <span>G</span>
+            <small>3rd</small>
+          </button>
+          <button class="tuner-btn" data-note="B3">
+            <span>B</span>
+            <small>2nd</small>
+          </button>
+          <button class="tuner-btn" data-note="E4">
+            <span>e</span>
+            <small>1st</small>
+          </button>
+        </div>
+      </section>
+
+      <!-- Practice Metronome -->
+      <section class="tool-panel">
+        <div class="panel-title">
+          <span>Metronome</span>
+          <span class="panel-title-badge"><span id="bpmVal">80</span> BPM</span>
+        </div>
+        <div class="metronome-box">
+          <div class="metronome-visual">
+            <div class="beat-dot accent" id="beatDot1"></div>
+            <div class="beat-dot" id="beatDot2"></div>
+            <div class="beat-dot" id="beatDot3"></div>
+            <div class="beat-dot" id="beatDot4"></div>
+          </div>
+          <div class="tool-row" style="padding:0">
+            <span class="tool-label" style="font-size:0.8rem">Tempo</span>
+            <input type="range" id="metronomeBpmInput" min="40" max="220" value="80" style="width:140px">
+          </div>
+          <button class="btn btn-outline btn-sm" id="metronomeToggleBtn" style="width:100%;margin-top:6px;">
+            Start Metronome
+          </button>
+        </div>
+      </section>
+
+    </aside>
+
+  </div>
+
+  <!-- FLOATING BOTTOM PRACTICE BAR -->
+  <footer class="bottom-bar">
+    <div class="bar-song-info">
+      <div class="bar-song-thumb">🎵</div>
+      <div>
+        <div class="bar-song-title" id="barTitle">Song Title</div>
+        <div class="bar-song-artist" id="barArtist">Artist Name</div>
+      </div>
+    </div>
+
+    <div class="bar-controls">
+      <button class="bar-btn" id="prevSongBtn" title="Previous Song">⏮</button>
+      <button class="bar-btn bar-btn-main" id="barPlayBtn" title="Auto-Scroll / Play">▶</button>
+      <button class="bar-btn" id="nextSongBtn" title="Next Song">⏭</button>
+    </div>
+
+    <div class="bar-speed-group">
+      <span>Scroll Speed (<span id="speedVal">3x</span>)</span>
+      <input type="range" id="scrollSpeedInput" min="1" max="10" value="3" style="width:90px">
+    </div>
+  </footer>
+
+  <!-- MODAL: Add / Edit Song -->
+  <div class="modal-overlay" id="songModal">
+    <div class="modal-dialog modal-dialog-lg">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Add New Song</h2>
+        <button class="modal-close-btn" id="closeModalX">✕</button>
+      </div>
+
+      <!-- GEMINI AI PHOTO SCANNER -->
+      <div class="ai-scan-card" id="aiScanCard">
+        <div class="ai-scan-header">
+          <div class="ai-scan-title">
+            <span style="font-size:1.15rem;">✨</span>
+            <div>
+              <b>Scan Chord Sheet Image with Gemini AI</b>
+              <div style="font-size:0.72rem;color:var(--ink-muted);">Auto-extracts Myanmar/English lyrics & chords • Discards watermarks & ads</div>
+            </div>
+            <span class="ai-badge">gemini-flash-latest</span>
+          </div>
+          <button type="button" class="btn-text-sm" id="toggleApiKeyBtn" title="Gemini API Key Settings">⚙️ Key</button>
+        </div>
+
+        <!-- Collapsible API Key settings -->
+        <div class="ai-key-settings" id="aiKeySettings" style="display:none;">
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input type="password" id="geminiApiKeyInput" class="form-input" style="flex:1;padding:6px 10px;font-size:0.8rem;" placeholder="Gemini API Key">
+            <button type="button" class="btn btn-outline btn-sm" id="saveApiKeyBtn">Save</button>
+          </div>
+          <small style="color:var(--ink-muted);font-size:0.72rem;display:block;margin-top:4px;">Default key is pre-configured and saved in your browser.</small>
+        </div>
+
+        <!-- Dropzone -->
+        <div class="ai-dropzone" id="aiDropzone">
+          <input type="file" id="chordImgInput" accept="image/*" style="display:none;">
+          
+          <div class="ai-dropzone-content" id="dropzoneContent">
+            <span style="font-size:2rem;">📸</span>
+            <div>
+              <b>Click to browse or Drag & Drop Chord Sheet Photo</b>
+              <div style="color:var(--ink-muted);font-size:0.75rem;margin-top:3px;">
+                Supports PNG, JPG, WEBP • Or Paste screenshot with <kbd>Ctrl+V</kbd> / <kbd>Cmd+V</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scanning state with animation -->
+          <div class="ai-scanning-state" id="aiScanningState" style="display:none;">
+            <div class="ai-spinner"></div>
+            <div>
+              <b style="color:var(--brand);">Gemini Flash is analyzing photo...</b>
+              <div style="color:var(--ink-muted);font-size:0.75rem;margin-top:2px;">Transcribing lyrics and aligning chords • Discarding watermarks...</div>
+            </div>
+          </div>
+
+          <!-- Preview & Success Banner -->
+          <div class="ai-scan-preview" id="aiScanPreview" style="display:none;">
+            <img id="aiThumbImg" src="" alt="Chord Sheet Preview">
+            <div style="flex:1;min-width:0;">
+              <div class="ai-success-msg">✓ Transcribed successfully!</div>
+              <div style="font-size:0.75rem;color:var(--ink-muted);" id="aiScanMeta">Song details & lyrics populated.</div>
+            </div>
+            <button type="button" class="btn btn-outline btn-sm" id="reUploadBtn">Scan Another Image</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Basic Metadata Grid -->
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label">Song Title *</label>
+          <input type="text" class="form-input" id="fTitle" placeholder="e.g. ဖြေလွှတ်ပစ်လိုက်တဲ့ကြိုး">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Artist</label>
+          <input type="text" class="form-input" id="fArtist" placeholder="e.g. စိုးလွင်လွင်">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Genre</label>
+          <input type="text" class="form-input" id="fGenre" placeholder="e.g. Myanmar Classic, Acoustic">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Original Key</label>
+          <input type="text" class="form-input" id="fKey" placeholder="e.g. G, C, Am">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Capo Fret</label>
+          <input type="number" class="form-input" id="fCapo" min="0" max="12" value="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tempo (BPM)</label>
+          <input type="number" class="form-input" id="fBpm" min="40" max="240" value="80">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Language / ဘာသာစကား</label>
+          <select class="form-input" id="fLanguage">
+            <option value="my">🇲🇲 Myanmar (မြန်မာ)</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="other">🌐 Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Release Year</label>
+          <input type="text" class="form-input" id="fYear" placeholder="e.g. 2024">
+        </div>
+      </div>
+
+      <!-- Lyrics Editor Header with Mode Switcher -->
+      <div class="editor-mode-bar">
+        <div class="editor-tabs">
+          <button type="button" class="editor-tab-btn active" id="tabTextMode">
+            <span>📝 Text Editor</span>
+          </button>
+          <button type="button" class="editor-tab-btn" id="tabVisualMode">
+            <span>🎯 Visual Chord Aligner (Chord နေရာချိန်ညှိရန်)</span>
+          </button>
+        </div>
+        <span style="font-size:0.75rem;color:var(--ink-muted);" id="alignerTip">
+          Chord နေရာလွဲနေပါက ◂ သို့မဟုတ် ▸ နှိပ်ပြီး နေရာရွေ့နိုင်ပါသည်
+        </span>
+      </div>
+
+      <!-- Tab 1: Text Mode -->
+      <div id="textModeContainer">
+        <div class="form-help-box">
+          <b>📝 How to write lyrics with chords:</b> Put chords in brackets right before the syllable, e.g. <code>[G]ကိုယ် ရေးခဲ့သော [Em]သီချင်းတွေ</code>.<br>
+          Sections can be marked like <code>Intro:</code>, <code>Verse 1:</code>, <code>Chorus:</code>, <code>Solo:</code>, or <code>Ending:</code>.
+        </div>
+        <div class="form-group">
+          <textarea class="form-textarea" id="fLyrics" placeholder="Intro:&#10;[G]  [Em]  [Am]  [D]&#10;&#10;Verse 1:&#10;[G]ကိုယ် ရေးခဲ့သော [Em]သီချင်းတွေ..."></textarea>
+        </div>
+      </div>
+
+      <!-- Tab 2: Visual Chord Position Adjuster -->
+      <div id="visualModeContainer" style="display:none;">
+        <div class="aligner-help-banner">
+          <b>🎯 Chord နေရာချိန်ညှိရန် လမ်းညွှန်:</b><br>
+          • <b>◂ / ▸ ခလုတ်များ:</b> Chord တစ်ခုချင်းစီကို ဘယ်/ညာ စာလုံးတစ်လုံးချင်း အလွယ်တကူ ရွှေ့နိုင်ပါသည်။<br>
+          • <b>စာသားကို Click နှိပ်ခြင်း:</b> မည်သည့်စာလုံးပေါ်မဆို Click နှိပ်လိုက်ပါက ရွေးထားသော Chord ထိုနေရာသို့ ချက်ချင်းပြောင်းရွှေ့သွားပါမည်။<br>
+          • <b>✕ ခလုတ်:</b> မလိုချင်သော Chord ကို ဖျက်နိုင်ပါသည်။
+        </div>
+        <div class="visual-aligner-board" id="visualAlignerBoard"></div>
+      </div>
+
+      <div class="modal-actions" style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+        <div>
+          <button type="button" class="btn btn-danger btn-sm" id="modalDeleteSongBtn" style="display:none;">
+            🗑 Delete This Song
+          </button>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button type="button" class="btn btn-outline" id="cancelModalBtn">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveSongModalBtn">Save Song</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Firebase Cloud Database Config -->
+  <div class="modal-overlay" id="firebaseModal">
+    <div class="modal-dialog" style="max-width:560px;">
+      <div class="modal-header">
+        <h2 class="modal-title">☁️ Firebase Cloud Database</h2>
+        <button class="modal-close-btn" id="closeFirebaseModalX">✕</button>
+      </div>
+      <p style="font-size:0.84rem;color:var(--ink-secondary);line-height:1.5;margin-bottom:14px;">
+        Google Firebase Firestore နှင့် ချိတ်ဆက်ပြီး သီချင်းဒေတာများကို Cloud ပေါ်တွင် အမြဲသိမ်းဆည်းထားနိုင်ပါသည်။ Browser data ရှင်းလိုက်သော်လည်း သီချင်းများ မပျက်တော့ဘဲ အခြား Device များမှလည်း ကြည့်ရှုနိုင်မည်ဖြစ်ပါသည်။
+      </p>
+
+      <div class="form-group">
+        <label class="form-label">Firebase Config (JSON or JavaScript Object)</label>
+        <textarea class="form-textarea" id="firebaseConfigInput" style="min-height:130px;font-size:0.8rem;font-family:var(--font-mono);" placeholder='{&#10;  "apiKey": "AIzaSy...",&#10;  "authDomain": "your-app.firebaseapp.com",&#10;  "projectId": "your-project-id",&#10;  "storageBucket": "your-app.appspot.com",&#10;  "messagingSenderId": "...",&#10;  "appId": "..."&#10;}'></textarea>
+      </div>
+
+      <div style="font-size:0.75rem;color:var(--ink-muted);background:var(--bg-subtle);padding:10px 12px;border-radius:var(--radius-md);margin-bottom:16px;line-height:1.4;">
+        💡 <b>Firebase Config ရယူနည်း:</b> <a href="https://console.firebase.google.com" target="_blank" style="color:var(--brand);text-decoration:underline;">Firebase Console</a> &gt; Project Settings &gt; General &gt; Your apps &gt; Web config ကို copy ကူးထည့်ပါ။ Firestore Database ဖွင့်ထားပေးရန် လိုအပ်ပါသည်။
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:space-between;align-items:center;">
+        <div>
+          <button type="button" class="btn btn-danger btn-sm" id="disconnectFirebaseBtn" style="display:none;">Disconnect Cloud</button>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button type="button" class="btn btn-outline" id="cancelFirebaseModalBtn">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveFirebaseConfigBtn">Connect &amp; Sync Songs</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Compat SDK (Loaded for persistent Cloud sync) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <!-- Scripts -->
+  <script>
+/**
+ * Tashido Guitar Chord - Comprehensive Guitar Chord Database
+ * Format: frets array [string6(low E), string5(A), string4(D), string3(G), string2(B), string1(high E)]
+ * -1 = mute (x), 0 = open (o), 1..n = fret number
+ * baseFret: starting fret for higher positions (1 is standard open position)
+ * fingers: suggested finger [T/1/2/3/4] for each string (-1 or 0 is null)
+ * barres: array of fret numbers where index finger bars across strings
+ */
+
+const CHORD_DATABASE = {
+  // Major Chords
+  "C": { frets: [-1, 3, 2, 0, 1, 0], baseFret: 1, fingers: [0, 3, 2, 0, 1, 0] },
+  "C#": { frets: [-1, 4, 3, 1, 2, 1], baseFret: 1, fingers: [0, 4, 3, 1, 2, 1], barres: [1] },
+  "Db": { frets: [-1, 4, 3, 1, 2, 1], baseFret: 1, fingers: [0, 4, 3, 1, 2, 1], barres: [1] },
+  "D": { frets: [-1, -1, 0, 2, 3, 2], baseFret: 1, fingers: [0, 0, 0, 1, 3, 2] },
+  "D#": { frets: [-1, -1, 1, 3, 4, 3], baseFret: 1, fingers: [0, 0, 1, 2, 4, 3] },
+  "Eb": { frets: [-1, -1, 1, 3, 4, 3], baseFret: 1, fingers: [0, 0, 1, 2, 4, 3] },
+  "E": { frets: [0, 2, 2, 1, 0, 0], baseFret: 1, fingers: [0, 2, 3, 1, 0, 0] },
+  "F": { frets: [1, 3, 3, 2, 1, 1], baseFret: 1, fingers: [1, 3, 4, 2, 1, 1], barres: [1] },
+  "F#": { frets: [2, 4, 4, 3, 2, 2], baseFret: 2, fingers: [1, 3, 4, 2, 1, 1], barres: [2] },
+  "Gb": { frets: [2, 4, 4, 3, 2, 2], baseFret: 2, fingers: [1, 3, 4, 2, 1, 1], barres: [2] },
+  "G": { frets: [3, 2, 0, 0, 0, 3], baseFret: 1, fingers: [2, 1, 0, 0, 0, 3] },
+  "G#": { frets: [4, 6, 6, 5, 4, 4], baseFret: 4, fingers: [1, 3, 4, 2, 1, 1], barres: [4] },
+  "Ab": { frets: [4, 6, 6, 5, 4, 4], baseFret: 4, fingers: [1, 3, 4, 2, 1, 1], barres: [4] },
+  "A": { frets: [-1, 0, 2, 2, 2, 0], baseFret: 1, fingers: [0, 0, 1, 2, 3, 0] },
+  "A#": { frets: [-1, 1, 3, 3, 3, 1], baseFret: 1, fingers: [0, 1, 2, 3, 4, 1], barres: [1] },
+  "Bb": { frets: [-1, 1, 3, 3, 3, 1], baseFret: 1, fingers: [0, 1, 2, 3, 4, 1], barres: [1] },
+  "B": { frets: [-1, 2, 4, 4, 4, 2], baseFret: 2, fingers: [0, 1, 2, 3, 4, 1], barres: [2] },
+
+  // Minor Chords
+  "Cm": { frets: [-1, 3, 5, 5, 4, 3], baseFret: 3, fingers: [0, 1, 3, 4, 2, 1], barres: [3] },
+  "C#m": { frets: [-1, 4, 6, 6, 5, 4], baseFret: 4, fingers: [0, 1, 3, 4, 2, 1], barres: [4] },
+  "Dbm": { frets: [-1, 4, 6, 6, 5, 4], baseFret: 4, fingers: [0, 1, 3, 4, 2, 1], barres: [4] },
+  "Dm": { frets: [-1, -1, 0, 2, 3, 1], baseFret: 1, fingers: [0, 0, 0, 2, 3, 1] },
+  "D#m": { frets: [-1, -1, 1, 3, 4, 2], baseFret: 1, fingers: [0, 0, 1, 3, 4, 2] },
+  "Ebm": { frets: [-1, -1, 1, 3, 4, 2], baseFret: 1, fingers: [0, 0, 1, 3, 4, 2] },
+  "Em": { frets: [0, 2, 2, 0, 0, 0], baseFret: 1, fingers: [0, 2, 3, 0, 0, 0] },
+  "Fm": { frets: [1, 3, 3, 1, 1, 1], baseFret: 1, fingers: [1, 3, 4, 1, 1, 1], barres: [1] },
+  "F#m": { frets: [2, 4, 4, 2, 2, 2], baseFret: 2, fingers: [1, 3, 4, 1, 1, 1], barres: [2] },
+  "Gbm": { frets: [2, 4, 4, 2, 2, 2], baseFret: 2, fingers: [1, 3, 4, 1, 1, 1], barres: [2] },
+  "Gm": { frets: [3, 5, 5, 3, 3, 3], baseFret: 3, fingers: [1, 3, 4, 1, 1, 1], barres: [3] },
+  "G#m": { frets: [4, 6, 6, 4, 4, 4], baseFret: 4, fingers: [1, 3, 4, 1, 1, 1], barres: [4] },
+  "Abm": { frets: [4, 6, 6, 4, 4, 4], baseFret: 4, fingers: [1, 3, 4, 1, 1, 1], barres: [4] },
+  "Am": { frets: [-1, 0, 2, 2, 1, 0], baseFret: 1, fingers: [0, 0, 2, 3, 1, 0] },
+  "A#m": { frets: [-1, 1, 3, 3, 2, 1], baseFret: 1, fingers: [0, 1, 3, 4, 2, 1], barres: [1] },
+  "Bbm": { frets: [-1, 1, 3, 3, 2, 1], baseFret: 1, fingers: [0, 1, 3, 4, 2, 1], barres: [1] },
+  "Bm": { frets: [-1, 2, 4, 4, 3, 2], baseFret: 2, fingers: [0, 1, 3, 4, 2, 1], barres: [2] },
+
+  // Dominant 7th Chords
+  "C7": { frets: [-1, 3, 2, 3, 1, 0], baseFret: 1, fingers: [0, 3, 2, 4, 1, 0] },
+  "D7": { frets: [-1, -1, 0, 2, 1, 2], baseFret: 1, fingers: [0, 0, 0, 2, 1, 3] },
+  "E7": { frets: [0, 2, 0, 1, 0, 0], baseFret: 1, fingers: [0, 2, 0, 1, 0, 0] },
+  "F7": { frets: [1, 3, 1, 2, 1, 1], baseFret: 1, fingers: [1, 3, 1, 2, 1, 1], barres: [1] },
+  "F#7": { frets: [2, 4, 2, 3, 2, 2], baseFret: 2, fingers: [1, 3, 1, 2, 1, 1], barres: [2] },
+  "G7": { frets: [3, 2, 0, 0, 0, 1], baseFret: 1, fingers: [3, 2, 0, 0, 0, 1] },
+  "A7": { frets: [-1, 0, 2, 0, 2, 0], baseFret: 1, fingers: [0, 0, 2, 0, 3, 0] },
+  "B7": { frets: [-1, 2, 1, 2, 0, 2], baseFret: 1, fingers: [0, 2, 1, 3, 0, 4] },
+  "Bb7": { frets: [-1, 1, 3, 1, 3, 1], baseFret: 1, fingers: [0, 1, 3, 1, 4, 1], barres: [1] },
+
+  // Minor 7th Chords
+  "Cm7": { frets: [-1, 3, 5, 3, 4, 3], baseFret: 3, fingers: [0, 1, 3, 1, 2, 1], barres: [3] },
+  "Dm7": { frets: [-1, -1, 0, 2, 1, 1], baseFret: 1, fingers: [0, 0, 0, 2, 1, 1], barres: [1] },
+  "Em7": { frets: [0, 2, 0, 0, 0, 0], baseFret: 1, fingers: [0, 2, 0, 0, 0, 0] },
+  "F#m7": { frets: [2, 4, 2, 2, 2, 2], baseFret: 2, fingers: [1, 3, 1, 1, 1, 1], barres: [2] },
+  "Gm7": { frets: [3, 5, 3, 3, 3, 3], baseFret: 3, fingers: [1, 3, 1, 1, 1, 1], barres: [3] },
+  "Am7": { frets: [-1, 0, 2, 0, 1, 0], baseFret: 1, fingers: [0, 0, 2, 0, 1, 0] },
+  "Bm7": { frets: [-1, 2, 4, 2, 3, 2], baseFret: 2, fingers: [0, 1, 3, 1, 2, 1], barres: [2] },
+
+  // Major 7th Chords
+  "Cmaj7": { frets: [-1, 3, 2, 0, 0, 0], baseFret: 1, fingers: [0, 3, 2, 0, 0, 0] },
+  "Dmaj7": { frets: [-1, -1, 0, 2, 2, 2], baseFret: 1, fingers: [0, 0, 0, 1, 2, 3] },
+  "Emaj7": { frets: [0, 2, 1, 1, 0, 0], baseFret: 1, fingers: [0, 3, 1, 2, 0, 0] },
+  "Fmaj7": { frets: [-1, -1, 3, 2, 1, 0], baseFret: 1, fingers: [0, 0, 3, 2, 1, 0] },
+  "Gmaj7": { frets: [3, 2, 0, 0, 0, 2], baseFret: 1, fingers: [3, 2, 0, 0, 0, 1] },
+  "Amaj7": { frets: [-1, 0, 2, 1, 2, 0], baseFret: 1, fingers: [0, 0, 2, 1, 3, 0] },
+  "Bmaj7": { frets: [-1, 2, 4, 3, 4, 2], baseFret: 2, fingers: [0, 1, 3, 2, 4, 1], barres: [2] },
+
+  // Suspended & Add Chords
+  "Csus4": { frets: [-1, 3, 3, 0, 1, 1], baseFret: 1, fingers: [0, 3, 4, 0, 1, 1], barres: [1] },
+  "Dsus4": { frets: [-1, -1, 0, 2, 3, 3], baseFret: 1, fingers: [0, 0, 0, 1, 3, 4] },
+  "Dsus2": { frets: [-1, -1, 0, 2, 3, 0], baseFret: 1, fingers: [0, 0, 0, 1, 3, 0] },
+  "Esus4": { frets: [0, 2, 2, 2, 0, 0], baseFret: 1, fingers: [0, 2, 3, 4, 0, 0] },
+  "Gsus4": { frets: [3, 3, 0, 0, 1, 3], baseFret: 1, fingers: [2, 3, 0, 0, 1, 4] },
+  "Asus2": { frets: [-1, 0, 2, 2, 0, 0], baseFret: 1, fingers: [0, 0, 1, 2, 0, 0] },
+  "Asus4": { frets: [-1, 0, 2, 2, 3, 0], baseFret: 1, fingers: [0, 0, 1, 2, 3, 0] },
+  "Cadd9": { frets: [-1, 3, 2, 0, 3, 3], baseFret: 1, fingers: [0, 2, 1, 0, 3, 4] },
+  "Gadd9": { frets: [3, 2, 0, 2, 0, 3], baseFret: 1, fingers: [2, 1, 0, 3, 0, 4] },
+
+  // Slash / Inverted Chords
+  "G/B": { frets: [-1, 2, 0, 0, 3, 3], baseFret: 1, fingers: [0, 1, 0, 0, 3, 4] },
+  "C/E": { frets: [0, 3, 2, 0, 1, 0], baseFret: 1, fingers: [0, 3, 2, 0, 1, 0] },
+  "D/F#": { frets: [2, 0, 0, 2, 3, 2], baseFret: 1, fingers: [1, 0, 0, 2, 4, 3] },
+  "F/A": { frets: [-1, 0, 3, 2, 1, 1], baseFret: 1, fingers: [0, 0, 3, 2, 1, 1] },
+  "Am/G": { frets: [3, 0, 2, 2, 1, 0], baseFret: 1, fingers: [4, 0, 2, 3, 1, 0] }
+};
+
+// Open string MIDI pitches (Standard tuning: E2, A2, D3, G3, B3, E4)
+const STANDARD_TUNING_MIDI = [40, 45, 50, 55, 59, 64];
+
+/**
+ * Calculates MIDI pitch numbers for a given chord frets array
+ */
+function getChordMidiPitches(chordName) {
+  const data = CHORD_DATABASE[chordName];
+  if (!data) return [48, 52, 55, 60]; // default C triad
+  const pitches = [];
+  data.frets.forEach((fret, stringIdx) => {
+    if (fret >= 0) {
+      pitches.push(STANDARD_TUNING_MIDI[stringIdx] + fret);
+    }
+  });
+  return pitches;
+}
+
+/**
+ * Generate an SVG diagram for any chord
+ */
+function renderChordSVG(name, options = {}) {
+  const data = CHORD_DATABASE[name];
+  const width = options.width || 120;
+  const height = options.height || 145;
+
+  if (!data) {
+    return `
+      <svg class="chord-svg" width="${width}" height="${height}" viewBox="0 0 120 145">
+        <text x="60" y="24" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">${escapeXml(name)}</text>
+        <text x="60" y="80" text-anchor="middle" font-size="11" fill="#94a3b8">No diagram</text>
+      </svg>
+    `;
+  }
+
+  const { frets, baseFret = 1 } = data;
+  const numFrets = 4;
+  const numStrings = 6;
+  const startX = 22;
+  const startY = 40;
+  const stringDist = 15;
+  const fretDist = 20;
+  const endX = startX + (numStrings - 1) * stringDist;
+  const endY = startY + numFrets * fretDist;
+
+  let svg = `<svg class="chord-svg" width="${width}" height="${height}" viewBox="0 0 120 145">`;
+  
+  // Chord Title
+  svg += `<text x="60" y="22" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">${escapeXml(name)}</text>`;
+
+  // Base Fret indicator (e.g. 3fr)
+  if (baseFret > 1) {
+    svg += `<text x="${startX - 6}" y="${startY + fretDist * 0.7}" text-anchor="end" font-size="10" font-weight="600" fill="#64748b">${baseFret}fr</text>`;
+  }
+
+  // Nut or top line
+  if (baseFret === 1) {
+    // Thick nut line
+    svg += `<line x1="${startX - 1}" y1="${startY}" x2="${endX + 1}" y2="${startY}" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>`;
+  } else {
+    // Normal line
+    svg += `<line x1="${startX}" y1="${startY}" x2="${endX}" y2="${startY}" stroke="#94a3b8" stroke-width="1.5"/>`;
+  }
+
+  // Fret horizontal lines
+  for (let f = 1; f <= numFrets; f++) {
+    const y = startY + f * fretDist;
+    svg += `<line x1="${startX}" y1="${y}" x2="${endX}" y2="${y}" stroke="#cbd5e1" stroke-width="1.2"/>`;
+  }
+
+  // String vertical lines
+  for (let s = 0; s < numStrings; s++) {
+    const x = startX + s * stringDist;
+    const strokeWidth = s < 3 ? 1.5 : 1.1; // lower strings slightly thicker
+    svg += `<line x1="${x}" y1="${startY}" x2="${x}" y2="${endY}" stroke="#64748b" stroke-width="${strokeWidth}"/>`;
+  }
+
+  // Top indicators: 'x' or 'o'
+  frets.forEach((fret, s) => {
+    const x = startX + s * stringDist;
+    if (fret === -1) {
+      // Mute (X)
+      svg += `<text x="${x}" y="${startY - 8}" text-anchor="middle" font-size="11" font-weight="700" fill="#94a3b8">×</text>`;
+    } else if (fret === 0) {
+      // Open (O)
+      svg += `<circle cx="${x}" cy="${startY - 10}" r="3.5" fill="none" stroke="#2563eb" stroke-width="1.5"/>`;
+    }
+  });
+
+  // Finger dots
+  frets.forEach((fret, s) => {
+    if (fret > 0) {
+      const relFret = fret - (baseFret - 1);
+      if (relFret >= 1 && relFret <= numFrets) {
+        const x = startX + s * stringDist;
+        const y = startY + (relFret - 0.5) * fretDist;
+        // Accent dot with subtle shadow
+        svg += `<circle cx="${x}" cy="${y}" r="5.5" fill="#2563eb"/>`;
+      }
+    }
+  });
+
+  svg += `</svg>`;
+  return svg;
+}
+
+function escapeXml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[c]));
+}
+
+
+/**
+ * Tashido Guitar Chord - Application Logic
+ */
+
+// Initial Sample Songs
+const DEFAULT_SONGS = [
+  {
+    id: "s-hpyay-lhwut",
+    title: "ဖြေလွှတ်ပစ်လိုက်တဲ့ကြိုး",
+    artist: "စိုးလွင်လွင်",
+    genre: "Myanmar Classic",
+    language: "my",
+    key: "G",
+    capo: 0,
+    bpm: 78,
+    year: "1980s",
+    fav: true,
+    createdAt: 1700000000,
+    lyrics: `Intro:
+[G] [Em] [Am] [D]
+[G] [Em] [Am] [D]
+
+Verse 1:
+[G]ကိုယ် ရေးခဲ့သော [Em]သီချင်းတွေ ကြုံတွေ့ခဲ့သော [Am]အဖြစ်တွေ [D]
+[Bm]ကိုယ် လျှောက်ခဲ့သော [E]လမ်းတွေ ကိုယ် ချစ်ခဲ့သော [Am]မိန်းကလေးတွေ [D]
+[G]ပျံသန်းနေတဲ့ငှက်တွေ [Em] ငုံဖူးနေသော [Am]ပန်းတွေ [D] အစဉ်စီးနေတဲ့ [Bm]မြစ်တွေ [Em]
+[Am]တိမ်တိုက်အုပ်ထဲက မှိတ်တုတ် ကြယ်ကလေးတွေ [G] [Em] [E7]
+
+Verse 2:
+[Am]မှောက်လဲတဲ့ အရက်ခွက်တွေ [D] ကုန်ဆုံးတဲ့ [Bm]သက္ကရာဇ်တွေ [E] ပြိုသွားတဲ့ [Am]
+အိပ်မက်တွေကို [D] နှုတ်ဆက်နေ ဖြတ်ခနဲ [G]လု [Em] ဒုက္ခတွေ [Am]ဝင်သက်လဲ [D] [Bm]
+ထွက်သက်လဲ [E] ကိုယ် လွှင့်ပစ်ခဲ့တဲ့ [Am] ဆေးလိပ်တို [D] လေးတွေ [G] [D]
+
+Verse 3:
+[G]ကိုယ် ရေးခဲ့သော [Em]သီချင်းတွေ ကိုယ်ပြောခဲ့သော [Am]စကားတွေ [D]
+[Bm]ကိုယ် လုပ်ခဲ့သော [E]အလုပ်တွေ ကိုယ်ရှိခဲ့တုန်းက [Am]အကြောင်းတွေ [D]
+[G]သံယောဇဉ် အတ္တတွေ [Em] ကြံဆ လှုပ်ရှားမှု[Am]တွေ [D] အာယူအာသာ [Bm]ဆန္ဒတွေ [Em]
+[Am]ဖြေလွှတ်ပစ်လိုက်တဲ့ [D] ကိုယ့်ဘဝရဲ့ကြိုးတွေ [G] [D] [G] [E7]
+
+Solo:
+[G] [Em] [Am] [D]
+[G] [Em] [Am] [D]
+[Bm] [Em] [Am] [D]
+[G] [Em] [Am] [D]
+[G] [Em] [Am] [D]
+[G] [Em] [Am] [D]
+
+Outro:
+[Am]တိမ်တိုက်အုပ်ထဲက မှိတ်တုတ် ကြယ်ကလေးတွေ [G] [Em]
+[Am]ကိုယ် လွှင့်ပစ်ခဲ့တဲ့ ဆေးလိပ်တို [D] လေးတွေ [G]
+
+Ending:
+[G] [Em] [Am] [D]
+[Bm] [E] [Am] [D]`
+  },
+  {
+    id: "s-morning-light",
+    title: "Morning Light",
+    artist: "Original Acoustic",
+    genre: "Acoustic",
+    language: "en",
+    key: "C",
+    capo: 0,
+    bpm: 85,
+    year: "2024",
+    fav: true,
+    createdAt: 1700000001,
+    lyrics: `Intro:
+[C]  [G]  [Am]  [F]
+
+Verse 1:
+[C]Morning light is [G]falling on my [Am]window
+[F]Soft and golden, [C]quiet and [G]slow
+[C]All the night has [G]finally let me [Am]go now
+[F]And there's a [C]peace I [G]used to [C]know
+
+Chorus:
+[F]So lift your [G]eyes to the [C]morning [Am]light
+[F]Everything is [G]gonna be al[C]right
+[F]Hold this [G]moment, [Em]let it [Am]shine so bright
+[F]In the [G]morning [C]light
+
+Verse 2:
+[C]Coffee steam and [G]footsteps in the [Am]hallway
+[F]A brand new [C]story starts to[G]day
+[Em]Every heart can [Am]learn to find its [F]own way
+[Dm]When the [C]darkness [G]fades a[C]way
+
+Outro:
+[F]  [G]  [C]`
+  },
+  {
+    id: "s-stand-by-me",
+    title: "Stand By Me",
+    artist: "Ben E. King",
+    genre: "Classic",
+    language: "en",
+    key: "A",
+    capo: 0,
+    bpm: 118,
+    year: "1961",
+    fav: true,
+    createdAt: 1700000002,
+    lyrics: `Intro:
+[A]  [F#m]  [D]  [E]  [A]
+
+Verse 1:
+When the [A]night has come, [F#m]and the land is dark
+And the [D]moon is the [E]only light we'll [A]see
+No, I [A]won't be afraid, no, I [F#m]won't be afraid
+Just as [D]long as you [E]stand, stand by [A]me
+
+Chorus:
+So darling, darling, [A]stand by me, oh [F#m]stand by me
+Oh [D]stand, [E]stand by me, [A]stand by me
+
+Verse 2:
+If the [A]sky that we look upon [F#m]should tumble and fall
+Or the [D]mountain should [E]crumble to the [A]sea
+I won't [A]cry, I won't cry, no, I [F#m]won't shed a tear
+Just as [D]long as you [E]stand, stand by [A]me
+
+Chorus:
+And darling, darling, [A]stand by me, oh [F#m]stand by me
+Oh [D]stand, [E]stand by me, [A]stand by me`
+  },
+  {
+    id: "s-let-it-be",
+    title: "Let It Be",
+    artist: "The Beatles",
+    genre: "Classic Rock",
+    language: "en",
+    key: "C",
+    capo: 0,
+    bpm: 72,
+    year: "1970",
+    fav: false,
+    createdAt: 1700000003,
+    lyrics: `Intro:
+[C]  [G]  [Am]  [F]
+[C]  [G]  [F]   [C]
+
+Verse 1:
+When I [C]find myself in [G]times of trouble, [Am]Mother Mary [F]comes to me
+[C]Speaking words of [G]wisdom, let it [F]be [C]
+And [C]in my hour of [G]darkness she is [Am]standing right in [F]front of me
+[C]Speaking words of [G]wisdom, let it [F]be [C]
+
+Chorus:
+Let it [Am]be, let it [G]be, let it [F]be, let it [C]be
+[C]Whisper words of [G]wisdom, let it [F]be [C]
+
+Verse 2:
+And [C]when the broken [G]hearted people [Am]living in the [F]world agree
+[C]There will be an [G]answer, let it [F]be [C]
+For [C]though they may be [G]parted there is [Am]still a chance that [F]they will see
+[C]There will be an [G]answer, let it [F]be [C]`
+  },
+  {
+    id: "s-alwan-pyay",
+    title: "အလွမ်းပြေဆုတောင်း (Wish)",
+    artist: "Myanmar Acoustic Sample",
+    genre: "Acoustic Pop",
+    language: "my",
+    key: "C",
+    capo: 0,
+    bpm: 76,
+    year: "2023",
+    fav: true,
+    createdAt: 1700000004,
+    lyrics: `Intro:
+[C]  [Em]  [Am]  [F]  [G]
+
+Verse 1:
+[C]ညနေခင်းရဲ့ [Em]လေပြည်အေးလေးထဲမှာ
+[Am]သတိရမိတဲ့ [Em]အတိတ်ကပုံရိပ်များ
+[F]ဘယ်ဆီကို [G]ရောက်နေပါစေ [Em]မင်းလေး [Am]ပျော်နေဖို့
+[Dm]အဝေးကနေ [G]ဆုတောင်းပေးနေ[C]တယ်
+
+Chorus:
+[F]ရင်ထဲက [G]မေတ္တာတွေ [Em]မင်းအတွက် [Am]အမြဲတမ်းပါ
+[F]ဘယ်တော့မှ [G]မပြောင်းလဲတဲ့ [C]အချစ်များနဲ့
+[F]အလွမ်းပြေ [G]သီချင်းလေး [Em]ဆိုရင်းနဲ့ [Am]မျှော်နေမယ်
+[Dm]တစ်နေ့နေ့တော့ [G]ပြန်ဆုံကြဦး[C]မယ်`
+  },
+  {
+    id: "s-perfect",
+    title: "Perfect",
+    artist: "Ed Sheeran",
+    genre: "Pop",
+    language: "en",
+    key: "G",
+    capo: 1,
+    bpm: 63,
+    year: "2017",
+    fav: false,
+    createdAt: 1700000005,
+    lyrics: `Intro:
+[G]
+
+Verse 1:
+I found a [G]love for [Em]me
+Darling, just [C]dive right in and follow my [D]lead
+Well, I found a [G]girl, beautiful and [Em]sweet
+Oh, I never [C]knew you were the someone waiting for [D]me
+
+Pre-Chorus:
+'Cause we were just kids when we [G]fell in love
+Not knowing [Em]what it was
+I will not [C]give you up this [G]ti[D]me
+But darling, just [G]kiss me slow, your heart is [Em]all I own
+And in your [C]eyes, you're holding [D]mine
+
+Chorus:
+Baby, [Em]I'm [C]dancing in the [G]dark with [D]you between my [Em]arms
+[C]Barefoot on the [G]grass, [D]listening to our [Em]favorite song
+When you [C]said you looked a [G]mess, I whispered [D]underneath my [Em]breath
+But you [C]heard it, darling, [G]you look [D]perfect to[G]night`
+  }
+];
+
+// Local Storage Key
+const STORAGE_KEY = "tashido_guitar_chordbook_v2";
+
+// State
+let songs = [];
+let currentSongId = null;
+let currentView = "all"; // 'all', 'fav', 'recent'
+let transposeSteps = 0;
+let isAutoScrolling = false;
+let scrollIntervalId = null;
+let scrollSpeed = 3;
+let editingSongId = null;
+let showChords = true;
+let isTwoColumns = false;
+
+// Audio Context (Web Audio API)
+let audioCtx = null;
+let isMetronomePlaying = false;
+let metronomeTimer = null;
+let metronomeBeat = 0;
+let metronomeBpm = 80;
+let activeTunerOsc = null;
+
+// Musical constants
+const CHROMATIC_SCALE = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const FLAT_TO_SHARP = { "Db": "C#", "Eb": "D#", "Gb": "F#", "Ab": "G#", "Bb": "A#" };
+
+// DOM Helper
+const $ = id => document.getElementById(id);
+
+/**
+ * Initialize Web Audio Context on user gesture
+ */
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContextClass();
+  }
+  if (audioCtx.state === "suspended") {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+/**
+ * Transpose a single chord string (e.g. "Am", "F#m7", "G/B", "Cadd9")
+ */
+function transposeChord(chord, steps) {
+  if (!steps || !chord) return chord;
+
+  // Handle slash chords (e.g., G/B -> transpose G and B separately)
+  if (chord.includes("/")) {
+    const parts = chord.split("/");
+    return parts.map(p => transposeChord(p, steps)).join("/");
+  }
+
+  const match = chord.match(/^([A-G](?:#|b)?)(.*)$/);
+  if (!match) return chord;
+
+  let root = match[1];
+  const suffix = match[2] || "";
+
+  // Normalize flat to sharp for chromatic lookup
+  if (FLAT_TO_SHARP[root]) {
+    root = FLAT_TO_SHARP[root];
+  }
+
+  const idx = CHROMATIC_SCALE.indexOf(root);
+  if (idx === -1) return chord;
+
+  const newIdx = (idx + steps % 12 + 12) % 12;
+  return CHROMATIC_SCALE[newIdx] + suffix;
+}
+
+/**
+ * Acoustic Pluck Sound Generator using Web Audio API
+ */
+function playAcousticPluck(ctx, freq, startTime, duration = 1.8, velocity = 0.8) {
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+
+  // Warm acoustic guitar harmonic profile (triangle wave + resonant cutoff)
+  osc.type = "triangle";
+  osc.frequency.setValueAtTime(freq, startTime);
+
+  filter.type = "lowpass";
+  filter.frequency.setValueAtTime(freq * 4.2, startTime);
+  filter.frequency.exponentialRampToValueAtTime(freq * 1.1, startTime + duration);
+  filter.Q.value = 2.0;
+
+  gain.gain.setValueAtTime(velocity * 0.35, startTime);
+  gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start(startTime);
+  osc.stop(startTime + duration);
+}
+
+/**
+ * Play a full guitar chord strum
+ */
+function playChordAudio(chordName, downstrum = true) {
+  try {
+    const ctx = getAudioContext();
+    const pitches = getChordMidiPitches(chordName);
+    const now = ctx.currentTime;
+    const strumDuration = 0.035; // 35ms between string plucks for natural strum
+
+    const orderedPitches = downstrum ? pitches : [...pitches].reverse();
+
+    orderedPitches.forEach((midiNote, idx) => {
+      const freq = 440 * Math.pow(2, (midiNote - 69) / 12);
+      const stringTime = now + idx * strumDuration;
+      playAcousticPluck(ctx, freq, stringTime, 2.0, 0.7);
+    });
+  } catch (err) {
+    console.error("Audio playback error:", err);
+  }
+}
+
+/**
+ * Play single pitch for Guitar Tuner
+ */
+function playTunerTone(freq, duration = 2.5) {
+  const ctx = getAudioContext();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(freq, ctx.currentTime);
+
+  gain.gain.setValueAtTime(0.3, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start();
+  osc.stop(ctx.currentTime + duration);
+}
+
+/**
+ * Metronome Sound Click
+ */
+function playMetronomeClick(isAccent = false) {
+  try {
+    const ctx = getAudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(isAccent ? 1200 : 800, ctx.currentTime);
+
+    gain.gain.setValueAtTime(isAccent ? 0.4 : 0.2, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.05);
+  } catch (e) {
+    // audio not initialized yet
+  }
+}
+
+/**
+ * Toggle Metronome
+ */
+function toggleMetronome() {
+  isMetronomePlaying = !isMetronomePlaying;
+  const btn = $("metronomeToggleBtn");
+
+  if (isMetronomePlaying) {
+    getAudioContext();
+    btn.textContent = "Stop Metronome";
+    btn.classList.add("btn-danger");
+    metronomeBeat = 0;
+    const intervalMs = (60 / metronomeBpm) * 1000;
+
+    metronomeTimer = setInterval(() => {
+      metronomeBeat = (metronomeBeat % 4) + 1;
+      playMetronomeClick(metronomeBeat === 1);
+
+      // Update visual dots
+      for (let i = 1; i <= 4; i++) {
+        const dot = $("beatDot" + i);
+        if (dot) {
+          if (i === metronomeBeat) {
+            dot.classList.add("active");
+          } else {
+            dot.classList.remove("active");
+          }
+        }
+      }
+    }, intervalMs);
+  } else {
+    clearInterval(metronomeTimer);
+    btn.textContent = "Start Metronome";
+    btn.classList.remove("btn-danger");
+    for (let i = 1; i <= 4; i++) {
+      const dot = $("beatDot" + i);
+      if (dot) dot.classList.remove("active");
+    }
+  }
+}
+
+/**
+ * Load Songs from LocalStorage
+ */
+function loadSongs() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      songs = JSON.parse(raw);
+    }
+  } catch (err) {
+    console.warn("Could not read songs from localStorage:", err);
+  }
+
+  if (!Array.isArray(songs) || songs.length === 0) {
+    songs = [...DEFAULT_SONGS];
+    saveSongs();
+  } else {
+    // If user has existing songs from previous session, ensure "ဖြေလွှတ်ပစ်လိုက်တဲ့ကြိုး" is added
+    if (!songs.some(s => s.id === "s-hpyay-lhwut")) {
+      songs.unshift(DEFAULT_SONGS[0]);
+      saveSongs();
+    }
+  }
+
+  currentSongId = songs[0].id;
+}
+
+/**
+ * Save Songs to LocalStorage
+ */
+function saveSongs() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(songs));
+}
+
+/**
+ * Get current selected song
+ */
+function getCurrentSong() {
+  return songs.find(s => s.id === currentSongId) || songs[0];
+}
+
+/**
+ * Extract all unique chord tokens from song lyrics
+ */
+function getUniqueChords(song) {
+  if (!song || !song.lyrics) return [];
+  const chords = [];
+  const matches = song.lyrics.match(/\[([^\]]+)\]/g) || [];
+
+  matches.forEach(token => {
+    const name = token.slice(1, -1).trim();
+    if (
+      name &&
+      !/^(intro|verse|chorus|bridge|outro|solo|pre-chorus)/i.test(name) &&
+      !chords.includes(name)
+    ) {
+      chords.push(name);
+    }
+  });
+
+  return chords;
+}
+
+/**
+ * Parse one line of lyrics containing [Chord] tags
+ */
+function parseLyricsLine(rawLine) {
+  const parts = [];
+  const regex = /\[([^\]]+)\]/g;
+  let lastIndex = 0;
+  let match;
+  let pendingChord = "";
+
+  while ((match = regex.exec(rawLine)) !== null) {
+    const textBefore = rawLine.slice(lastIndex, match.index);
+    parts.push({
+      chord: pendingChord,
+      text: textBefore
+    });
+    pendingChord = match[1];
+    lastIndex = regex.lastIndex;
+  }
+
+  parts.push({
+    chord: pendingChord,
+    text: rawLine.slice(lastIndex)
+  });
+
+  return parts
+    .map(p => {
+      const transChord = p.chord ? transposeChord(p.chord, transposeSteps) : "";
+      const chordHtml = transChord
+        ? `<span class="chord-tag" onclick="playChordAudio('${escapeXml(transChord)}')" title="Click to hear ${escapeXml(transChord)} chord">${escapeXml(transChord)}</span>`
+        : "";
+      return `<span class="chord-lyric-pair"><span class="chord-holder">${chordHtml}</span><span class="lyric-text">${escapeXml(p.text || " ")}</span></span>`;
+    })
+    .join("");
+}
+
+/**
+ * Render lyrics with section pill badges
+ */
+function renderLyrics() {
+  const song = getCurrentSong();
+  const container = $("lyricsContainer");
+  if (!song || !song.lyrics) {
+    container.innerHTML = `<p style="color:var(--ink-muted);text-align:center;padding:40px;">No lyrics available.</p>`;
+    return;
+  }
+
+  let html = "";
+  let insideSection = false;
+
+  song.lyrics.split("\n").forEach(raw => {
+    const trimmed = raw.trim();
+    const isSectionHeading = /^(intro|verse|chorus|bridge|outro|pre-chorus|solo)[^:]*:?$/i.test(trimmed);
+
+    if (isSectionHeading) {
+      if (insideSection) html += `</div>`;
+      const title = trimmed.replace(/:$/, "");
+      html += `<div class="lyrics-section"><span class="section-pill">${escapeXml(title)}</span>`;
+      insideSection = true;
+      return;
+    }
+
+    if (!insideSection) {
+      html += `<div class="lyrics-section">`;
+      insideSection = true;
+    }
+
+    if (!trimmed) {
+      html += `<div style="height:12px"></div>`;
+      return;
+    }
+
+    html += `<div class="lyrics-line">${parseLyricsLine(raw.trimEnd())}</div>`;
+  });
+
+  if (insideSection) html += `</div>`;
+  container.innerHTML = html;
+}
+
+/**
+ * Language Helper: Detect if text contains Myanmar (Burmese) Unicode
+ */
+function detectSongLanguage(title, lyrics) {
+  const combined = (title || "") + " " + (lyrics || "");
+  return /[\u1000-\u109F]/.test(combined) ? "my" : "en";
+}
+
+function getSongLanguage(s) {
+  if (!s) return "en";
+  return s.language || detectSongLanguage(s.title, s.lyrics);
+}
+
+/**
+ * Filter songs according to search input and active view
+ */
+function getFilteredSongs() {
+  const query = ($("searchInput").value || "").trim().toLowerCase();
+  let list = [...songs];
+
+  if (currentView === "my") {
+    list = list.filter(s => getSongLanguage(s) === "my");
+  } else if (currentView === "en") {
+    list = list.filter(s => getSongLanguage(s) === "en");
+  } else if (currentView === "fav") {
+    list = list.filter(s => s.fav);
+  } else if (currentView === "recent") {
+    list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  }
+
+  if (query) {
+    list = list.filter(
+      s =>
+        (s.title + " " + (s.artist || "") + " " + (s.genre || "") + " " + (s.key || "")).toLowerCase().includes(query)
+    );
+  }
+
+  return list;
+}
+
+/**
+ * Render Sidebar Song List
+ */
+function renderSongList() {
+  const list = getFilteredSongs();
+  const container = $("songList");
+
+  if (!list.length) {
+    container.innerHTML = `<div style="color:var(--ink-faint);font-size:0.8rem;text-align:center;padding:20px 0;">No songs found.</div>`;
+  } else {
+    container.innerHTML = list
+      .map(s => {
+        const isActive = s.id === currentSongId;
+        const transposedKey = transposeChord(s.key || "C", transposeSteps);
+        const lang = getSongLanguage(s);
+        const flag = lang === "my" ? "🇲🇲" : "🇬🇧";
+        return `
+          <button class="song-item-btn ${isActive ? "active" : ""}" data-id="${s.id}">
+            <div class="song-item-title">
+              <span>${escapeXml(s.title)}</span>
+              ${s.fav ? '<span style="color:var(--rose);font-size:0.8rem;">♥</span>' : ""}
+            </div>
+            <div class="song-item-meta">
+              <span>${flag} ${escapeXml(s.artist || "Unknown")}</span>
+              <span>•</span>
+              <span>Key ${escapeXml(transposedKey)}</span>
+            </div>
+          </button>
+        `;
+      })
+      .join("");
+
+    container.querySelectorAll(".song-item-btn").forEach(btn => {
+      btn.onclick = () => {
+        currentSongId = btn.dataset.id;
+        transposeSteps = 0;
+        $("trVal").textContent = "0";
+        render();
+        const lyricsBox = $("lyricsCard");
+        if (lyricsBox) lyricsBox.scrollTo({ top: 0, behavior: "smooth" });
+      };
+    });
+  }
+
+  // Update counts
+  $("countAll").textContent = songs.length;
+  if ($("countMyanmar")) $("countMyanmar").textContent = songs.filter(s => getSongLanguage(s) === "my").length;
+  if ($("countEnglish")) $("countEnglish").textContent = songs.filter(s => getSongLanguage(s) === "en").length;
+  $("countFav").textContent = songs.filter(s => s.fav).length;
+
+  // Render Genre Chips
+  const genres = {};
+  songs.forEach(s => {
+    const g = s.genre || "Other";
+    genres[g] = (genres[g] || 0) + 1;
+  });
+
+  const genreContainer = $("genreTags");
+  if (genreContainer) {
+    genreContainer.innerHTML = Object.entries(genres)
+      .map(
+        ([g, count]) => `
+          <button class="tag-chip" data-genre="${escapeXml(g)}">
+            ${escapeXml(g)} (${count})
+          </button>
+        `
+      )
+      .join("");
+
+    genreContainer.querySelectorAll(".tag-chip").forEach(chip => {
+      chip.onclick = () => {
+        $("searchInput").value = chip.dataset.genre;
+        currentView = "all";
+        renderSongList();
+      };
+    });
+  }
+}
+
+/**
+ * Render Chord SVG Diagrams for this song
+ */
+function renderChordGrid() {
+  const song = getCurrentSong();
+  const container = $("chordGrid");
+  if (!song) return;
+
+  const chords = getUniqueChords(song);
+  if (!chords.length) {
+    container.innerHTML = `<div style="color:var(--ink-faint);font-size:0.8rem;grid-column:1/-1;text-align:center;padding:14px 0;">No chords in this song.</div>`;
+    return;
+  }
+
+  container.innerHTML = chords
+    .map(c => {
+      const trans = transposeChord(c, transposeSteps);
+      return `
+        <div class="chord-card" onclick="playChordAudio('${escapeXml(trans)}')" title="Click to hear ${escapeXml(trans)} chord strum">
+          <span class="chord-play-indicator">▶</span>
+          ${renderChordSVG(trans, { width: 110, height: 135 })}
+        </div>
+      `;
+    })
+    .join("");
+}
+
+/**
+ * Master Render
+ */
+function render() {
+  const song = getCurrentSong();
+  if (!song) return;
+
+  // Hero Card Data
+  $("heroTitle").textContent = song.title;
+  $("heroArtist").textContent = song.artist || "Unknown Artist";
+  $("heroGenre").textContent = song.genre || "Acoustic";
+  $("heroYear").textContent = song.year || "2024";
+  $("heroCapo").textContent = `Capo ${song.capo || 0}`;
+  $("capoVal").textContent = song.capo || 0;
+
+  const lang = getSongLanguage(song);
+  if ($("heroLang")) $("heroLang").textContent = lang === "my" ? "🇲🇲 Myanmar" : lang === "en" ? "🇬🇧 English" : "🌐 Other";
+
+  const currentKey = transposeChord(song.key || "C", transposeSteps);
+  $("heroKey").textContent = `Key ${currentKey}`;
+
+  // Favorite button
+  const favBtn = $("favBtn");
+  if (song.fav) {
+    favBtn.textContent = "♥";
+    favBtn.classList.add("active");
+  } else {
+    favBtn.textContent = "♡";
+    favBtn.classList.remove("active");
+  }
+
+  // Floating Bar Data
+  $("barTitle").textContent = song.title;
+  $("barArtist").textContent = song.artist || "Unknown";
+
+  renderSongList();
+  renderLyrics();
+  renderChordGrid();
+}
+
+/**
+ * Smooth Auto-scroll Engine (Only scrolls lyrics box)
+ */
+function toggleAutoScroll(forceState) {
+  isAutoScrolling = typeof forceState === "boolean" ? forceState : !isAutoScrolling;
+
+  const playBtn = $("heroPlayBtn");
+  const barPlayBtn = $("barPlayBtn");
+  const scrollSwitch = $("scrollSwitch");
+  const lyricsCard = $("lyricsCard");
+
+  if (isAutoScrolling) {
+    playBtn.textContent = "⏸";
+    barPlayBtn.textContent = "⏸";
+    scrollSwitch.classList.add("active");
+
+    clearInterval(scrollIntervalId);
+    scrollIntervalId = setInterval(() => {
+      if (lyricsCard) {
+        lyricsCard.scrollTop += scrollSpeed;
+        if (lyricsCard.scrollTop + lyricsCard.clientHeight >= lyricsCard.scrollHeight - 6) {
+          toggleAutoScroll(false);
+        }
+      }
+    }, 40);
+  } else {
+    playBtn.textContent = "▶";
+    barPlayBtn.textContent = "▶";
+    scrollSwitch.classList.remove("active");
+    clearInterval(scrollIntervalId);
+  }
+}
+
+// ==========================================================================
+// FIREBASE CLOUD FIRESTORE INTEGRATION
+// ==========================================================================
+let firebaseApp = null;
+let firestoreDb = null;
+let isFirebaseConnected = false;
+let unsubscribeFirestore = null;
+const FIREBASE_CONFIG_KEY = "tashido_firebase_config_v1";
+
+function getStoredFirebaseConfig() {
+  try {
+    const raw = localStorage.getItem(FIREBASE_CONFIG_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function updateCloudStatusUI(connected, text) {
+  const dot = $("cloudStatusDot");
+  const label = $("cloudStatusText");
+  const disconnectBtn = $("disconnectFirebaseBtn");
+  if (dot) dot.classList.toggle("connected", connected);
+  if (label) label.textContent = connected ? `☁️ ${text || "Cloud Synced"}` : "☁️ Firebase Cloud Sync";
+  if (disconnectBtn) disconnectBtn.style.display = connected ? "inline-block" : "none";
+}
+
+function initFirebase(config) {
+  if (!config || !config.projectId || typeof firebase === "undefined") {
+    updateCloudStatusUI(false);
+    return false;
+  }
+
+  try {
+    if (!firebase.apps.length) {
+      firebaseApp = firebase.initializeApp(config);
+    } else {
+      firebaseApp = firebase.app();
+    }
+    firestoreDb = firebase.firestore();
+    isFirebaseConnected = true;
+    updateCloudStatusUI(true, "Cloud Synced");
+    listenToFirestoreSongs();
+    return true;
+  } catch (err) {
+    console.error("Firebase connection error:", err);
+    updateCloudStatusUI(false, "Connection Error");
+    return false;
+  }
+}
+
+function listenToFirestoreSongs() {
+  if (!firestoreDb || !isFirebaseConnected) return;
+  if (unsubscribeFirestore) unsubscribeFirestore();
+
+  try {
+    unsubscribeFirestore = firestoreDb.collection("songs").onSnapshot(
+      snapshot => {
+        if (!snapshot.empty) {
+          const cloudList = [];
+          snapshot.forEach(doc => {
+            cloudList.push({ id: doc.id, ...doc.data() });
+          });
+          if (cloudList.length > 0) {
+            cloudList.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+            songs = cloudList;
+            if (!songs.some(s => s.id === currentSongId)) {
+              currentSongId = songs[0].id;
+            }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(songs));
+            render();
+            updateCloudStatusUI(true, `${songs.length} Songs Synced`);
+          }
+        } else {
+          uploadAllLocalSongsToFirestore();
+        }
+      },
+      err => {
+        console.warn("Firestore listener warning:", err);
+      }
+    );
+  } catch (e) {
+    console.warn("Could not listen to Firestore:", e);
+  }
+}
+
+async function saveSongToFirebase(song) {
+  if (!firestoreDb || !isFirebaseConnected || !song) return;
+  try {
+    await firestoreDb.collection("songs").doc(song.id).set(song, { merge: true });
+    updateCloudStatusUI(true, "Saved to Cloud");
+  } catch (err) {
+    console.error("Failed to save to Firestore:", err);
+  }
+}
+
+async function deleteSongFromFirebase(songId) {
+  if (!firestoreDb || !isFirebaseConnected || !songId) return;
+  try {
+    await firestoreDb.collection("songs").doc(songId).delete();
+  } catch (err) {
+    console.error("Failed to delete from Firestore:", err);
+  }
+}
+
+async function uploadAllLocalSongsToFirestore() {
+  if (!firestoreDb || !isFirebaseConnected || !songs.length) return;
+  try {
+    const batch = firestoreDb.batch();
+    songs.forEach(s => {
+      const docRef = firestoreDb.collection("songs").doc(s.id);
+      batch.set(docRef, s, { merge: true });
+    });
+    await batch.commit();
+    updateCloudStatusUI(true, `${songs.length} Songs Synced`);
+  } catch (err) {
+    console.error("Batch upload to Firestore error:", err);
+  }
+}
+
+// ==========================================================================
+// GEMINI AI INTEGRATION & CHORD SHEET OCR
+// ==========================================================================
+const DEFAULT_GEMINI_KEY = (typeof atob !== "undefined")
+  ? atob("QVEuQWI4Uk42SWtOSVY4Z1dzNFZZM0RucGczMWJUNi1oV2JadHRpV0g4XzJhX21vYnB3dFE=")
+  : "";
+const GEMINI_MODEL = "gemini-flash-latest";
+
+function getGeminiApiKey() {
+  return localStorage.getItem("tashido_gemini_api_key") || DEFAULT_GEMINI_KEY;
+}
+
+function setGeminiApiKey(key) {
+  if (key && key.trim()) {
+    localStorage.setItem("tashido_gemini_api_key", key.trim());
+  } else {
+    localStorage.removeItem("tashido_gemini_api_key");
+  }
+}
+
+/**
+ * Transcribe Chord Sheet Photo using Gemini Flash Multimodal API
+ */
+async function processChordSheetImage(file) {
+  const apiKey = getGeminiApiKey();
+  const dropContent = $("dropzoneContent");
+  const scanningState = $("aiScanningState");
+  const scanPreview = $("aiScanPreview");
+
+  // Show loading spinner
+  dropContent.style.display = "none";
+  scanPreview.style.display = "none";
+  scanningState.style.display = "flex";
+
+  try {
+    const reader = new FileReader();
+    const dataUrl = await new Promise((resolve, reject) => {
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+    const mimeType = file.type || "image/png";
+    const base64Data = dataUrl.split(",")[1];
+
+    const promptText = `You are an expert guitar music transcriber. Transcribe this guitar chord sheet image accurately into structured song data.
+
+CRITICAL INSTRUCTIONS:
+1. Ignore and DISCARD all watermarks (e.g. 'NT LYRIC & CHORD', website URLs, channel names, watermarks in the background).
+2. Ignore and DISCARD any unrelated scribbles, page numbers, decorative drawings, ads, logos, or 'Fade Out' notes.
+3. Identify:
+   - title: Song title (e.g. ဖြေလွှတ်ပစ်လိုက်တဲ့ကြိုး)
+   - artist: Singer or composer (e.g. စိုးလွင်လွင်)
+   - key: Key (e.g. G)
+   - capo: 0 unless specified
+   - genre: Music genre or Myanmar Classic / Acoustic
+4. Format the lyrics with inline guitar chords in brackets [Chord] placed EXACTLY right before the Burmese/English syllable or word that the chord aligns with vertically.
+   Example:
+   [G]ကိုယ် ရေးခဲ့သော [Em]သီချင်းတွေ ကြုံတွေ့ခဲ့သော [Am]အဖြစ်တွေ [D]
+5. Preserve song sections with clean headers like:
+   Intro:
+   [G] [Em] [Am] [D]
+   Verse 1:
+   ...
+   Verse 2:
+   ...
+   Chorus:
+   ...
+   Solo:
+   ...
+   Ending:
+
+Return STRICT JSON format:
+{
+  "title": "...",
+  "artist": "...",
+  "key": "...",
+  "capo": 0,
+  "genre": "...",
+  "lyrics": "..."
+}`;
+
+    const payload = {
+      contents: [{
+        parts: [
+          { text: promptText },
+          {
+            inline_data: {
+              mime_type: mimeType,
+              data: base64Data
+            }
+          }
+        ]
+      }],
+      generationConfig: {
+        response_mime_type: "application/json"
+      }
+    };
+
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const errJson = await res.json().catch(() => ({}));
+      throw new Error(errJson?.error?.message || `Gemini API request failed (${res.status})`);
+    }
+
+    const data = await res.json();
+    const rawJsonText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!rawJsonText) throw new Error("No response text from Gemini");
+
+    const cleanJson = rawJsonText.replace(/^```json\s*/, "").replace(/\s*```$/, "").trim();
+    const parsed = JSON.parse(cleanJson);
+
+    // Populate form fields
+    if (parsed.title) $("fTitle").value = parsed.title;
+    if (parsed.artist) $("fArtist").value = parsed.artist;
+    if (parsed.genre) $("fGenre").value = parsed.genre;
+    if (parsed.key) $("fKey").value = parsed.key;
+    if (typeof parsed.capo === "number") $("fCapo").value = parsed.capo;
+    if (parsed.lyrics) $("fLyrics").value = parsed.lyrics;
+
+    const detectedLang = parsed.language || detectSongLanguage(parsed.title, parsed.lyrics);
+    if ($("fLanguage")) $("fLanguage").value = detectedLang;
+
+    // Show preview & success
+    $("aiThumbImg").src = dataUrl;
+    $("aiScanMeta").textContent = `${parsed.title || "Song"} • Key ${parsed.key || "C"} • Chords extracted`;
+    scanningState.style.display = "none";
+    scanPreview.style.display = "flex";
+
+    // Switch to Visual Aligner mode so user can review and nudge chord positions
+    switchEditorTab("visual");
+    renderVisualAligner();
+  } catch (err) {
+    console.error("Gemini Scan Error:", err);
+    alert("Gemini Scan Error: " + err.message);
+    scanningState.style.display = "none";
+    dropContent.style.display = "flex";
+  }
+}
+
+// ==========================================================================
+// VISUAL CHORD ALIGNER & NUDGE ENGINE
+// ==========================================================================
+let activeEditorMode = "text"; // 'text' or 'visual'
+
+function switchEditorTab(mode) {
+  activeEditorMode = mode;
+  const isVisual = mode === "visual";
+  $("tabTextMode").classList.toggle("active", !isVisual);
+  $("tabVisualMode").classList.toggle("active", isVisual);
+  $("textModeContainer").style.display = isVisual ? "none" : "block";
+  $("visualModeContainer").style.display = isVisual ? "block" : "none";
+
+  if (isVisual) {
+    renderVisualAligner();
+  }
+}
+
+function parseLineForAligner(line) {
+  const trimmed = line.trim();
+  const isSection = /^(intro|verse|chorus|bridge|outro|solo|ending|pre-chorus)[^:]*:?$/i.test(trimmed);
+  if (isSection) {
+    return { isSection: true, text: trimmed };
+  }
+
+  const regex = /\[([^\]]+)\]/g;
+  let match;
+  let plainText = "";
+  let lastIndex = 0;
+  const chords = [];
+
+  while ((match = regex.exec(line)) !== null) {
+    const textSegment = line.slice(lastIndex, match.index);
+    plainText += textSegment;
+    chords.push({
+      chord: match[1],
+      index: plainText.length
+    });
+    lastIndex = regex.lastIndex;
+  }
+  plainText += line.slice(lastIndex);
+
+  return { isSection: false, plainText, chords };
+}
+
+function serializeLineFromAligner(plainText, chords) {
+  const sorted = [...chords].sort((a, b) => a.index - b.index);
+  let result = "";
+  let currentIdx = 0;
+
+  sorted.forEach(item => {
+    const targetIdx = Math.max(0, Math.min(item.index, plainText.length));
+    result += plainText.slice(currentIdx, targetIdx);
+    result += `[${item.chord}]`;
+    currentIdx = targetIdx;
+  });
+  result += plainText.slice(currentIdx);
+  return result;
+}
+
+function renderVisualAligner() {
+  const board = $("visualAlignerBoard");
+  const rawText = $("fLyrics").value;
+  const rawLines = rawText.split("\n");
+
+  let html = "";
+  rawLines.forEach((line, lineIdx) => {
+    if (!line.trim()) {
+      html += `<div style="height:10px"></div>`;
+      return;
+    }
+
+    const parsed = parseLineForAligner(line);
+    if (parsed.isSection) {
+      html += `
+        <div class="aligner-line">
+          <span class="aligner-line-section">${escapeXml(parsed.text)}</span>
+        </div>
+      `;
+      return;
+    }
+
+    // Chords row
+    const chordPills = parsed.chords
+      .map(
+        (c, cIdx) => `
+          <div class="aligner-chord-pill" data-line="${lineIdx}" data-cidx="${cIdx}">
+            <button type="button" class="nudge-btn" onclick="nudgeChord(${lineIdx}, ${cIdx}, -1)" title="Nudge Left (ဘယ်ဘက်သို့ ၁ လုံးရွေ့)">◂</button>
+            <span class="chord-name-tag" onclick="editChordName(${lineIdx}, ${cIdx})" title="Click to rename chord">${escapeXml(c.chord)}</span>
+            <button type="button" class="nudge-btn" onclick="nudgeChord(${lineIdx}, ${cIdx}, 1)" title="Nudge Right (ညာဘက်သို့ ၁ လုံးရွေ့)">▸</button>
+            <button type="button" class="remove-chord-btn" onclick="removeChord(${lineIdx}, ${cIdx})" title="Delete Chord">✕</button>
+          </div>
+        `
+      )
+      .join("");
+
+    html += `
+      <div class="aligner-line" data-line="${lineIdx}">
+        <div class="aligner-chord-row">
+          ${chordPills}
+          <button type="button" class="aligner-add-chord-btn" onclick="addChordToLine(${lineIdx})">+ Chord</button>
+        </div>
+        <div class="aligner-text-row">${escapeXml(parsed.plainText || " ")}</div>
+      </div>
+    `;
+  });
+
+  board.innerHTML = html || `<p style="color:var(--ink-muted);text-align:center;padding:24px;">No lyrics yet. Upload an image above or type in the Text Editor tab.</p>`;
+}
+
+// Global functions for inline onclick handlers in visual aligner
+window.nudgeChord = function(lineIdx, chordIdx, delta) {
+  const rawLines = $("fLyrics").value.split("\n");
+  const parsed = parseLineForAligner(rawLines[lineIdx]);
+
+  if (parsed.chords[chordIdx]) {
+    const chord = parsed.chords[chordIdx];
+    chord.index = Math.max(0, Math.min(parsed.plainText.length, chord.index + delta));
+    rawLines[lineIdx] = serializeLineFromAligner(parsed.plainText, parsed.chords);
+    $("fLyrics").value = rawLines.join("\n");
+    renderVisualAligner();
+  }
+};
+
+window.editChordName = function(lineIdx, chordIdx) {
+  const rawLines = $("fLyrics").value.split("\n");
+  const parsed = parseLineForAligner(rawLines[lineIdx]);
+
+  if (parsed.chords[chordIdx]) {
+    const oldName = parsed.chords[chordIdx].chord;
+    const newName = prompt("Rename chord:", oldName);
+    if (newName && newName.trim()) {
+      parsed.chords[chordIdx].chord = newName.trim();
+      rawLines[lineIdx] = serializeLineFromAligner(parsed.plainText, parsed.chords);
+      $("fLyrics").value = rawLines.join("\n");
+      renderVisualAligner();
+    }
+  }
+};
+
+window.removeChord = function(lineIdx, chordIdx) {
+  const rawLines = $("fLyrics").value.split("\n");
+  const parsed = parseLineForAligner(rawLines[lineIdx]);
+
+  parsed.chords.splice(chordIdx, 1);
+  rawLines[lineIdx] = serializeLineFromAligner(parsed.plainText, parsed.chords);
+  $("fLyrics").value = rawLines.join("\n");
+  renderVisualAligner();
+};
+
+window.addChordToLine = function(lineIdx) {
+  const chordName = prompt("Enter chord name (e.g. G, Em, Am, D, C):", "G");
+  if (!chordName || !chordName.trim()) return;
+
+  const rawLines = $("fLyrics").value.split("\n");
+  const parsed = parseLineForAligner(rawLines[lineIdx]);
+
+  parsed.chords.push({
+    chord: chordName.trim(),
+    index: 0
+  });
+
+  rawLines[lineIdx] = serializeLineFromAligner(parsed.plainText, parsed.chords);
+  $("fLyrics").value = rawLines.join("\n");
+  renderVisualAligner();
+};
+
+/**
+ * Modal Management (Add / Edit Song)
+ */
+function openSongModal(songToEdit = null) {
+  editingSongId = songToEdit ? songToEdit.id : null;
+  $("modalTitle").textContent = songToEdit ? "Edit Song" : "Add New Song";
+
+  $("fTitle").value = songToEdit ? songToEdit.title : "";
+  $("fArtist").value = songToEdit ? songToEdit.artist || "" : "";
+  $("fGenre").value = songToEdit ? songToEdit.genre || "" : "";
+  $("fKey").value = songToEdit ? songToEdit.key || "C" : "C";
+  $("fCapo").value = songToEdit ? songToEdit.capo || 0 : 0;
+  $("fBpm").value = songToEdit ? songToEdit.bpm || 80 : 80;
+  $("fYear").value = songToEdit ? songToEdit.year || "" : "";
+  $("fLyrics").value = songToEdit ? songToEdit.lyrics : "";
+  if ($("fLanguage")) $("fLanguage").value = songToEdit ? getSongLanguage(songToEdit) : "my";
+
+  // Reset Dropzone UI
+  $("dropzoneContent").style.display = "flex";
+  $("aiScanningState").style.display = "none";
+  $("aiScanPreview").style.display = "none";
+  $("geminiApiKeyInput").value = getGeminiApiKey();
+
+  // Reset tab to text mode
+  switchEditorTab("text");
+
+  // Show/Hide Delete Button inside Modal (only show when editing an existing song)
+  const modalDeleteBtn = $("modalDeleteSongBtn");
+  if (modalDeleteBtn) {
+    modalDeleteBtn.style.display = songToEdit ? "inline-flex" : "none";
+  }
+
+  $("songModal").classList.add("open");
+}
+
+function closeSongModal() {
+  $("songModal").classList.remove("open");
+}
+
+function saveSongFromModal() {
+  const title = $("fTitle").value.trim();
+  if (!title) {
+    alert("Please enter a song title.");
+    return;
+  }
+
+  const lyrics = $("fLyrics").value;
+  const language = $("fLanguage") ? $("fLanguage").value : detectSongLanguage(title, lyrics);
+
+  const songData = {
+    title,
+    artist: $("fArtist").value.trim() || "Unknown",
+    genre: $("fGenre").value.trim() || "Acoustic",
+    language,
+    key: $("fKey").value.trim() || "C",
+    capo: parseInt($("fCapo").value, 10) || 0,
+    bpm: parseInt($("fBpm").value, 10) || 80,
+    year: $("fYear").value.trim() || "2024",
+    lyrics
+  };
+
+  if (editingSongId) {
+    const existing = songs.find(s => s.id === editingSongId);
+    if (existing) {
+      Object.assign(existing, songData);
+      saveSongToFirebase(existing);
+    }
+  } else {
+    const newSong = {
+      id: "song-" + Date.now(),
+      fav: false,
+      createdAt: Date.now(),
+      ...songData
+    };
+    songs.unshift(newSong);
+    currentSongId = newSong.id;
+    saveSongToFirebase(newSong);
+  }
+
+  saveSongs();
+  closeSongModal();
+  transposeSteps = 0;
+  $("trVal").textContent = "0";
+  render();
+}
+
+/**
+ * Delete Current Song with Burmese Confirmation
+ */
+function deleteCurrentSong() {
+  const s = editingSongId ? songs.find(x => x.id === editingSongId) : getCurrentSong();
+  if (!s) return;
+
+  if (songs.length <= 1) {
+    alert("သီချင်းအားလုံးကို မဖျက်နိုင်ပါ။ စာရင်းထဲတွင် အနည်းဆုံး သီချင်းတစ်ပုဒ် ရှိရပါမည်။");
+    return;
+  }
+
+  const confirmed = confirm(`သီချင်း "${s.title}" ကို အပြီးတိုင် ဖျက်မှာ သေချာပါသလား?\n\nဖျက်ပြီးပါက ပြန်လည်ရယူနိုင်မည် မဟုတ်ပါ။`);
+  if (confirmed) {
+    const idToDelete = s.id;
+    songs = songs.filter(x => x.id !== idToDelete);
+    currentSongId = songs[0].id;
+    saveSongs();
+    deleteSongFromFirebase(idToDelete);
+    closeSongModal();
+    transposeSteps = 0;
+    $("trVal").textContent = "0";
+    render();
+  }
+}
+
+/**
+ * Export Library to JSON
+ */
+function exportLibrary() {
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(songs, null, 2));
+  const downloadAnchor = document.createElement("a");
+  downloadAnchor.setAttribute("href", dataStr);
+  downloadAnchor.setAttribute("download", `tashido_chords_backup_${new Date().toISOString().slice(0, 10)}.json`);
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  downloadAnchor.remove();
+}
+
+/**
+ * Import Library from JSON
+ */
+function importLibrary(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (Array.isArray(imported) && imported.length > 0) {
+        songs = imported;
+        currentSongId = songs[0].id;
+        saveSongs();
+        render();
+        alert(`Successfully imported ${imported.length} songs!`);
+      } else {
+        alert("Invalid file format. Expected a list of songs.");
+      }
+    } catch (err) {
+      alert("Error reading JSON file: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+/**
+ * Step through songs (Next / Previous)
+ */
+function stepSong(direction) {
+  const idx = songs.findIndex(s => s.id === currentSongId);
+  currentSongId = songs[(idx + direction + songs.length) % songs.length].id;
+  transposeSteps = 0;
+  $("trVal").textContent = "0";
+  render();
+  const lyricsBox = $("lyricsCard");
+  if (lyricsBox) lyricsBox.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/**
+ * Strum all chords in current song for practice
+ */
+function strumAllSongChords() {
+  const song = getCurrentSong();
+  const chords = getUniqueChords(song);
+  if (!chords.length) return;
+
+  chords.forEach((c, i) => {
+    setTimeout(() => {
+      const trans = transposeChord(c, transposeSteps);
+      playChordAudio(trans);
+    }, i * 650);
+  });
+}
+
+/**
+ * Event Bindings Setup
+ */
+function setupEventListeners() {
+  // Navigation tabs (All, Favorites, Recent)
+  document.querySelectorAll(".nav-item[data-view]").forEach(btn => {
+    btn.onclick = () => {
+      currentView = btn.dataset.view;
+      document.querySelectorAll(".nav-item[data-view]").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderSongList();
+    };
+  });
+
+  // Search input
+  $("searchInput").oninput = renderSongList;
+
+  // Add / Edit Song Buttons
+  $("addSongBtn").onclick = () => openSongModal(null);
+  $("editSongBtn").onclick = () => openSongModal(getCurrentSong());
+  if ($("deleteSongBtn")) $("deleteSongBtn").onclick = deleteCurrentSong;
+
+  // Delete button inside Modal
+  if ($("modalDeleteSongBtn")) {
+    $("modalDeleteSongBtn").onclick = deleteCurrentSong;
+  }
+
+  $("cancelModalBtn").onclick = closeSongModal;
+  $("closeModalX").onclick = closeSongModal;
+  $("saveSongModalBtn").onclick = saveSongFromModal;
+
+  $("songModal").addEventListener("click", e => {
+    if (e.target.id === "songModal") closeSongModal();
+  });
+
+  // Editor Tabs (Text vs Visual Chord Aligner)
+  $("tabTextMode").onclick = () => switchEditorTab("text");
+  $("tabVisualMode").onclick = () => switchEditorTab("visual");
+
+  // Gemini Photo Dropzone & File Input
+  const dropzone = $("aiDropzone");
+  const fileInput = $("chordImgInput");
+
+  dropzone.onclick = e => {
+    // Only trigger if not clicking inside reUpload button
+    if (e.target.id !== "reUploadBtn") {
+      fileInput.click();
+    }
+  };
+
+  $("reUploadBtn").onclick = e => {
+    e.stopPropagation();
+    fileInput.click();
+  };
+
+  fileInput.onchange = e => {
+    if (e.target.files && e.target.files[0]) {
+      processChordSheetImage(e.target.files[0]);
+    }
+  };
+
+  dropzone.ondragover = e => {
+    e.preventDefault();
+    dropzone.classList.add("dragover");
+  };
+
+  dropzone.ondragleave = () => {
+    dropzone.classList.remove("dragover");
+  };
+
+  dropzone.ondrop = e => {
+    e.preventDefault();
+    dropzone.classList.remove("dragover");
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      processChordSheetImage(e.dataTransfer.files[0]);
+    }
+  };
+
+  // Clipboard Paste support (Ctrl+V / Cmd+V)
+  window.addEventListener("paste", e => {
+    if (!$("songModal").classList.contains("open")) return;
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf("image") !== -1) {
+        const file = items[i].getAsFile();
+        if (file) {
+          processChordSheetImage(file);
+          break;
+        }
+      }
+    }
+  });
+
+  // Gemini API Key Settings Toggle & Save
+  $("toggleApiKeyBtn").onclick = () => {
+    const el = $("aiKeySettings");
+    el.style.display = el.style.display === "none" ? "block" : "none";
+  };
+
+  $("saveApiKeyBtn").onclick = () => {
+    setGeminiApiKey($("geminiApiKeyInput").value);
+    alert("Gemini API Key updated successfully!");
+    $("aiKeySettings").style.display = "none";
+  };
+
+  // Favorite Button
+  $("favBtn").onclick = () => {
+    const s = getCurrentSong();
+    s.fav = !s.fav;
+    saveSongs();
+    render();
+  };
+
+  // Play / Auto-scroll Buttons
+  $("heroPlayBtn").onclick = () => toggleAutoScroll();
+  $("barPlayBtn").onclick = () => toggleAutoScroll();
+  $("scrollSwitch").onclick = () => toggleAutoScroll();
+
+  // Next / Prev Buttons
+  $("nextSongBtn").onclick = () => stepSong(1);
+  $("prevSongBtn").onclick = () => stepSong(-1);
+
+  // Auto-scroll Speed Slider
+  $("scrollSpeedInput").oninput = e => {
+    scrollSpeed = parseInt(e.target.value, 10);
+    $("speedVal").textContent = scrollSpeed + "x";
+    if (isAutoScrolling) {
+      toggleAutoScroll(true);
+    }
+  };
+
+  // Transpose Controls
+  $("trMinus").onclick = () => {
+    transposeSteps--;
+    $("trVal").textContent = transposeSteps;
+    render();
+  };
+  $("trPlus").onclick = () => {
+    transposeSteps++;
+    $("trVal").textContent = transposeSteps;
+    render();
+  };
+
+  // Capo Controls
+  $("capoMinus").onclick = () => {
+    const s = getCurrentSong();
+    s.capo = Math.max(0, (parseInt(s.capo, 10) || 0) - 1);
+    saveSongs();
+    render();
+  };
+  $("capoPlus").onclick = () => {
+    const s = getCurrentSong();
+    s.capo = Math.min(12, (parseInt(s.capo, 10) || 0) + 1);
+    saveSongs();
+    render();
+  };
+
+  // Font Size Slider
+  $("fontSizeInput").oninput = e => {
+    const val = e.target.value + "px";
+    $("fontSizeVal").textContent = val;
+    $("lyricsContainer").style.fontSize = val;
+  };
+
+  // Show/Hide Chords Switch
+  $("chordsSwitch").onclick = () => {
+    showChords = !showChords;
+    $("chordsSwitch").classList.toggle("active", showChords);
+    $("lyricsContainer").classList.toggle("hide-chords", !showChords);
+  };
+
+  // Two Column Layout Switch
+  $("colToggleBtn").onclick = () => {
+    isTwoColumns = !isTwoColumns;
+    $("lyricsCard").classList.toggle("two-columns", isTwoColumns);
+    $("colToggleBtn").textContent = isTwoColumns ? "Single Column" : "2 Columns";
+  };
+
+  // Metronome Controls
+  $("metronomeToggleBtn").onclick = toggleMetronome;
+  $("metronomeBpmInput").oninput = e => {
+    metronomeBpm = parseInt(e.target.value, 10);
+    $("bpmVal").textContent = metronomeBpm;
+    if (isMetronomePlaying) {
+      toggleMetronome();
+      toggleMetronome();
+    }
+  };
+
+  // Guitar Tuner Buttons
+  const TUNER_FREQS = {
+    E2: 82.41,
+    A2: 110.0,
+    D3: 146.83,
+    G3: 196.0,
+    B3: 246.94,
+    E4: 329.63
+  };
+
+  document.querySelectorAll(".tuner-btn[data-note]").forEach(btn => {
+    btn.onclick = () => {
+      const note = btn.dataset.note;
+      const freq = TUNER_FREQS[note];
+      if (freq) {
+        btn.classList.add("sounding");
+        playTunerTone(freq, 2.5);
+        setTimeout(() => btn.classList.remove("sounding"), 2500);
+      }
+    };
+  });
+
+  // Strum Practice Button
+  $("strumPracticeBtn").onclick = strumAllSongChords;
+
+  // Print Button
+  $("printBtn").onclick = () => window.print();
+
+  // Export / Import
+  $("exportBtn").onclick = exportLibrary;
+  $("importFileInput").onchange = importLibrary;
+
+  // Firebase Cloud Modal Event Bindings
+  const fbModal = $("firebaseModal");
+  if ($("openFirebaseModalBtn")) {
+    $("openFirebaseModalBtn").onclick = () => {
+      const stored = getStoredFirebaseConfig();
+      if (stored) {
+        $("firebaseConfigInput").value = JSON.stringify(stored, null, 2);
+      }
+      fbModal.classList.add("open");
+    };
+  }
+
+  if ($("closeFirebaseModalX")) $("closeFirebaseModalX").onclick = () => fbModal.classList.remove("open");
+  if ($("cancelFirebaseModalBtn")) $("cancelFirebaseModalBtn").onclick = () => fbModal.classList.remove("open");
+  if (fbModal) {
+    fbModal.onclick = e => { if (e.target.id === "firebaseModal") fbModal.classList.remove("open"); };
+  }
+
+  if ($("saveFirebaseConfigBtn")) {
+    $("saveFirebaseConfigBtn").onclick = async () => {
+      const raw = $("firebaseConfigInput").value.trim();
+      if (!raw) {
+        alert("Please paste your Firebase configuration.");
+        return;
+      }
+      try {
+        let configObj;
+        try {
+          configObj = JSON.parse(raw);
+        } catch (jsonErr) {
+          const cleaned = raw.replace(/^const\s+firebaseConfig\s*=\s*/, "").replace(/;$/, "");
+          configObj = new Function(`return (${cleaned});`)();
+        }
+
+        if (!configObj || !configObj.projectId) {
+          alert("Invalid Firebase config. Missing projectId.");
+          return;
+        }
+
+        localStorage.setItem(FIREBASE_CONFIG_KEY, JSON.stringify(configObj));
+        const ok = initFirebase(configObj);
+        if (ok) {
+          await uploadAllLocalSongsToFirestore();
+          alert("Firebase Cloud Database Connected! All songs are synced with your cloud Firestore database.");
+          fbModal.classList.remove("open");
+        } else {
+          alert("Could not connect to Firebase with this configuration. Please check your credentials.");
+        }
+      } catch (e) {
+        alert("Error parsing Firebase configuration: " + e.message);
+      }
+    };
+  }
+
+  if ($("disconnectFirebaseBtn")) {
+    $("disconnectFirebaseBtn").onclick = () => {
+      if (confirm("Disconnect Firebase Cloud? Your songs will still be preserved locally in your browser.")) {
+        localStorage.removeItem(FIREBASE_CONFIG_KEY);
+        if (unsubscribeFirestore) unsubscribeFirestore();
+        isFirebaseConnected = false;
+        updateCloudStatusUI(false);
+        fbModal.classList.remove("open");
+        alert("Disconnected from Firebase.");
+      }
+    };
+  }
+}
+
+// Initial Boot
+window.addEventListener("DOMContentLoaded", () => {
+  loadSongs();
+  setupEventListeners();
+  render();
+
+  // Try auto-connecting stored Firebase
+  const storedConfig = getStoredFirebaseConfig();
+  if (storedConfig) {
+    initFirebase(storedConfig);
+  }
+});
+
+</script>
+</body>
+</html>
