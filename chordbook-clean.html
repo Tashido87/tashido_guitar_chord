@@ -1929,14 +1929,20 @@ input[type="range"] {
 
         <!-- Text Size -->
         <div class="tool-row">
-          <span class="tool-label">Font Size (<span id="fontSizeVal">16px</span>)</span>
-          <input type="range" id="fontSizeInput" min="13" max="24" value="16" style="width:110px">
+          <span class="tool-label">Font Size (<span id="fontSizeVal">15px</span>)</span>
+          <input type="range" id="fontSizeInput" min="13" max="24" value="15" style="width:110px">
         </div>
 
         <!-- Auto Scroll Switch -->
         <div class="tool-row">
           <span class="tool-label">Auto Scroll</span>
           <button class="switch-control" id="scrollSwitch" title="Toggle Auto Scroll"></button>
+        </div>
+
+        <!-- Auto Scroll Speed Control -->
+        <div class="tool-row">
+          <span class="tool-label">Scroll Speed (<span id="panelSpeedVal">3x</span>)</span>
+          <input type="range" id="panelScrollSpeedInput" min="1" max="10" value="3" style="width:110px">
         </div>
 
         <!-- Show Chords Switch -->
@@ -1950,9 +1956,6 @@ input[type="range"] {
       <section class="tool-panel">
         <div class="panel-title">
           <span>Chords in Song</span>
-          <button class="btn btn-outline btn-sm" id="strumPracticeBtn" style="padding:4px 8px;" title="Strum all chords sequentially">
-            Strum All 🔊
-          </button>
         </div>
         <div class="chords-grid" id="chordGrid"></div>
       </section>
@@ -3977,14 +3980,20 @@ function setupEventListeners() {
   $("nextSongBtn").onclick = () => stepSong(1);
   $("prevSongBtn").onclick = () => stepSong(-1);
 
-  // Auto-scroll Speed Slider
-  $("scrollSpeedInput").oninput = e => {
-    scrollSpeed = parseInt(e.target.value, 10);
-    $("speedVal").textContent = scrollSpeed + "x";
+  // Auto-scroll Speed Control (Synchronized between panel & bottom bar)
+  function handleSpeedChange(newVal) {
+    scrollSpeed = parseInt(newVal, 10);
+    if ($("speedVal")) $("speedVal").textContent = scrollSpeed + "x";
+    if ($("panelSpeedVal")) $("panelSpeedVal").textContent = scrollSpeed + "x";
+    if ($("scrollSpeedInput")) $("scrollSpeedInput").value = scrollSpeed;
+    if ($("panelScrollSpeedInput")) $("panelScrollSpeedInput").value = scrollSpeed;
     if (isAutoScrolling) {
       toggleAutoScroll(true);
     }
-  };
+  }
+
+  if ($("scrollSpeedInput")) $("scrollSpeedInput").oninput = e => handleSpeedChange(e.target.value);
+  if ($("panelScrollSpeedInput")) $("panelScrollSpeedInput").oninput = e => handleSpeedChange(e.target.value);
 
   // Transpose Controls
   $("trMinus").onclick = () => {
@@ -4066,8 +4075,8 @@ function setupEventListeners() {
     };
   });
 
-  // Strum Practice Button
-  $("strumPracticeBtn").onclick = strumAllSongChords;
+  // Strum Practice Button (if present)
+  if ($("strumPracticeBtn")) $("strumPracticeBtn").onclick = strumAllSongChords;
 
   // Print Button
   $("printBtn").onclick = () => window.print();
@@ -4149,6 +4158,9 @@ window.addEventListener("DOMContentLoaded", () => {
   loadSongs();
   setupEventListeners();
   render();
+
+  // Set default font size to 15px
+  if ($("lyricsContainer")) $("lyricsContainer").style.fontSize = "15px";
 
   // Try auto-connecting stored Firebase
   const storedConfig = getStoredFirebaseConfig();

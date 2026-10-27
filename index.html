@@ -191,14 +191,20 @@
 
         <!-- Text Size -->
         <div class="tool-row">
-          <span class="tool-label">Font Size (<span id="fontSizeVal">16px</span>)</span>
-          <input type="range" id="fontSizeInput" min="13" max="24" value="16" style="width:110px">
+          <span class="tool-label">Font Size (<span id="fontSizeVal">15px</span>)</span>
+          <input type="range" id="fontSizeInput" min="13" max="24" value="15" style="width:110px">
         </div>
 
         <!-- Auto Scroll Switch -->
         <div class="tool-row">
           <span class="tool-label">Auto Scroll</span>
           <button class="switch-control" id="scrollSwitch" title="Toggle Auto Scroll"></button>
+        </div>
+
+        <!-- Auto Scroll Speed Control -->
+        <div class="tool-row">
+          <span class="tool-label">Scroll Speed (<span id="panelSpeedVal">3x</span>)</span>
+          <input type="range" id="panelScrollSpeedInput" min="1" max="10" value="3" style="width:110px">
         </div>
 
         <!-- Show Chords Switch -->
@@ -212,9 +218,6 @@
       <section class="tool-panel">
         <div class="panel-title">
           <span>Chords in Song</span>
-          <button class="btn btn-outline btn-sm" id="strumPracticeBtn" style="padding:4px 8px;" title="Strum all chords sequentially">
-            Strum All 🔊
-          </button>
         </div>
         <div class="chords-grid" id="chordGrid"></div>
       </section>

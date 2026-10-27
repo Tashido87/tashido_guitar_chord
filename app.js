@@ -1527,14 +1527,20 @@ function setupEventListeners() {
   $("nextSongBtn").onclick = () => stepSong(1);
   $("prevSongBtn").onclick = () => stepSong(-1);
 
-  // Auto-scroll Speed Slider
-  $("scrollSpeedInput").oninput = e => {
-    scrollSpeed = parseInt(e.target.value, 10);
-    $("speedVal").textContent = scrollSpeed + "x";
+  // Auto-scroll Speed Control (Synchronized between panel & bottom bar)
+  function handleSpeedChange(newVal) {
+    scrollSpeed = parseInt(newVal, 10);
+    if ($("speedVal")) $("speedVal").textContent = scrollSpeed + "x";
+    if ($("panelSpeedVal")) $("panelSpeedVal").textContent = scrollSpeed + "x";
+    if ($("scrollSpeedInput")) $("scrollSpeedInput").value = scrollSpeed;
+    if ($("panelScrollSpeedInput")) $("panelScrollSpeedInput").value = scrollSpeed;
     if (isAutoScrolling) {
       toggleAutoScroll(true);
     }
-  };
+  }
+
+  if ($("scrollSpeedInput")) $("scrollSpeedInput").oninput = e => handleSpeedChange(e.target.value);
+  if ($("panelScrollSpeedInput")) $("panelScrollSpeedInput").oninput = e => handleSpeedChange(e.target.value);
 
   // Transpose Controls
   $("trMinus").onclick = () => {
@@ -1616,8 +1622,8 @@ function setupEventListeners() {
     };
   });
 
-  // Strum Practice Button
-  $("strumPracticeBtn").onclick = strumAllSongChords;
+  // Strum Practice Button (if present)
+  if ($("strumPracticeBtn")) $("strumPracticeBtn").onclick = strumAllSongChords;
 
   // Print Button
   $("printBtn").onclick = () => window.print();
@@ -1699,6 +1705,9 @@ window.addEventListener("DOMContentLoaded", () => {
   loadSongs();
   setupEventListeners();
   render();
+
+  // Set default font size to 15px
+  if ($("lyricsContainer")) $("lyricsContainer").style.fontSize = "15px";
 
   // Try auto-connecting stored Firebase
   const storedConfig = getStoredFirebaseConfig();
