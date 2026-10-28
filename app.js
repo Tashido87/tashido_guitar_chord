@@ -870,7 +870,7 @@ function openSongView(songId) {
   const appContainer = document.querySelector(".app-container");
 
   if (homeView) homeView.style.display = "none";
-  if (songView) songView.style.display = "block";
+  if (songView) songView.style.display = "flex";
   if (appContainer) appContainer.classList.remove("home-mode");
 
   render();

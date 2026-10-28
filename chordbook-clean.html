@@ -717,7 +717,14 @@ a {
   flex-direction: column;
   gap: 14px;
   height: 100%;
+  min-height: 0;
+  flex: 1;
   overflow: hidden;
+}
+
+.song-view > .song-hero,
+.song-view > .lyrics-toolbar {
+  flex-shrink: 0;
 }
 
 /* Playlist / Tag chips */
@@ -3701,7 +3708,7 @@ function openSongView(songId) {
   const appContainer = document.querySelector(".app-container");
 
   if (homeView) homeView.style.display = "none";
-  if (songView) songView.style.display = "block";
+  if (songView) songView.style.display = "flex";
   if (appContainer) appContainer.classList.remove("home-mode");
 
   render();
