@@ -1965,7 +1965,7 @@ function setupEventListeners() {
   $("colToggleBtn").onclick = () => {
     isTwoColumns = !isTwoColumns;
     $("lyricsCard").classList.toggle("two-columns", isTwoColumns);
-    $("colToggleBtn").textContent = isTwoColumns ? "Single Column" : "2 Columns";
+    $("colToggleBtn").classList.toggle("active", isTwoColumns);
   };
 
   // Metronome Controls
@@ -2008,8 +2008,8 @@ function setupEventListeners() {
   $("printBtn").onclick = () => window.print();
 
   // Export / Import
-  $("exportBtn").onclick = exportLibrary;
-  $("importFileInput").onchange = importLibrary;
+  if ($("exportBtn")) $("exportBtn").onclick = exportLibrary;
+  if ($("importFileInput")) $("importFileInput").onchange = importLibrary;
 
   // Firebase Cloud Modal Event Bindings
   const fbModal = $("firebaseModal");

@@ -141,10 +141,15 @@ a {
   padding: 18px 16px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   height: 100%;
   overflow-y: auto;
   box-sizing: border-box;
+}
+
+.sidebar > .add-song-gradient-btn {
+  flex-shrink: 0;
+  margin-top: 4px;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -306,18 +311,23 @@ a {
 .song-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 1px;
   overflow-y: auto;
-  max-height: 280px;
-  padding-right: 4px;
+  flex: 1 1 auto;
+  min-height: 220px;
+  margin: 0 -6px;
+  padding: 2px 4px;
 }
 
 .song-list::-webkit-scrollbar {
   width: 4px;
 }
 .song-list::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: transparent;
   border-radius: 4px;
+}
+.song-list:hover::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
 }
 
 /* ==========================================================================
@@ -327,11 +337,12 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--ink-faint);
-  padding: 10px 4px 2px;
+  padding: 8px 4px 0;
+  border-top: 1px solid var(--border-subtle, #eef2f6);
 }
 
 .song-item-btn {
@@ -340,47 +351,61 @@ a {
   gap: 10px;
   width: 100%;
   text-align: left;
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 7px 10px;
-  cursor: grab;
-  transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: background 0.14s ease, box-shadow 0.14s ease;
   position: relative;
   user-select: none;
+  flex-shrink: 0;
 }
 
-.song-item-btn:active {
-  cursor: grabbing;
+.song-item-btn::after {
+  content: "⋮⋮";
+  font-size: 0.7rem;
+  letter-spacing: -2px;
+  color: var(--ink-faint);
+  opacity: 0;
+  margin-left: auto;
+  padding-left: 4px;
+  cursor: grab;
+  transition: opacity 0.14s ease;
+}
+
+.song-item-btn:hover::after {
+  opacity: 1;
 }
 
 .song-item-btn:hover {
-  background: #f8fafc;
-  border-color: #cbd5e1;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+.song-item-btn.dragging {
+  opacity: 0.45;
 }
 
 .song-item-btn.active {
-  background: #eff6ff;
-  border-color: #bfdbfe;
-  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.08);
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), inset 3px 0 0 var(--brand);
 }
 
 .song-item-btn.drag-over {
-  border-top: 2.5px solid var(--brand);
+  box-shadow: inset 0 2px 0 var(--brand);
 }
 
 .song-item-thumb {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   flex-shrink: 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0.1);
   color: #ffffff;
   font-weight: 700;
 }
@@ -391,27 +416,26 @@ a {
 }
 
 .song-item-title {
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 600;
   color: var(--ink-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .song-item-btn.active .song-item-title {
   color: var(--brand);
-  font-weight: 700;
 }
 
 .song-item-artist {
-  font-size: 0.73rem;
+  font-size: 0.72rem;
   color: var(--ink-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 /* Sound Wave Equalizer animation for active song */
@@ -461,13 +485,17 @@ a {
 
 /* Sub-categories menu */
 .sub-nav-section {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 3px;
   padding-left: 8px;
   margin-top: 2px;
   border-left: 2px solid var(--border-subtle);
   margin-left: 14px;
+}
+
+.sub-nav-section.open {
+  display: flex;
 }
 
 .sub-nav-item {
@@ -2174,7 +2202,6 @@ input[type="range"] {
             <span>🇲🇲 Myanmar Songs</span>
             <span class="badge-count" id="countMyanmar">0</span>
           </button>
-          <div class="tag-list" id="genreTags" style="padding:4px 0;"></div>
         </div>
       </nav>
 
@@ -2191,23 +2218,6 @@ input[type="range"] {
       <button class="btn btn-primary add-song-gradient-btn" id="addSongBtn">
         <span>+ Add Song</span>
       </button>
-
-      <!-- Sidebar Footer (Export / Backup & Firebase Cloud) -->
-      <div class="sidebar-footer">
-        <button type="button" class="btn btn-outline btn-sm cloud-sync-btn" id="openFirebaseModalBtn" title="Firebase Cloud Database Sync">
-          <span class="cloud-status-dot" id="cloudStatusDot"></span>
-          <span id="cloudStatusText">☁️ Firebase Cloud Sync</span>
-        </button>
-        <div class="backup-actions">
-          <button class="btn btn-outline btn-sm" id="exportBtn" style="flex:1" title="Download backup JSON">
-            Backup JSON
-          </button>
-          <label class="btn btn-outline btn-sm" style="flex:1;cursor:pointer;margin:0;text-align:center" title="Restore songs from JSON">
-            Import JSON
-            <input type="file" id="importFileInput" accept=".json" style="display:none">
-          </label>
-        </div>
-      </div>
 
     </aside>
 
@@ -2297,16 +2307,6 @@ input[type="range"] {
           </div>
         </section>
 
-        <!-- Lyrics Toolbar -->
-        <div class="lyrics-toolbar">
-          <div class="lyrics-toolbar-group">
-            <span>💡 Click any chord tag above words to hear the acoustic strum!</span>
-          </div>
-          <div class="lyrics-toolbar-group">
-            <button class="view-toggle-btn" id="colToggleBtn">2 Columns</button>
-          </div>
-        </div>
-
         <!-- Main Lyrics Card -->
         <article class="lyrics-card" id="lyricsCard">
           <div id="lyricsContainer"></div>
@@ -2368,6 +2368,12 @@ input[type="range"] {
         <div class="tool-row">
           <span class="tool-label">Show Chords</span>
           <button class="switch-control active" id="chordsSwitch" title="Toggle Chords Visibility"></button>
+        </div>
+
+        <!-- Two Columns Layout Switch -->
+        <div class="tool-row">
+          <span class="tool-label">2 Columns</span>
+          <button class="switch-control" id="colToggleBtn" title="Toggle two-column lyrics"></button>
         </div>
       </section>
 
@@ -4803,7 +4809,7 @@ function setupEventListeners() {
   $("colToggleBtn").onclick = () => {
     isTwoColumns = !isTwoColumns;
     $("lyricsCard").classList.toggle("two-columns", isTwoColumns);
-    $("colToggleBtn").textContent = isTwoColumns ? "Single Column" : "2 Columns";
+    $("colToggleBtn").classList.toggle("active", isTwoColumns);
   };
 
   // Metronome Controls
@@ -4846,8 +4852,8 @@ function setupEventListeners() {
   $("printBtn").onclick = () => window.print();
 
   // Export / Import
-  $("exportBtn").onclick = exportLibrary;
-  $("importFileInput").onchange = importLibrary;
+  if ($("exportBtn")) $("exportBtn").onclick = exportLibrary;
+  if ($("importFileInput")) $("importFileInput").onchange = importLibrary;
 
   // Firebase Cloud Modal Event Bindings
   const fbModal = $("firebaseModal");

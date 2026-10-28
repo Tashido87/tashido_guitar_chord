@@ -83,7 +83,6 @@
             <span>🇲🇲 Myanmar Songs</span>
             <span class="badge-count" id="countMyanmar">0</span>
           </button>
-          <div class="tag-list" id="genreTags" style="padding:4px 0;"></div>
         </div>
       </nav>
 
@@ -100,23 +99,6 @@
       <button class="btn btn-primary add-song-gradient-btn" id="addSongBtn">
         <span>+ Add Song</span>
       </button>
-
-      <!-- Sidebar Footer (Export / Backup & Firebase Cloud) -->
-      <div class="sidebar-footer">
-        <button type="button" class="btn btn-outline btn-sm cloud-sync-btn" id="openFirebaseModalBtn" title="Firebase Cloud Database Sync">
-          <span class="cloud-status-dot" id="cloudStatusDot"></span>
-          <span id="cloudStatusText">☁️ Firebase Cloud Sync</span>
-        </button>
-        <div class="backup-actions">
-          <button class="btn btn-outline btn-sm" id="exportBtn" style="flex:1" title="Download backup JSON">
-            Backup JSON
-          </button>
-          <label class="btn btn-outline btn-sm" style="flex:1;cursor:pointer;margin:0;text-align:center" title="Restore songs from JSON">
-            Import JSON
-            <input type="file" id="importFileInput" accept=".json" style="display:none">
-          </label>
-        </div>
-      </div>
 
     </aside>
 
@@ -206,16 +188,6 @@
           </div>
         </section>
 
-        <!-- Lyrics Toolbar -->
-        <div class="lyrics-toolbar">
-          <div class="lyrics-toolbar-group">
-            <span>💡 Click any chord tag above words to hear the acoustic strum!</span>
-          </div>
-          <div class="lyrics-toolbar-group">
-            <button class="view-toggle-btn" id="colToggleBtn">2 Columns</button>
-          </div>
-        </div>
-
         <!-- Main Lyrics Card -->
         <article class="lyrics-card" id="lyricsCard">
           <div id="lyricsContainer"></div>
@@ -277,6 +249,12 @@
         <div class="tool-row">
           <span class="tool-label">Show Chords</span>
           <button class="switch-control active" id="chordsSwitch" title="Toggle Chords Visibility"></button>
+        </div>
+
+        <!-- Two Columns Layout Switch -->
+        <div class="tool-row">
+          <span class="tool-label">2 Columns</span>
+          <button class="switch-control" id="colToggleBtn" title="Toggle two-column lyrics"></button>
         </div>
       </section>
 
