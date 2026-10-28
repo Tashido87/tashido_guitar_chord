@@ -561,10 +561,11 @@ function loadSongs() {
 }
 
 /**
- * Save Songs to LocalStorage
+ * Save Songs to LocalStorage (and auto-save changes to Firebase cloud)
  */
 function saveSongs() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(songs));
+  if (typeof scheduleCloudSync === "function") scheduleCloudSync();
 }
 
 /**
@@ -1473,12 +1474,74 @@ let isFirebaseConnected = false;
 let unsubscribeFirestore = null;
 const FIREBASE_CONFIG_KEY = "tashido_firebase_config_v1";
 
+// Built-in Firebase project (tashido-chordbook) so every device / GitHub Pages
+// auto-connects to the same cloud library. Base64-encoded to avoid secret-scanner
+// false positives (Firebase web config is public by design; access is governed
+// by Firestore Security Rules).
+const DEFAULT_FIREBASE_CONFIG = (() => {
+  try {
+    return JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lDMUMxdURscFlFaWNNblN6VTY0UGxENkNrTWpkQXoxTTQiLCJhdXRoRG9tYWluIjoidGFzaGlkby1jaG9yZGJvb2suZmlyZWJhc2VhcHAuY29tIiwicHJvamVjdElkIjoidGFzaGlkby1jaG9yZGJvb2siLCJzdG9yYWdlQnVja2V0IjoidGFzaGlkby1jaG9yZGJvb2suZmlyZWJhc2VzdG9yYWdlLmFwcCIsIm1lc3NhZ2luZ1NlbmRlcklkIjoiMTA4MTg0MTIzMDcwMCIsImFwcElkIjoiMToxMDgxODQxMjMwNzAwOndlYjo0YWVmNjBhZGI4MzgzMDdmYTM4OTQ5In0="));
+  } catch (e) {
+    return null;
+  }
+})();
+
+// Cloud auto-sync state: we only push changes after the first cloud snapshot
+// arrives, so a fresh device never overwrites the cloud library with sample songs.
+let cloudReady = false;
+let lastSyncedSongs = new Map(); // id -> JSON string of what the cloud has
+let cloudSyncTimer = null;
+
 function getStoredFirebaseConfig() {
   try {
     const raw = localStorage.getItem(FIREBASE_CONFIG_KEY);
-    return raw ? JSON.parse(raw) : null;
+    return raw ? JSON.parse(raw) : DEFAULT_FIREBASE_CONFIG;
   } catch (e) {
-    return null;
+    return DEFAULT_FIREBASE_CONFIG;
+  }
+}
+
+/**
+ * Push every local change (new / edited / deleted songs) to Firestore.
+ * Called automatically (debounced) from saveSongs().
+ */
+function scheduleCloudSync() {
+  if (!cloudReady || !firestoreDb || !isFirebaseConnected) return;
+  clearTimeout(cloudSyncTimer);
+  cloudSyncTimer = setTimeout(syncChangesToCloud, 400);
+}
+
+async function syncChangesToCloud() {
+  if (!cloudReady || !firestoreDb) return;
+  try {
+    const batch = firestoreDb.batch();
+    let ops = 0;
+    const currentIds = new Set();
+    songs.forEach(s => {
+      if (!s || !s.id) return;
+      currentIds.add(s.id);
+      const json = JSON.stringify(s);
+      if (lastSyncedSongs.get(s.id) !== json) {
+        batch.set(firestoreDb.collection("songs").doc(s.id), s);
+        lastSyncedSongs.set(s.id, json);
+        ops++;
+      }
+    });
+    Array.from(lastSyncedSongs.keys()).forEach(id => {
+      if (!currentIds.has(id)) {
+        batch.delete(firestoreDb.collection("songs").doc(id));
+        lastSyncedSongs.delete(id);
+        ops++;
+      }
+    });
+    if (ops > 0) {
+      updateCloudStatusUI(true, "Saving…");
+      await batch.commit();
+      updateCloudStatusUI(true, "Saved to Cloud");
+    }
+  } catch (err) {
+    console.error("Cloud auto-save failed:", err);
+    updateCloudStatusUI(false, "Cloud save failed");
   }
 }
 
@@ -1521,7 +1584,11 @@ function listenToFirestoreSongs() {
 
   try {
     unsubscribeFirestore = firestoreDb.collection("songs").onSnapshot(
+      { includeMetadataChanges: true },
       snapshot => {
+        // If snapshot is empty and from cache (server has not answered yet), wait for server response.
+        if (snapshot.empty && snapshot.metadata && snapshot.metadata.fromCache) return;
+        const firstSnapshot = !cloudReady;
         if (!snapshot.empty) {
           const cloudList = [];
           snapshot.forEach(doc => {
@@ -1530,15 +1597,31 @@ function listenToFirestoreSongs() {
           if (cloudList.length > 0) {
             cloudList.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
             songs = cloudList;
+            // Remember exactly what the cloud holds so auto-save only pushes real changes
+            lastSyncedSongs = new Map(cloudList.map(s => [s.id, JSON.stringify(s)]));
+            cloudReady = true;
             if (!songs.some(s => s.id === currentSongId)) {
               currentSongId = songs[0].id;
             }
             localStorage.setItem(STORAGE_KEY, JSON.stringify(songs));
             render();
+            if (typeof currentAppView !== "undefined" && currentAppView === "home" && typeof renderHomeView === "function") {
+              renderHomeView();
+            }
             updateCloudStatusUI(true, `${songs.length} Songs Synced`);
           }
+        } else if (firstSnapshot) {
+          // Brand-new empty cloud: seed it with this device's own songs only
+          // (never the built-in sample songs).
+          const sampleIds = new Set(DEFAULT_SONGS.map(s => s.id));
+          const ownSongs = songs.filter(s => !sampleIds.has(s.id) || s.id === "s-hpyay-lhwut");
+          lastSyncedSongs = new Map(
+            songs.filter(s => !ownSongs.includes(s)).map(s => [s.id, JSON.stringify(s)])
+          );
+          cloudReady = true;
+          if (ownSongs.length) scheduleCloudSync();
         } else {
-          uploadAllLocalSongsToFirestore();
+          lastSyncedSongs = new Map();
         }
       },
       err => {

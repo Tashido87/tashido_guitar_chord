@@ -1,0 +1,18 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Songs collection used by Tashido's ChordBook
+    match /songs/{songId} {
+      allow read: if true;
+      allow delete: if true;
+      allow create, update: if request.resource.data.title is string
+                            && request.resource.data.title.size() > 0
+                            && request.resource.data.title.size() < 300
+                            && (!('lyrics' in request.resource.data) || request.resource.data.lyrics.size() < 200000);
+    }
+    // Everything else is closed
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
