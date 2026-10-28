@@ -228,12 +228,27 @@ let currentSongId = null;
 let currentView = "all"; // 'all', 'fav', 'recent', 'my', 'en', 'artists'
 let currentAppView = "home"; // 'home' or 'song'
 let homeFilter = "all"; // 'all', 'my', 'en', 'fav'
-let homeCatalogLimit = 12; // Smart pagination limit for large catalog
+let homeCatalogPage = 0; // All Songs page, 30 songs per side (60 per page)
+let homeCatalogShowAll = false; // Display all songs instead of paging
+let homeCatalogSort = "recent"; // All Songs sort: recent (default) or name
+let artistsPage = 0; // Artists list page, 30 names per side (60 per page)
+let artistsShowAll = false; // Display all artists instead of paging
+let artistsSort = "name"; // Artists sort: name (default) or recent
+let artistDetailSort = "name"; // Artist detail songs sort: name (default) or recent
+let selectedArtist = null; // Artists view: null = artist list, name = that artist's songs
 let recentPracticedIds = [];
 try {
   recentPracticedIds = JSON.parse(localStorage.getItem("tashido_recent_played") || "[]");
 } catch (e) {
   recentPracticedIds = [];
+}
+// Real song queue: starts empty. A song enters ONLY via Add to Queue.
+let queueIds = [];
+try {
+  queueIds = JSON.parse(localStorage.getItem("tashido_queue") || "[]");
+  if (!Array.isArray(queueIds)) queueIds = [];
+} catch (e) {
+  queueIds = [];
 }
 let transposeSteps = 0;
 let isAutoScrolling = false;
@@ -241,7 +256,7 @@ let scrollIntervalId = null;
 let scrollSpeed = 3;
 let editingSongId = null;
 let showChords = true;
-let isTwoColumns = false;
+let isTwoColumns = true;
 
 // Apple Music Style Gradient Covers & Glyphs
 const COVER_GRADIENTS = [
@@ -277,6 +292,48 @@ function recordSongPracticed(id) {
   try {
     localStorage.setItem("tashido_recent_played", JSON.stringify(recentPracticedIds));
   } catch (e) {}
+}
+
+function saveQueue() {
+  try {
+    localStorage.setItem("tashido_queue", JSON.stringify(queueIds));
+  } catch (e) {}
+}
+
+function getQueueSongs() {
+  return queueIds.map(id => songs.find(s => s.id === id)).filter(Boolean);
+}
+
+function updateQueueAddBtn() {
+  const btn = $("queueAddBtn");
+  if (!btn) return;
+  const inQueue = currentSongId && queueIds.includes(currentSongId);
+  btn.textContent = inQueue ? "\u2713" : "\uff0b";
+  btn.title = inQueue ? "Already in queue" : "Add to queue";
+  btn.classList.toggle("active", !!inQueue);
+}
+
+function addToQueue(id) {
+  if (!id || queueIds.includes(id)) return;
+  if (!songs.find(s => s.id === id)) return;
+  queueIds.push(id);
+  saveQueue();
+  updateQueueAddBtn();
+  renderSongList();
+}
+
+function removeFromQueue(id) {
+  queueIds = queueIds.filter(x => x !== id);
+  saveQueue();
+  updateQueueAddBtn();
+  renderSongList();
+}
+
+function clearQueue() {
+  queueIds = [];
+  saveQueue();
+  updateQueueAddBtn();
+  renderSongList();
 }
 
 // Audio Context (Web Audio API)
@@ -631,6 +688,79 @@ function getSongLanguage(s) {
 }
 
 /**
+ * Search match: title, artist, genre, key, and lyrics (partial lyric search)
+ */
+function normalizeSearchText(text) {
+  return (text || "")
+    .normalize("NFC")
+    .replace(/\[[^\]]*\]/g, "")
+    .replace(/[\s\u200b-\u200d]+/g, "")
+    .toLowerCase();
+}
+
+function songMatchesQuery(s, query) {
+  if (!query) return true;
+  const hay = normalizeSearchText(s.title + " " + (s.artist || "") + " " + (s.genre || "") + " " + (s.key || "") + " " + (s.lyrics || ""));
+  return hay.includes(normalizeSearchText(query));
+}
+
+function getSongArtists(s) {
+  const raw = (s.artist || "").trim();
+  if (!raw) return ["Unknown Artist"];
+  const parts = raw.split(/\s*(?:,|&|\/|\+|feat\.?|ft\.)\s*/i).map(p => p.trim()).filter(Boolean);
+  return parts.length ? parts : ["Unknown Artist"];
+}
+
+function searchMatchRank(s, query) {
+  const q = normalizeSearchText(query);
+  if (!q) return 0;
+  if (normalizeSearchText(s.title).includes(q)) return 0;
+  if (normalizeSearchText(s.artist || "").includes(q)) return 1;
+  return 2;
+}
+
+function highlightLyricMatch(line, query) {
+  const clean = line.replace(/\[[^\]]*\]/g, "").trim();
+  const normClean = clean.normalize("NFC");
+  let norm = "";
+  const map = [];
+  for (let i = 0; i < normClean.length; i++) {
+    const ch = normClean[i];
+    if (/\s/.test(ch) || ch === "\u200b" || ch === "\u200c" || ch === "\u200d") continue;
+    norm += ch.toLowerCase();
+    map.push(i);
+  }
+  const q = normalizeSearchText(query);
+  const idx = q ? norm.indexOf(q) : -1;
+  if (idx === -1) return escapeXml(clean);
+  const start = map[idx];
+  const end = map[idx + q.length - 1] + 1;
+  return escapeXml(normClean.slice(0, start)) + "<mark>" + escapeXml(normClean.slice(start, end)) + "</mark>" + escapeXml(normClean.slice(end));
+}
+
+function getLyricSnippet(s, query) {
+  if (!query || !s.lyrics) return "";
+  const q = normalizeSearchText(query);
+  if (!q) return "";
+  const lines = s.lyrics.split("\n");
+  const isHeader = line => /^(intro|verse|chorus|bridge|outro|pre-chorus|interlude|solo|refrain)\b/i.test(line.replace(/\[[^\]]*\]/g, "").trim());
+  let matchIdx = -1;
+  for (let i = 0; i < lines.length; i++) {
+    const clean = lines[i].replace(/\[[^\]]*\]/g, "").trim();
+    if (!clean || isHeader(lines[i])) continue;
+    if (normalizeSearchText(clean).includes(q)) { matchIdx = i; break; }
+  }
+  if (matchIdx === -1) return "";
+  const snippetLines = [highlightLyricMatch(lines[matchIdx], query)];
+  for (let j = matchIdx + 1; j < lines.length && snippetLines.length < 2; j++) {
+    const clean = lines[j].replace(/\[[^\]]*\]/g, "").trim();
+    if (!clean || isHeader(lines[j])) continue;
+    snippetLines.push(escapeXml(clean));
+  }
+  return `<div class="home-card-snippet">${snippetLines.map(l => `<div class="snippet-line">${l}</div>`).join("")}</div>`;
+}
+
+/**
  * Filter songs according to search input and active view
  */
 function getFilteredSongs() {
@@ -658,7 +788,7 @@ function getFilteredSongs() {
   if (query) {
     list = list.filter(
       s =>
-        (s.title + " " + (s.artist || "") + " " + (s.genre || "") + " " + (s.key || "")).toLowerCase().includes(query)
+        songMatchesQuery(s, query)
     );
   }
 
@@ -674,8 +804,10 @@ function renderHomeCard(s) {
   const lang = getSongLanguage(s);
   const flag = lang === "my" ? "🇲🇲" : "🇬🇧";
   const key = s.key || "C";
+  const cardQuery = ($("searchInput")?.value || "").trim();
+  const snippet = cardQuery ? getLyricSnippet(s, cardQuery) : "";
   return `
-    <div class="home-card" data-id="${s.id}">
+    <div class="home-card${snippet ? " has-snippet" : ""}" data-id="${s.id}">
       <div class="home-card-cover" style="background:${grad}">
         <span>${glyph}</span>
         <div class="home-card-play-overlay">
@@ -690,7 +822,9 @@ function renderHomeCard(s) {
           ${s.capo ? `<span class="home-meta-badge">Capo ${s.capo}</span>` : ""}
           ${s.fav ? `<span style="color:var(--rose);font-size:0.8rem;margin-left:auto;">♥</span>` : ""}
         </div>
+        ${snippet}
       </div>
+      <button class="queue-add-btn" data-id="${s.id}" title="Add to queue">+</button>
     </div>
   `;
 }
@@ -709,33 +843,25 @@ function renderHomeView() {
 
   const query = ($("searchInput")?.value || "").trim().toLowerCase();
 
-  // 1. Recently Practiced / Jump Back In
+  // 1. Recently Added (newest first, 10 songs)
   const recentSection = $("homeRecentSection");
   const recentGrid = $("homeRecentGrid");
   if (recentSection && recentGrid) {
-    let recentSongs = recentPracticedIds
-      .map(id => songs.find(s => s.id === id))
-      .filter(Boolean);
-
-    if (recentSongs.length === 0) {
-      recentSongs = songs.slice(0, 4);
-    }
+    let recentSongs = [...songs].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
     if (homeFilter === "my") recentSongs = recentSongs.filter(s => getSongLanguage(s) === "my");
     else if (homeFilter === "en") recentSongs = recentSongs.filter(s => getSongLanguage(s) === "en");
     else if (homeFilter === "fav") recentSongs = recentSongs.filter(s => s.fav);
 
     if (query) {
-      recentSongs = recentSongs.filter(s =>
-        (s.title + " " + (s.artist || "")).toLowerCase().includes(query)
-      );
+      recentSongs = recentSongs.filter(s => songMatchesQuery(s, query));
     }
 
     if (recentSongs.length === 0) {
       recentSection.style.display = "none";
     } else {
       recentSection.style.display = "block";
-      recentGrid.innerHTML = recentSongs.slice(0, 4).map(renderHomeCard).join("");
+      recentGrid.innerHTML = recentSongs.slice(0, 10).map(renderHomeCard).join("");
     }
   }
 
@@ -749,9 +875,7 @@ function renderHomeView() {
       let myanmarSongs = songs.filter(s => getSongLanguage(s) === "my");
       if (homeFilter === "fav") myanmarSongs = myanmarSongs.filter(s => s.fav);
       if (query) {
-        myanmarSongs = myanmarSongs.filter(s =>
-          (s.title + " " + (s.artist || "")).toLowerCase().includes(query)
-        );
+        myanmarSongs = myanmarSongs.filter(s => songMatchesQuery(s, query));
       }
       if (myanmarSongs.length === 0) {
         myanmarSection.style.display = "none";
@@ -772,9 +896,7 @@ function renderHomeView() {
       let englishSongs = songs.filter(s => getSongLanguage(s) === "en");
       if (homeFilter === "fav") englishSongs = englishSongs.filter(s => s.fav);
       if (query) {
-        englishSongs = englishSongs.filter(s =>
-          (s.title + " " + (s.artist || "")).toLowerCase().includes(query)
-        );
+        englishSongs = englishSongs.filter(s => songMatchesQuery(s, query));
       }
       if (englishSongs.length === 0) {
         englishSection.style.display = "none";
@@ -793,6 +915,7 @@ function renderHomeView() {
   const loadMoreBox = $("homeLoadMoreBox");
 
   if (allSection && allGrid) {
+    allSection.style.display = "block";
     let catalogSongs = [...songs];
     if (homeFilter === "my") catalogSongs = catalogSongs.filter(s => getSongLanguage(s) === "my");
     else if (homeFilter === "en") catalogSongs = catalogSongs.filter(s => getSongLanguage(s) === "en");
@@ -800,25 +923,223 @@ function renderHomeView() {
 
     if (query) {
       catalogSongs = catalogSongs.filter(s =>
-        (s.title + " " + (s.artist || "") + " " + (s.genre || "")).toLowerCase().includes(query)
+        songMatchesQuery(s, query)
       );
     }
 
+    if (homeCatalogSort === "name") {
+      catalogSongs.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+    } else {
+      catalogSongs.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    }
+    if (query) {
+      catalogSongs.sort((a, b) => searchMatchRank(a, query) - searchMatchRank(b, query));
+    }
+
     if (catalogCount) catalogCount.textContent = catalogSongs.length;
-    const visibleSongs = catalogSongs.slice(0, homeCatalogLimit);
+    // All Songs: 30 per side in 2 side-by-side tables (60 per page), or all at once.
+    const pageSize = 60;
+    const maxPage = Math.max(0, Math.ceil(catalogSongs.length / pageSize) - 1);
+    if (homeCatalogPage > maxPage) homeCatalogPage = maxPage;
+    if (homeCatalogPage < 0) homeCatalogPage = 0;
+    const visibleSongs = homeCatalogShowAll
+      ? catalogSongs
+      : catalogSongs.slice(homeCatalogPage * pageSize, homeCatalogPage * pageSize + pageSize);
 
     if (catalogSummary) {
-      catalogSummary.textContent = `Showing ${Math.min(visibleSongs.length, catalogSongs.length)} of ${catalogSongs.length} songs`;
+      if (homeCatalogShowAll) {
+        catalogSummary.textContent = `Showing all ${catalogSongs.length} songs`;
+      } else if (catalogSongs.length === 0) {
+        catalogSummary.textContent = `Showing 0 of 0 songs`;
+      } else {
+        const start = homeCatalogPage * pageSize + 1;
+        const end = Math.min(homeCatalogPage * pageSize + visibleSongs.length, catalogSongs.length);
+        catalogSummary.textContent = `Showing ${start}-${end} of ${catalogSongs.length} songs`;
+      }
+    }
+    const pageInfo = $("homeCatalogPageInfo");
+    if (pageInfo) {
+      pageInfo.textContent = homeCatalogShowAll ? "All songs" : `Page ${homeCatalogPage + 1} of ${maxPage + 1}`;
+    }
+    const prevBtn = $("homeCatalogPrevBtn");
+    if (prevBtn) prevBtn.disabled = homeCatalogShowAll || homeCatalogPage <= 0;
+    const nextBtn = $("homeCatalogNextBtn");
+    if (nextBtn) nextBtn.disabled = homeCatalogShowAll || homeCatalogPage >= maxPage;
+    const showAllBtn = $("homeCatalogShowAllBtn");
+    if (showAllBtn) showAllBtn.textContent = homeCatalogShowAll ? "Show 60 per page" : "Display all songs";
+    const sortRecentBtn = $("homeCatalogSortRecentBtn");
+    if (sortRecentBtn) {
+      sortRecentBtn.style.fontWeight = homeCatalogSort === "recent" ? "700" : "400";
+      sortRecentBtn.style.background = homeCatalogSort === "recent" ? "#FFFFFF" : "";
+      sortRecentBtn.style.boxShadow = homeCatalogSort === "recent" ? "0 1px 3px rgba(0,0,0,.12)" : "";
+    }
+    const sortNameBtn = $("homeCatalogSortNameBtn");
+    if (sortNameBtn) {
+      sortNameBtn.style.fontWeight = homeCatalogSort === "name" ? "700" : "400";
+      sortNameBtn.style.background = homeCatalogSort === "name" ? "#FFFFFF" : "";
+      sortNameBtn.style.boxShadow = homeCatalogSort === "name" ? "0 1px 3px rgba(0,0,0,.12)" : "";
     }
 
     if (visibleSongs.length === 0) {
       allGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--ink-muted);">No songs match this filter.</div>`;
     } else {
-      allGrid.innerHTML = visibleSongs.map(renderHomeCard).join("");
+      // Two real tables: first half left, second half right, fixed columns align both.
+      const half = Math.ceil(visibleSongs.length / 2);
+      const leftHtml = visibleSongs.slice(0, half).map(renderHomeCard).join("");
+      const rightHtml = visibleSongs.slice(half).map(renderHomeCard).join("");
+      allGrid.innerHTML = `<div class="all-table-col">${leftHtml}</div><div class="all-table-col">${rightHtml}</div>`;
     }
 
     if (loadMoreBox) {
-      loadMoreBox.style.display = visibleSongs.length < catalogSongs.length ? "block" : "none";
+      loadMoreBox.style.display = "block";
+    }
+  }
+
+  // Home shows the All Songs library only: hide Recently Added, Myanmar, English sections.
+  if ($("homeRecentSection")) $("homeRecentSection").style.display = "none";
+  if ($("homeMyanmarSection")) $("homeMyanmarSection").style.display = "none";
+  if ($("homeEnglishSection")) $("homeEnglishSection").style.display = "none";
+
+  // Artists view: names only, in order. Tap a name to see only their songs.
+  const artistsSection = $("homeArtistsSection");
+  const artistsGrid = $("homeArtistsGrid");
+  if (currentView !== "artists") selectedArtist = null;
+  if (artistsSection) {
+    if (currentView === "artists" && artistsGrid) {
+      if ($("homeRecentSection")) $("homeRecentSection").style.display = "none";
+      if ($("homeMyanmarSection")) $("homeMyanmarSection").style.display = "none";
+      if ($("homeEnglishSection")) $("homeEnglishSection").style.display = "none";
+      if (allSection) allSection.style.display = "none";
+      if (loadMoreBox) loadMoreBox.style.display = "none";
+      artistsSection.style.display = "block";
+      artistsGrid.classList.toggle("detail", !!selectedArtist);
+      const backBtn = $("homeArtistsBackBtn");
+      const titleEl = $("homeArtistsTitle");
+      const countEl = $("homeArtistsCount");
+      const artistsSortBox = $("homeArtistsSortBox");
+      const artistsNavBox = $("homeArtistsNavBox");
+      const artistDetailSortBox = $("homeArtistDetailSortBox");
+      if (selectedArtist) {
+        if (backBtn) backBtn.style.display = "inline-flex";
+        if (titleEl) titleEl.textContent = selectedArtist;
+        if (artistsSortBox) artistsSortBox.style.display = "none";
+        if (artistsNavBox) artistsNavBox.style.display = "none";
+        if (artistDetailSortBox) artistDetailSortBox.style.display = "flex";
+        let artistSongs = songs.filter(s => getSongArtists(s).includes(selectedArtist));
+        if (query) {
+          artistSongs = artistSongs.filter(s => songMatchesQuery(s, query));
+        }
+        const sortDetailSongs = list => {
+          if (artistDetailSort === "recent") {
+            list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          } else {
+            list.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+          }
+          if (query) {
+            list.sort((a, b) => searchMatchRank(a, query) - searchMatchRank(b, query));
+          }
+          return list;
+        };
+        const soloSongs = sortDetailSongs(artistSongs.filter(s => getSongArtists(s).length === 1));
+        const collabSongs = sortDetailSongs(artistSongs.filter(s => getSongArtists(s).length > 1));
+        const detailSortNameBtn = $("homeArtistDetailSortNameBtn");
+        if (detailSortNameBtn) {
+          detailSortNameBtn.style.fontWeight = artistDetailSort === "name" ? "700" : "400";
+          detailSortNameBtn.style.background = artistDetailSort === "name" ? "#FFFFFF" : "";
+          detailSortNameBtn.style.boxShadow = artistDetailSort === "name" ? "0 1px 3px rgba(0,0,0,.12)" : "";
+        }
+        const detailSortRecentBtn = $("homeArtistDetailSortRecentBtn");
+        if (detailSortRecentBtn) {
+          detailSortRecentBtn.style.fontWeight = artistDetailSort === "recent" ? "700" : "400";
+          detailSortRecentBtn.style.background = artistDetailSort === "recent" ? "#FFFFFF" : "";
+          detailSortRecentBtn.style.boxShadow = artistDetailSort === "recent" ? "0 1px 3px rgba(0,0,0,.12)" : "";
+        }
+        if (countEl) countEl.textContent = artistSongs.length + " songs";
+        if (artistSongs.length === 0) {
+          artistsGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--ink-muted);">No songs for this artist.</div>`;
+        } else {
+          const groupHtml = (title, list) => {
+            if (!list.length) return "";
+            const half = Math.ceil(list.length / 2);
+            const leftHtml = list.slice(0, half).map(renderHomeCard).join("");
+            const rightHtml = list.slice(half).map(renderHomeCard).join("");
+            return `<div class="artist-group"><div class="artist-group-title">${title} (${list.length})</div><div class="artist-group-tables"><div class="all-table-col">${leftHtml}</div><div class="all-table-col">${rightHtml}</div></div></div>`;
+          };
+          artistsGrid.innerHTML = groupHtml("Solo", soloSongs) + groupHtml("Collaborations", collabSongs);
+        }
+      } else {
+        if (backBtn) backBtn.style.display = "none";
+        if (titleEl) titleEl.textContent = "Artists";
+        if (artistsSortBox) artistsSortBox.style.display = "flex";
+        if (artistsNavBox) artistsNavBox.style.display = "block";
+        if (artistDetailSortBox) artistDetailSortBox.style.display = "none";
+        let artistNames = [...new Set(songs.flatMap(s => getSongArtists(s)))];
+        if (artistsSort === "recent") {
+          const newest = {};
+          songs.forEach(s => {
+            getSongArtists(s).forEach(name => {
+              newest[name] = Math.max(newest[name] || 0, s.createdAt || 0);
+            });
+          });
+          artistNames.sort((a, b) => (newest[b] || 0) - (newest[a] || 0) || a.localeCompare(b));
+        } else {
+          artistNames.sort((a, b) => a.localeCompare(b));
+        }
+        if (query) {
+          artistNames = artistNames.filter(name => normalizeSearchText(name).includes(normalizeSearchText(query)) || songs.some(s => getSongArtists(s).includes(name) && songMatchesQuery(s, query)));
+          const qNorm = normalizeSearchText(query);
+          artistNames.sort((a, b) => (normalizeSearchText(a).includes(qNorm) ? 0 : 1) - (normalizeSearchText(b).includes(qNorm) ? 0 : 1));
+        }
+        if (countEl) countEl.textContent = artistNames.length + " artists";
+        const artistsPageSize = 60;
+        const artistsMaxPage = Math.max(0, Math.ceil(artistNames.length / artistsPageSize) - 1);
+        if (artistsPage > artistsMaxPage) artistsPage = artistsMaxPage;
+        if (artistsPage < 0) artistsPage = 0;
+        const indexedNames = artistNames.map((name, idx) => ({ name, idx }));
+        const visibleArtists = artistsShowAll ? indexedNames : indexedNames.slice(artistsPage * artistsPageSize, artistsPage * artistsPageSize + artistsPageSize);
+        const artistsPageInfo = $("homeArtistsPageInfo");
+        if (artistsPageInfo) {
+          artistsPageInfo.textContent = artistsShowAll ? "All artists" : `Page ${artistsPage + 1} of ${artistsMaxPage + 1}`;
+        }
+        const artistsPrevBtn = $("homeArtistsPrevBtn");
+        if (artistsPrevBtn) artistsPrevBtn.disabled = artistsShowAll || artistsPage <= 0;
+        const artistsNextBtn = $("homeArtistsNextBtn");
+        if (artistsNextBtn) artistsNextBtn.disabled = artistsShowAll || artistsPage >= artistsMaxPage;
+        const artistsShowAllBtn = $("homeArtistsShowAllBtn");
+        if (artistsShowAllBtn) artistsShowAllBtn.textContent = artistsShowAll ? "Show 60 per page" : "Display all artists";
+        const artistsSortNameBtn = $("homeArtistsSortNameBtn");
+        if (artistsSortNameBtn) {
+          artistsSortNameBtn.style.fontWeight = artistsSort === "name" ? "700" : "400";
+          artistsSortNameBtn.style.background = artistsSort === "name" ? "#FFFFFF" : "";
+          artistsSortNameBtn.style.boxShadow = artistsSort === "name" ? "0 1px 3px rgba(0,0,0,.12)" : "";
+        }
+        const artistsSortRecentBtn = $("homeArtistsSortRecentBtn");
+        if (artistsSortRecentBtn) {
+          artistsSortRecentBtn.style.fontWeight = artistsSort === "recent" ? "700" : "400";
+          artistsSortRecentBtn.style.background = artistsSort === "recent" ? "#FFFFFF" : "";
+          artistsSortRecentBtn.style.boxShadow = artistsSort === "recent" ? "0 1px 3px rgba(0,0,0,.12)" : "";
+        }
+        if (visibleArtists.length === 0) {
+          artistsGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--ink-muted);">No artists found.</div>`;
+        } else {
+          const half = Math.ceil(visibleArtists.length / 2);
+          const rowHtml = item => {
+            const count = songs.filter(s => getSongArtists(s).includes(item.name)).length;
+            return `<button class="artist-row" data-idx="${item.idx}"><span class="artist-row-name">${escapeXml(item.name)}</span><span class="artist-row-count">${count} songs</span></button>`;
+          };
+          const leftHtml = visibleArtists.slice(0, half).map(rowHtml).join("");
+          const rightHtml = visibleArtists.slice(half).map(rowHtml).join("");
+          artistsGrid.innerHTML = `<div class="all-table-col">${leftHtml}</div><div class="all-table-col">${rightHtml}</div>`;
+        }
+        artistsGrid.querySelectorAll(".artist-row").forEach(row => {
+          row.onclick = () => {
+            selectedArtist = artistNames[parseInt(row.dataset.idx, 10)];
+            renderHomeView();
+          };
+        });
+      }
+    } else {
+      artistsSection.style.display = "none";
     }
   }
 
@@ -827,6 +1148,14 @@ function renderHomeView() {
     card.onclick = () => {
       const id = card.dataset.id;
       if (id) openSongView(id);
+    };
+  });
+  // Add to Queue buttons on cards (must not open the song)
+  homeView.querySelectorAll(".queue-add-btn").forEach(btn => {
+    btn.onclick = e => {
+      e.stopPropagation();
+      addToQueue(btn.dataset.id);
+      btn.textContent = "\u2713";
     };
   });
 }
@@ -882,12 +1211,17 @@ function openSongView(songId) {
  * Render Sidebar Song List (Apple Music Queue with Drag & Drop Reorder)
  */
 function renderSongList() {
-  const list = getFilteredSongs();
+  // Queue only: never the whole library. Sidebar search filters the queue.
+  const query = ($("searchInput")?.value || "").trim().toLowerCase();
+  let list = getQueueSongs();
+  if (query) {
+    list = list.filter(s => songMatchesQuery(s, query));
+  }
   const container = $("songList");
   if (!container) return;
 
   if (!list.length) {
-    container.innerHTML = `<div style="color:var(--ink-faint);font-size:0.8rem;text-align:center;padding:20px 0;">No songs found.</div>`;
+    container.innerHTML = `<div style="color:var(--ink-faint);font-size:0.8rem;text-align:center;padding:20px 0;">Queue is empty. Tap + Add to Queue on a song.</div>`;
   } else {
     container.innerHTML = list
       .map((s, idx) => {
@@ -912,10 +1246,19 @@ function renderSongList() {
                 ? '<span style="color:var(--rose);font-size:0.8rem;margin-left:4px;">♥</span>'
                 : ""
             }
+            <span class="queue-remove" data-id="${s.id}" title="Remove from queue">\u00d7</span>
           </button>
         `;
       })
       .join("");
+
+    // Remove-one-song control inside each queue row
+    container.querySelectorAll(".queue-remove").forEach(el => {
+      el.onclick = e => {
+        e.stopPropagation();
+        removeFromQueue(el.dataset.id);
+      };
+    });
 
     // Click handler to open song
     container.querySelectorAll(".song-item-btn").forEach(btn => {
@@ -955,14 +1298,14 @@ function renderSongList() {
           const sourceSong = list[fromIdx];
           const targetSong = list[toIdx];
           if (sourceSong && targetSong) {
-            const actualFromIdx = songs.findIndex(s => s.id === sourceSong.id);
-            const actualToIdx = songs.findIndex(s => s.id === targetSong.id);
-            if (actualFromIdx !== -1 && actualToIdx !== -1) {
-              const [moved] = songs.splice(actualFromIdx, 1);
-              songs.splice(actualToIdx, 0, moved);
-              saveSongs();
+            // Reorder the queue only, never the library order.
+            const qFrom = queueIds.indexOf(sourceSong.id);
+            const qTo = queueIds.indexOf(targetSong.id);
+            if (qFrom !== -1 && qTo !== -1) {
+              const [moved] = queueIds.splice(qFrom, 1);
+              queueIds.splice(qTo, 0, moved);
+              saveQueue();
               renderSongList();
-              if (currentAppView === "home") renderHomeView();
             }
           }
         }
@@ -979,7 +1322,8 @@ function renderSongList() {
   // Render Genre Chips
   const genres = {};
   songs.forEach(s => {
-    const g = s.genre || "Acoustic";
+    const g = (s.genre || "").trim();
+    if (!g) return;
     genres[g] = (genres[g] || 0) + 1;
   });
 
@@ -998,6 +1342,8 @@ function renderSongList() {
     genreContainer.querySelectorAll(".tag-chip").forEach(chip => {
       chip.onclick = () => {
         $("searchInput").value = chip.dataset.genre;
+        const clearBtn = $("searchClearBtn");
+        if (clearBtn) clearBtn.style.display = "block";
         currentView = "all";
         renderSongList();
         if (currentAppView === "home") renderHomeView();
@@ -1043,7 +1389,7 @@ function render() {
   // Hero Card Data
   if ($("heroTitle")) $("heroTitle").textContent = song.title;
   if ($("heroArtist")) $("heroArtist").textContent = song.artist || "Unknown Artist";
-  if ($("heroGenre")) $("heroGenre").textContent = song.genre || "Acoustic";
+  if ($("heroGenre")) $("heroGenre").textContent = song.genre || "";
   if ($("heroYear")) $("heroYear").textContent = song.year || "2024";
   if ($("heroCapo")) $("heroCapo").textContent = `Capo ${song.capo || 0}`;
   if ($("capoVal")) $("capoVal").textContent = song.capo || 0;
@@ -1071,11 +1417,15 @@ function render() {
     }
   }
 
+  // Add to Queue button state for this song
+  updateQueueAddBtn();
+
   // Floating Bar Data
   if ($("barTitle")) $("barTitle").textContent = song.title;
   if ($("barArtist")) $("barArtist").textContent = song.artist || "Unknown";
 
   renderSongList();
+  if (currentAppView === "home") renderHomeView();
   renderLyrics();
   renderChordGrid();
 }
@@ -1288,7 +1638,6 @@ CRITICAL INSTRUCTIONS:
    - artist: Singer or composer (e.g. စိုးလွင်လွင်)
    - key: Key (e.g. G)
    - capo: 0 unless specified
-   - genre: Music genre or Myanmar Classic / Acoustic
 4. Format the lyrics with inline guitar chords in brackets [Chord] placed EXACTLY right before the Burmese/English syllable or word that the chord aligns with vertically.
    Example:
    [G]ကိုယ် ရေးခဲ့သော [Em]သီချင်းတွေ ကြုံတွေ့ခဲ့သော [Am]အဖြစ်တွေ [D]
@@ -1311,7 +1660,6 @@ Return STRICT JSON format:
   "artist": "...",
   "key": "...",
   "capo": 0,
-  "genre": "...",
   "lyrics": "..."
 }`;
 
@@ -1353,7 +1701,7 @@ Return STRICT JSON format:
     // Populate form fields
     if (parsed.title) $("fTitle").value = parsed.title;
     if (parsed.artist) $("fArtist").value = parsed.artist;
-    if (parsed.genre) $("fGenre").value = parsed.genre;
+    /* Genre is never auto-filled: the user types it, or leaves it empty. */
     if (parsed.key) $("fKey").value = parsed.key;
     if (typeof parsed.capo === "number") $("fCapo").value = parsed.capo;
     if (parsed.lyrics) $("fLyrics").value = parsed.lyrics;
@@ -1597,7 +1945,7 @@ function saveSongFromModal() {
   const songData = {
     title,
     artist: $("fArtist").value.trim() || "Unknown",
-    genre: $("fGenre").value.trim() || "Acoustic",
+    genre: $("fGenre").value.trim(),
     language,
     key: $("fKey").value.trim() || "C",
     capo: parseInt($("fCapo").value, 10) || 0,
@@ -1621,6 +1969,7 @@ function saveSongFromModal() {
     };
     songs.unshift(newSong);
     currentSongId = newSong.id;
+    homeCatalogPage = 0;
     saveSongToFirebase(newSong);
   }
 
@@ -1647,6 +1996,8 @@ function deleteCurrentSong() {
   if (confirmed) {
     const idToDelete = s.id;
     songs = songs.filter(x => x.id !== idToDelete);
+    queueIds = queueIds.filter(x => x !== idToDelete);
+    saveQueue();
     currentSongId = songs[0].id;
     saveSongs();
     deleteSongFromFirebase(idToDelete);
@@ -1768,14 +2119,95 @@ function setupEventListeners() {
   document.querySelectorAll(".home-pill[data-home-filter]").forEach(pill => {
     pill.onclick = () => {
       homeFilter = pill.dataset.homeFilter;
+      homeCatalogPage = 0;
       renderHomeView();
     };
   });
 
-  // Home View "Load More Songs"
-  if ($("homeLoadMoreBtn")) {
-    $("homeLoadMoreBtn").onclick = () => {
-      homeCatalogLimit += 12;
+  // Artists view: back from an artist's songs to the artist list
+  if ($("homeArtistsBackBtn")) {
+    $("homeArtistsBackBtn").onclick = () => {
+      selectedArtist = null;
+      renderHomeView();
+    };
+  }
+
+  // All Songs navigation: Prev / Next pages, Display all songs
+  if ($("homeCatalogPrevBtn")) {
+    $("homeCatalogPrevBtn").onclick = () => {
+      if (homeCatalogPage > 0) homeCatalogPage--;
+      renderHomeView();
+    };
+  }
+  if ($("homeCatalogNextBtn")) {
+    $("homeCatalogNextBtn").onclick = () => {
+      homeCatalogPage++;
+      renderHomeView();
+    };
+  }
+  if ($("homeCatalogShowAllBtn")) {
+    $("homeCatalogShowAllBtn").onclick = () => {
+      homeCatalogShowAll = !homeCatalogShowAll;
+      renderHomeView();
+    };
+  }
+  if ($("homeCatalogSortRecentBtn")) {
+    $("homeCatalogSortRecentBtn").onclick = () => {
+      homeCatalogSort = "recent";
+      homeCatalogPage = 0;
+      renderHomeView();
+    };
+  }
+  if ($("homeCatalogSortNameBtn")) {
+    $("homeCatalogSortNameBtn").onclick = () => {
+      homeCatalogSort = "name";
+      homeCatalogPage = 0;
+      renderHomeView();
+    };
+  }
+  // Artists navigation and sort, like All Songs
+  if ($("homeArtistsPrevBtn")) {
+    $("homeArtistsPrevBtn").onclick = () => {
+      if (artistsPage > 0) artistsPage--;
+      renderHomeView();
+    };
+  }
+  if ($("homeArtistsNextBtn")) {
+    $("homeArtistsNextBtn").onclick = () => {
+      artistsPage++;
+      renderHomeView();
+    };
+  }
+  if ($("homeArtistsShowAllBtn")) {
+    $("homeArtistsShowAllBtn").onclick = () => {
+      artistsShowAll = !artistsShowAll;
+      renderHomeView();
+    };
+  }
+  if ($("homeArtistsSortNameBtn")) {
+    $("homeArtistsSortNameBtn").onclick = () => {
+      artistsSort = "name";
+      artistsPage = 0;
+      renderHomeView();
+    };
+  }
+  if ($("homeArtistsSortRecentBtn")) {
+    $("homeArtistsSortRecentBtn").onclick = () => {
+      artistsSort = "recent";
+      artistsPage = 0;
+      renderHomeView();
+    };
+  }
+  // Artist detail songs sort: Name (default) or Recently Added
+  if ($("homeArtistDetailSortNameBtn")) {
+    $("homeArtistDetailSortNameBtn").onclick = () => {
+      artistDetailSort = "name";
+      renderHomeView();
+    };
+  }
+  if ($("homeArtistDetailSortRecentBtn")) {
+    $("homeArtistDetailSortRecentBtn").onclick = () => {
+      artistDetailSort = "recent";
       renderHomeView();
     };
   }
@@ -1785,6 +2217,16 @@ function setupEventListeners() {
     $("heroBackBtn").onclick = () => openHomeView();
   }
 
+  // Queue controls: Clear Queue in the sidebar header, Add to Queue in song view
+  if ($("clearQueueBtn")) {
+    $("clearQueueBtn").onclick = () => clearQueue();
+  }
+  if ($("queueAddBtn")) {
+    $("queueAddBtn").onclick = () => {
+      if (currentSongId) addToQueue(currentSongId);
+    };
+  }
+
   // Brand logo click navigates to Home
   const brandLogo = document.querySelector(".brand");
   if (brandLogo) {
@@ -1792,11 +2234,26 @@ function setupEventListeners() {
     brandLogo.onclick = () => openHomeView();
   }
 
-  // Search input
+  // Search input + clear button
   if ($("searchInput")) {
     $("searchInput").oninput = () => {
+      homeCatalogPage = 0;
+      artistsPage = 0;
+      const clearBtn = $("searchClearBtn");
+      if (clearBtn) clearBtn.style.display = $("searchInput").value ? "block" : "none";
       renderSongList();
       if (currentAppView === "home") renderHomeView();
+    };
+  }
+  if ($("searchClearBtn")) {
+    $("searchClearBtn").onclick = () => {
+      $("searchInput").value = "";
+      homeCatalogPage = 0;
+      artistsPage = 0;
+      $("searchClearBtn").style.display = "none";
+      renderSongList();
+      if (currentAppView === "home") renderHomeView();
+      $("searchInput").focus();
     };
   }
 

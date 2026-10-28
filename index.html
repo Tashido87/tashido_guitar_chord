@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tashido Guitar Chord — Clean Acoustic Songbook</title>
+  <title>Tashido's ChordBook</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="chordbook-calm-v12.css">
 </head>
 <body>
 
   <div class="app-container">
+
+    <button type="button" class="mobile-nav-toggle" id="mobileNavToggleBtn">&#9776; Menu</button>
 
     <!-- LEFT SIDEBAR: Library & Navigation -->
     <aside class="sidebar">
@@ -16,10 +19,10 @@
       <!-- Brand Header -->
       <div class="brand-header">
         <div class="brand-logo" id="homeLogoBtn" title="Go to Home Library" style="cursor:pointer;">
-          <div class="brand-icon">🎸</div>
+          <div class="brand-icon" style="font-weight:600;">T</div>
           <div>
-            <div style="font-weight:700;font-size:1.05rem;line-height:1.2;">ChordBook</div>
-            <div style="font-size:0.68rem;color:var(--ink-muted);font-weight:400;">Songs. Chords. Always with you.</div>
+            <div style="font-weight:700;font-size:1.05rem;line-height:1.2;">Tashido's ChordBook</div>
+            <div style="font-size:0.68rem;color:var(--ink-muted);font-weight:400;">Songs · Chords</div>
           </div>
         </div>
       </div>
@@ -30,14 +33,14 @@
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="searchInput" placeholder="Search songs, artists...">
+        <input type="text" id="searchInput" placeholder="Search songs, artists, lyrics...">
+        <button type="button" id="searchClearBtn" aria-label="Clear search" style="display:none;">&times;</button>
       </div>
 
       <!-- Navigation Views -->
       <nav class="nav-section">
         <button class="nav-item active" data-view="all" id="navAllBtn">
           <div class="nav-item-content">
-            <span>🎵</span>
             <span>All Songs</span>
           </div>
           <span class="badge-count" id="countAll">0</span>
@@ -45,7 +48,7 @@
 
         <button class="nav-item" data-view="fav" id="navFavBtn">
           <div class="nav-item-content">
-            <span style="color:var(--rose)">🤍</span>
+            <span>♡</span>
             <span>Favorites</span>
           </div>
           <span class="badge-count" id="countFav">0</span>
@@ -53,21 +56,18 @@
 
         <button class="nav-item" data-view="recent" id="navRecentBtn">
           <div class="nav-item-content">
-            <span>⏱</span>
             <span>Recently Played</span>
           </div>
         </button>
 
         <button class="nav-item" data-view="artists" id="navArtistsBtn">
           <div class="nav-item-content">
-            <span>👤</span>
             <span>Artists</span>
           </div>
         </button>
 
         <button class="nav-item" id="categoriesToggleBtn">
           <div class="nav-item-content">
-            <span>📁</span>
             <span>Categories</span>
           </div>
           <span style="font-size:0.75rem;color:var(--ink-faint);" id="categoriesArrow">▾</span>
@@ -76,11 +76,11 @@
         <!-- Sub-categories dropdown -->
         <div class="sub-nav-section" id="categoriesSubMenu">
           <button class="sub-nav-item" data-view="en">
-            <span>🇬🇧 English Songs</span>
+            <span>English Songs</span>
             <span class="badge-count" id="countEnglish">0</span>
           </button>
           <button class="sub-nav-item" data-view="my">
-            <span>🇲🇲 Myanmar Songs</span>
+            <span>Myanmar Songs</span>
             <span class="badge-count" id="countMyanmar">0</span>
           </button>
         </div>
@@ -89,7 +89,7 @@
       <!-- Songs Queue Header -->
       <div class="sidebar-queue-header">
         <span>SONGS QUEUE</span>
-        <span style="font-size:0.7rem;color:var(--ink-faint);" title="Drag songs to reorder strum list">⇅ Reorder</span>
+        <button id="clearQueueBtn" title="Clear queue">Clear</button>
       </div>
 
       <!-- Songs List (Draggable Queue) -->
@@ -110,36 +110,54 @@
         <div class="home-header">
           <div>
             <h1 class="home-title">Library</h1>
-            <div class="home-subtitle">Browse your acoustic songs &amp; chords</div>
-          </div>
-          <div class="home-filter-pills">
-            <button class="home-pill active" data-home-filter="all">All Songs</button>
-            <button class="home-pill" data-home-filter="my">🇲🇲 Myanmar</button>
-            <button class="home-pill" data-home-filter="en">🇬🇧 English</button>
-            <button class="home-pill" data-home-filter="fav">🤍 Favorites</button>
+            <div class="home-subtitle">Browse your songs &amp; chords</div>
           </div>
         </div>
+
+        <!-- Section: Artists (names only; tap a name to see their songs) -->
+        <section id="homeArtistsSection" style="display:none;">
+          <div class="home-section-header">
+            <button class="btn btn-outline btn-sm" id="homeArtistsBackBtn" style="display:none;">Artists</button>
+            <h2 class="home-section-title" id="homeArtistsTitle">Artists</h2>
+            <div style="font-size:0.78rem;color:var(--ink-muted);" id="homeArtistsCount"></div>
+          </div>
+          <div style="display:inline-flex;gap:6px;align-items:center;margin:6px 0 10px;" id="homeArtistsSortBox">
+            <button class="btn btn-outline btn-sm" id="homeArtistsSortNameBtn">Name</button>
+            <button class="btn btn-outline btn-sm" id="homeArtistsSortRecentBtn">Recently Added</button>
+          </div>
+          <div style="display:none;gap:6px;align-items:center;margin:6px 0 10px;" id="homeArtistDetailSortBox">
+            <button class="btn btn-outline btn-sm" id="homeArtistDetailSortNameBtn">Name</button>
+            <button class="btn btn-outline btn-sm" id="homeArtistDetailSortRecentBtn">Recently Added</button>
+          </div>
+          <div class="home-grid" id="homeArtistsGrid"></div>
+          <div style="text-align:center;margin-top:20px;" id="homeArtistsNavBox">
+            <button class="btn btn-outline btn-sm" id="homeArtistsPrevBtn">Prev</button>
+            <span style="font-size:0.82rem;color:var(--ink-muted);margin:0 10px;" id="homeArtistsPageInfo"></span>
+            <button class="btn btn-outline btn-sm" id="homeArtistsNextBtn">Next</button>
+            <button class="btn btn-outline btn-sm" id="homeArtistsShowAllBtn" style="margin-left:10px;">Display all artists</button>
+          </div>
+        </section>
 
         <!-- Section: Recently Practiced / Jump Back In -->
         <section id="homeRecentSection">
           <div class="home-section-header">
-            <h2 class="home-section-title"><span>⏱</span> Recently Practiced</h2>
+            <h2 class="home-section-title">Recently Added</h2>
           </div>
           <div class="home-grid" id="homeRecentGrid"></div>
         </section>
 
-        <!-- Section: Myanmar Acoustic Songs -->
+        <!-- Section: Myanmar Songs -->
         <section id="homeMyanmarSection">
           <div class="home-section-header">
-            <h2 class="home-section-title"><span>🇲🇲</span> Myanmar Acoustic</h2>
+            <h2 class="home-section-title">Myanmar</h2>
           </div>
           <div class="home-grid" id="homeMyanmarGrid"></div>
         </section>
 
-        <!-- Section: English Acoustic Favorites -->
+        <!-- Section: English Songs -->
         <section id="homeEnglishSection">
           <div class="home-section-header">
-            <h2 class="home-section-title"><span>🇬🇧</span> English Acoustic</h2>
+            <h2 class="home-section-title">English</h2>
           </div>
           <div class="home-grid" id="homeEnglishGrid"></div>
         </section>
@@ -147,12 +165,19 @@
         <!-- Section: All Songs Catalog (Organized with Smart Limit) -->
         <section id="homeAllSection">
           <div class="home-section-header">
-            <h2 class="home-section-title"><span>🎸</span> All Songs (<span id="homeCatalogCount">0</span>)</h2>
+            <h2 class="home-section-title">All Songs (<span id="homeCatalogCount">0</span>)</h2>
             <div style="font-size:0.78rem;color:var(--ink-muted);" id="homeCatalogSummary"></div>
+          </div>
+          <div style="display:inline-flex;gap:6px;align-items:center;margin:6px 0 10px;" id="homeCatalogSortBox">
+            <button class="btn btn-outline btn-sm" id="homeCatalogSortRecentBtn">Recently Added</button>
+            <button class="btn btn-outline btn-sm" id="homeCatalogSortNameBtn">Name</button>
           </div>
           <div class="home-grid" id="homeAllGrid"></div>
           <div style="text-align:center;margin-top:20px;" id="homeLoadMoreBox">
-            <button class="btn btn-outline btn-sm" id="homeLoadMoreBtn">Load More Songs ▾</button>
+            <button class="btn btn-outline btn-sm" id="homeCatalogPrevBtn">Prev</button>
+            <span style="font-size:0.82rem;color:var(--ink-muted);margin:0 10px;" id="homeCatalogPageInfo"></span>
+            <button class="btn btn-outline btn-sm" id="homeCatalogNextBtn">Next</button>
+            <button class="btn btn-outline btn-sm" id="homeCatalogShowAllBtn" style="margin-left:10px;">Display all songs</button>
           </div>
         </section>
       </div>
@@ -181,15 +206,17 @@
           </div>
 
           <div class="hero-actions">
+            <button class="circle-btn" id="toolsToggleBtn" title="Hide tools">›</button>
             <button class="circle-btn" id="favBtn" title="Toggle Favorite">♡</button>
-            <button class="circle-btn" id="editSongBtn" title="Edit this song">✏️</button>
+            <button class="circle-btn" id="editSongBtn" title="Edit this song">&#9998;</button>
             <button class="circle-btn" id="printBtn" title="Print chord sheet">🖨️</button>
+            <button class="circle-btn" id="queueAddBtn" title="Add to queue">＋</button>
             <button class="circle-btn play-action" id="heroPlayBtn" title="Start / Pause Auto-Scroll">▶</button>
           </div>
         </section>
 
         <!-- Main Lyrics Card -->
-        <article class="lyrics-card" id="lyricsCard">
+        <article class="lyrics-card two-columns" id="lyricsCard">
           <div id="lyricsContainer"></div>
         </article>
 
@@ -254,7 +281,7 @@
         <!-- Two Columns Layout Switch -->
         <div class="tool-row">
           <span class="tool-label">2 Columns</span>
-          <button class="switch-control" id="colToggleBtn" title="Toggle two-column lyrics"></button>
+          <button class="switch-control active" id="colToggleBtn" title="Toggle two-column lyrics"></button>
         </div>
       </section>
 
@@ -329,8 +356,7 @@
           <div class="ai-scan-title">
             <span style="font-size:1.15rem;">✨</span>
             <div>
-              <b>Scan Chord Sheet Image with Gemini AI</b>
-              <div style="font-size:0.72rem;color:var(--ink-muted);">Auto-extracts Myanmar/English lyrics & chords • Discards watermarks & ads</div>
+              <b>Scan chord sheet</b>
             </div>
             <span class="ai-badge">gemini-flash-latest</span>
           </div>
@@ -353,10 +379,7 @@
           <div class="ai-dropzone-content" id="dropzoneContent">
             <span style="font-size:2rem;">📸</span>
             <div>
-              <b>Click to browse or Drag & Drop Chord Sheet Photo</b>
-              <div style="color:var(--ink-muted);font-size:0.75rem;margin-top:3px;">
-                Supports PNG, JPG, WEBP • Or Paste screenshot with <kbd>Ctrl+V</kbd> / <kbd>Cmd+V</kbd>
-              </div>
+              <b>Drop a chord sheet photo</b>
             </div>
           </div>
 
@@ -384,7 +407,7 @@
       <!-- Basic Metadata Grid -->
       <div class="form-grid-2">
         <div class="form-group">
-          <label class="form-label">Song Title *</label>
+          <label class="form-label">Title *</label>
           <input type="text" class="form-input" id="fTitle" placeholder="e.g. ဖြေလွှတ်ပစ်လိုက်တဲ့ကြိုး">
         </div>
         <div class="form-group">
@@ -393,30 +416,30 @@
         </div>
         <div class="form-group">
           <label class="form-label">Genre</label>
-          <input type="text" class="form-input" id="fGenre" placeholder="e.g. Myanmar Classic, Acoustic">
+          <input type="text" class="form-input" id="fGenre" placeholder="Optional">
         </div>
         <div class="form-group">
-          <label class="form-label">Original Key</label>
+          <label class="form-label">Key</label>
           <input type="text" class="form-input" id="fKey" placeholder="e.g. G, C, Am">
         </div>
         <div class="form-group">
-          <label class="form-label">Capo Fret</label>
+          <label class="form-label">Capo</label>
           <input type="number" class="form-input" id="fCapo" min="0" max="12" value="0">
         </div>
         <div class="form-group">
-          <label class="form-label">Tempo (BPM)</label>
+          <label class="form-label">Tempo</label>
           <input type="number" class="form-input" id="fBpm" min="40" max="240" value="80">
         </div>
         <div class="form-group">
-          <label class="form-label">Language / ဘာသာစကား</label>
+          <label class="form-label">Language</label>
           <select class="form-input" id="fLanguage">
-            <option value="my">🇲🇲 Myanmar (မြန်မာ)</option>
-            <option value="en">🇬🇧 English</option>
-            <option value="other">🌐 Other</option>
+            <option value="my">Myanmar</option>
+            <option value="en">English</option>
+            <option value="other">Other</option>
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Release Year</label>
+          <label class="form-label">Year</label>
           <input type="text" class="form-input" id="fYear" placeholder="e.g. 2024">
         </div>
       </div>
@@ -425,10 +448,10 @@
       <div class="editor-mode-bar">
         <div class="editor-tabs">
           <button type="button" class="editor-tab-btn active" id="tabTextMode">
-            <span>📝 Text Editor</span>
+            <span>Text</span>
           </button>
           <button type="button" class="editor-tab-btn" id="tabVisualMode">
-            <span>🎯 Visual Chord Aligner (Chord နေရာချိန်ညှိရန်)</span>
+            <span>Aligner</span>
           </button>
         </div>
         <span style="font-size:0.75rem;color:var(--ink-muted);" id="alignerTip">
@@ -510,6 +533,7 @@
 
   <!-- Scripts -->
   <script src="chords-db.js"></script>
-  <script src="app.js"></script>
+  <script src="app-v7.js"></script>
+  <script src="chordbook-calm.js"></script>
 </body>
 </html>

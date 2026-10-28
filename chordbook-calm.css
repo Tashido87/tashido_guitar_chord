@@ -1,0 +1,328 @@
+/* Tashido's ChordBook — Calm override (loaded AFTER styles.css, 2026-10-28).
+   Original styles.css is untouched. Remove this file's <link> to revert. */
+:root{
+  --bg-app:#F5F5F7; --bg-surface:#FFFFFF; --bg-sidebar:#F5F5F7; --bg-card:#FFFFFF;
+  --bg-card-hover:#F5F5F7; --bg-subtle:#F5F5F7; --bg-muted:#F5F5F7;
+  --ink-primary:#1D1D1F; --ink-secondary:#6E6E73; --ink-muted:#86868B; --ink-faint:#AEAEB2;
+  --brand:#5A8AB8; --brand-hover:#4A759E; --brand-light:#EBF1F7; --brand-border:#C7D8E8;
+  --amber:#8A7D6B; --amber-light:#F3EFE8; --emerald:#6B8A7A; --emerald-light:#EDF2ED;
+  --rose:#C47A7A; --rose-light:#F6EAEA;
+  --border:rgba(0,0,0,.08); --border-subtle:rgba(0,0,0,.05); --border-focus:#6B8CAE;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.04); --shadow-sm:0 1px 3px rgba(0,0,0,.05);
+  --shadow-md:0 4px 12px rgba(0,0,0,.05); --shadow-lg:0 12px 24px rgba(0,0,0,.06);
+  --shadow-float:0 16px 32px rgba(0,0,0,.08);
+  --radius-sm:8px; --radius-md:10px; --radius-lg:14px; --radius-xl:18px;
+}
+html,body{background:var(--bg-app)!important}
+.app-container{grid-template-columns:240px minmax(0,1fr) 288px!important;gap:16px!important;padding:16px 20px 96px!important}
+.app-container.home-mode{grid-template-columns:240px minmax(0,1fr)!important}
+.app-container.tools-collapsed{grid-template-columns:240px minmax(0,1fr)!important}
+.app-container.tools-collapsed .right-sidebar{display:none!important}
+.sidebar{background:transparent!important;border:0!important;border-radius:0!important;padding:8px 8px 8px 4px!important;gap:8px!important;box-shadow:none!important}
+.brand-logo{font-size:1rem!important}
+.brand-icon{background:#fff!important;border:1px solid var(--border)!important;box-shadow:none!important}
+.search-box{background:#fff!important;border:1px solid var(--border)!important;box-shadow:none!important}
+.search-box:focus-within{box-shadow:0 0 0 3px rgba(107,140,174,.15)!important}
+.nav-item{padding:7px 10px!important;font-size:.88rem!important}
+.nav-item.active,.song-item-btn.active{background:var(--brand-light)!important;color:var(--ink-primary)!important;box-shadow:none!important}
+.badge-count{background:transparent!important;color:var(--ink-faint)!important;font-size:.75rem!important}
+.sidebar-queue-header{font-size:.68rem!important;letter-spacing:.08em!important;color:var(--ink-faint)!important}
+.sub-nav-item{padding:6px 10px 6px 22px!important}
+.add-song-gradient-btn{background:#1D1D1F!important;border:0!important;box-shadow:none!important}
+.main-content{background:#fff;border:1px solid var(--border-subtle);border-radius:20px;padding:8px 20px 20px!important}
+.home-view{padding:12px 8px 40px 0!important;gap:28px!important}
+.home-header{border-bottom:0!important;padding-bottom:0!important}
+.home-title{font-size:1.75rem!important;letter-spacing:-.03em!important}
+.home-subtitle{color:var(--ink-muted)!important}
+.home-filter-pills{display:flex!important;background:#E8E8ED;border-radius:999px;padding:3px;gap:0!important}
+.home-pill{background:transparent!important;border:0!important;box-shadow:none!important;padding:6px 14px!important;font-size:.82rem!important}
+.home-pill.active{background:#fff!important;box-shadow:0 1px 3px rgba(0,0,0,.1)!important;color:var(--ink-primary)!important}
+.home-section-title{font-size:.72rem!important;letter-spacing:.1em!important;text-transform:uppercase!important;color:var(--ink-faint)!important;font-weight:700!important}
+#homeRecentGrid{display:flex!important;gap:12px!important;overflow-x:auto!important;padding-bottom:4px}
+#homeRecentGrid .home-card{min-width:200px;max-width:200px;box-shadow:none!important}
+#homeRecentGrid .home-card:hover{transform:none!important}
+.home-card{border:1px solid var(--border-subtle)!important;box-shadow:none!important;border-radius:14px!important;padding:10px!important}
+.home-card:hover{transform:none!important;box-shadow:0 4px 12px rgba(0,0,0,.05)!important}
+/* No loud cover squares: Home and Queue are text-first, like the concept. */
+.home-card-cover{display:none!important}
+.song-item-thumb{display:none!important}
+.hero-cover{filter:saturate(.45) brightness(1.04)}
+.home-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))!important;gap:10px!important}
+.home-card{padding:12px 14px!important}
+.home-card-title{font-size:.95rem!important}
+.home-card-artist{font-size:.82rem!important;color:var(--ink-muted)!important}
+#homeRecentGrid .home-card{min-width:220px;max-width:240px}
+#homeAllGrid .home-card-cover{display:none!important}
+.song-item-btn{padding:8px 10px!important;gap:0!important}
+.song-item-title{font-size:.9rem!important}
+.song-item-artist{font-size:.78rem!important;color:var(--ink-muted)!important}
+.home-meta-badge{background:var(--bg-subtle)!important;border:0!important;color:var(--ink-muted)!important}
+#homeAllGrid{display:flex!important;flex-direction:column!important;gap:0!important}
+#homeAllGrid .home-card{flex-direction:row!important;align-items:center!important;border:0!important;border-bottom:1px solid var(--border-subtle)!important;border-radius:0!important;padding:10px 6px!important}
+#homeAllGrid .home-card-cover{width:44px!important;height:44px!important;min-height:0!important;border-radius:10px!important;flex-shrink:0}
+#homeAllGrid .home-card-play-overlay{display:none!important}
+#homeAllGrid .home-card-info{flex:1;min-width:0}
+#homeAllGrid .home-card-meta{margin-left:auto}
+.song-hero{box-shadow:none!important}
+.hero-title{font-size:1.9rem!important;letter-spacing:-.03em!important}
+.hero-artist{color:var(--ink-muted)!important}
+.meta-pill{background:transparent!important;border:0!important;padding:0!important;color:var(--ink-muted)!important;font-size:.85rem!important}
+.hero-badges{gap:10px!important}
+.circle-btn{box-shadow:none!important}
+.play-action{background:#1D1D1F!important;border-color:#1D1D1F!important}
+.lyrics-card{border:1px solid var(--border-subtle)!important;box-shadow:none!important;padding:28px 40px!important}
+.chord-tag{color:var(--brand)!important}
+.lyrics-line{line-height:2!important}
+.section-pill{background:transparent!important;color:var(--ink-faint)!important;border:0!important;padding:0!important;font-size:.7rem!important;letter-spacing:.1em!important;text-transform:uppercase!important}
+.right-sidebar{gap:12px!important}
+.tool-panel{border:1px solid var(--border-subtle)!important;box-shadow:none!important;border-radius:14px!important;padding:16px!important}
+.panel-title{font-size:.82rem!important;cursor:pointer;user-select:none}
+.panel-title::after{content:"\203A";color:var(--ink-faint);transition:transform .15s ease}
+.tool-panel.collapsed .panel-title::after{transform:rotate(90deg)}
+.tool-panel.collapsed>:not(.panel-title){display:none!important}
+.panel-title-badge{display:none!important}
+.tool-label{color:var(--ink-muted)!important}
+.stepper-btn,.switch-control{box-shadow:none!important}
+.chord-card{border:1px solid var(--border-subtle)!important;box-shadow:none!important}
+.bottom-bar{box-shadow:0 8px 24px rgba(0,0,0,.08)!important;border:1px solid var(--border-subtle)!important;padding:8px 18px!important}
+.bar-song-thumb{display:none!important}
+.bar-btn-main{background:#1D1D1F!important}
+.bar-speed-group{display:none!important}
+.bar-song-title{font-size:.88rem!important}
+.bar-song-artist{font-size:.78rem!important;color:var(--ink-muted)!important}
+.modal-dialog{box-shadow:var(--shadow-float)!important}
+.btn-primary{background:#1D1D1F!important;border-color:#1D1D1F!important}
+/* Modal: Apple-style compact — small labels, tight spacing, no help essays */
+.modal-dialog{padding:20px 22px!important}
+.modal-header{padding-bottom:10px!important;margin-bottom:12px!important}
+.modal-title{font-size:1.15rem!important}
+.ai-scan-card{padding:12px 14px!important;margin-bottom:12px!important}
+.ai-scan-header{margin-bottom:8px!important}
+.ai-dropzone{padding:14px!important}
+.ai-dropzone-content span{font-size:1.4rem!important}
+.form-grid-2{gap:10px 12px!important;margin-bottom:12px!important}
+.form-group{margin-bottom:0!important}
+.form-label{font-size:.7rem!important;letter-spacing:.04em!important;text-transform:uppercase!important;color:var(--ink-muted)!important;margin-bottom:4px!important}
+.form-input,.form-textarea{padding:8px 10px!important;font-size:.9rem!important}
+.form-textarea{min-height:180px!important}
+.editor-mode-bar{margin:4px 0 10px!important}
+.editor-tab-btn{padding:6px 12px!important;font-size:.82rem!important}
+.form-help-box,.aligner-help-banner,#alignerTip{display:none!important}
+.modal-actions{margin-top:14px!important}
+.ai-badge{display:none!important}
+/* Density fix 2026-10-28: less scattered whitespace, tighter rows */
+.home-view{gap:20px!important;padding:8px 8px 24px 0!important}
+.main-content{padding:4px 16px 16px!important}
+.home-grid{gap:10px!important}
+.home-card{padding:11px 13px!important}
+.home-card-info{gap:1px!important}
+.home-card-title{line-height:1.3!important}
+.home-card-artist{line-height:1.3!important}
+.home-card-meta{margin-top:4px!important}
+#homeAllGrid .home-card{padding:7px 8px!important}
+.song-item-btn{padding:6px 10px!important}
+.song-item-title{line-height:1.3!important}
+.song-item-artist{line-height:1.3!important}
+/* Warmth fix: pale tinted cards (no loud squares back), All list stays white */
+.home-card:nth-child(4n+1){background:#EAF4F2!important}
+.home-card:nth-child(4n+2){background:#F4F1EB!important}
+.home-card:nth-child(4n+3){background:#EFF4EF!important}
+.home-card:nth-child(4n+4){background:#F6EFF0!important}
+#homeAllGrid .home-card{background:#fff!important}
+.home-meta-badge{background:rgba(255,255,255,.75)!important;color:#456E8F!important;font-weight:600!important}
+/* Hero redesign 2026-10-28: no boxed card, no cover square — editorial header */
+.song-hero{background:transparent!important;border:0!important;border-bottom:1px solid var(--border-subtle)!important;border-radius:0!important;padding:6px 4px 18px!important;align-items:flex-start!important}
+.hero-left{flex-direction:column!important;align-items:flex-start!important;gap:6px!important}
+.hero-back-btn{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;font-size:.82rem!important;color:var(--ink-muted)!important}
+.hero-cover{display:none!important}
+.hero-title{font-size:2.1rem!important;line-height:1.15!important}
+.hero-artist{font-size:1rem!important}
+.hero-badges{margin-top:6px!important;gap:8px!important}
+.hero-badges .meta-pill:not(:first-child)::before{content:"·";margin-right:8px;color:var(--ink-faint)}
+.hero-actions{align-items:flex-start!important;padding-top:2px}
+.circle-btn{border:1px solid var(--border)!important;background:#fff!important}
+/* Layout fix 2026-10-28: less side padding, wider centre, no double card padding */
+.app-container{grid-template-columns:220px minmax(0,1fr) 260px!important;gap:12px!important;padding:12px 14px 96px!important}
+.app-container.home-mode{grid-template-columns:220px minmax(0,1fr)!important}
+.app-container.tools-collapsed{grid-template-columns:220px minmax(0,1fr)!important}
+.main-content{background:transparent!important;border:0!important;border-radius:0!important;padding:0 4px 12px!important}
+.lyrics-card{padding:24px 28px!important}
+/* Hero title: fully visible, never truncated — wraps at a readable size */
+.hero-title{font-size:1.6rem!important;line-height:1.4!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+.hero-info{display:flex!important;flex-wrap:wrap!important;align-items:baseline!important;gap:4px 10px!important}
+.hero-title{flex-basis:100%!important;margin-bottom:0!important}
+.hero-artist{margin-bottom:0!important}
+.hero-badges{margin-top:0!important}
+/* Hero actions: play must stay visible (this rule must come after .circle-btn white) */
+.circle-btn{color:var(--ink-primary)!important;font-size:1rem!important}
+.circle-btn.play-action{background:var(--brand)!important;color:#fff!important;border-color:var(--brand)!important}
+/* Primary colour: vivid calm blue instead of black / dull blue */
+.btn-primary{background:var(--brand)!important;border-color:var(--brand)!important}
+.add-song-gradient-btn{background:var(--brand)!important}
+.bar-btn-main{background:var(--brand)!important}
+.home-meta-badge{color:var(--brand-hover)!important}
+/* No animation beside the selected song — pale background only */
+.playing-bars{display:none!important}
+/* A little more air between songs (list rows only, not inside lyrics) */
+.song-item-btn{padding:8px 10px!important;margin-bottom:2px!important}
+#homeAllGrid .home-card{padding:10px 8px!important}
+.lyrics-section{margin-bottom:24px!important}
+/* Flat white centre 2026-10-28: no rounded boxes in the song area —
+   the centre column itself is the white sheet, lyrics/hero have no card. */
+.main-content{background:#fff!important;border:0!important;border-radius:0!important;padding:0!important}
+.home-view{padding:12px 20px 24px 20px!important}
+.lyrics-card{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+.song-hero{border-radius:0!important}
+.home-view{background:#fff!important}
+/* Smaller icons: hero actions and bottom player */
+.circle-btn{width:34px!important;height:34px!important;font-size:.9rem!important}
+.circle-btn.play-action{width:42px!important;height:42px!important;font-size:1rem!important}
+.bottom-bar{border-radius:0!important;box-shadow:none!important;padding:8px 16px!important;bottom:12px!important}
+.bar-btn{font-size:.95rem!important}
+.bar-btn-main{width:38px!important;height:38px!important}
+/* Burmese text 2026-10-28: tall glyphs need taller lines, never truncated */
+.song-item-title,.home-card-title,.hero-title{line-height:1.6!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+.song-item-title{margin-bottom:2px!important}
+.song-item-artist,.home-card-artist{line-height:1.55!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+.home-card-info{gap:4px!important}
+/* All white 2026-10-28: no grey strip above/below the centre sheet */
+html,body{background:#fff!important}
+.app-container{background:#fff!important;padding:0 14px 96px!important}
+.right-sidebar{background:#fff!important}
+.lyrics-toolbar{background:#fff!important}
+.song-hero{padding-top:12px!important}
+/* Home cards are no longer big tinted blocks — same clean rows as All Songs */
+.home-grid{display:flex!important;flex-direction:column!important;gap:0!important}
+.home-grid .home-card{background:transparent!important;border:0!important;border-bottom:1px solid var(--border-subtle)!important;border-radius:0!important;box-shadow:none!important;padding:12px 8px!important;flex-direction:row!important;align-items:baseline!important;gap:10px!important}
+.home-grid .home-card:hover{transform:none!important;box-shadow:none!important;background:#F8F9FA!important}
+.home-grid .home-card-info{flex-direction:row!important;align-items:baseline!important;flex-wrap:wrap!important;gap:6px 12px!important;flex:1!important}
+.home-grid .home-card-meta{margin-left:auto!important;margin-top:0!important}
+/* Sidebars light grey 2026-10-28: centre stays white, both side areas faint grey */
+.sidebar{background:#F5F5F7!important;padding:12px!important}
+.right-sidebar{background:#F5F5F7!important;padding:12px!important}
+/* Bottom play bar removed 2026-10-28 — hero play + queue + Song Controls cover it */
+.bottom-bar{display:none!important}
+.app-container{padding:0 14px 12px!important}
+/* Sidebars full-bleed 2026-10-28: no white padding strips at the edges or between columns */
+.app-container{padding:0!important;gap:0!important;max-width:none!important;margin:0!important;width:100%!important}
+/* Queue controls */
+#clearQueueBtn{background:transparent;border:0;color:var(--ink-muted);font-size:.7rem;cursor:pointer;padding:0}
+#clearQueueBtn:hover{color:var(--ink-primary)}
+.queue-add-btn{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:#fff;color:var(--ink-primary);font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;margin-left:4px}
+.queue-add-btn:hover{border-color:var(--brand);color:var(--brand)}
+.queue-remove{color:var(--ink-muted);font-size:1rem;padding:2px 6px;cursor:pointer;flex-shrink:0;line-height:1}
+.queue-remove:hover{color:var(--ink-primary)}
+/* Hero breathing room 2026-10-28: title was touching the left sidebar after full-bleed */
+.song-hero{padding:12px 24px 18px!important}
+/* Artists view: name-only list rows */
+.artist-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--border-subtle);padding:12px 8px;cursor:pointer;font-size:.95rem;font-weight:600;color:var(--ink-primary)}
+.artist-row:hover{background:#F8F9FA}
+.artist-row-count{font-size:.8rem;color:var(--ink-muted);font-weight:400;flex-shrink:0}
+/* Compact rows 2026-10-28: no more huge middle gaps — Key/count sit next to the title, not at the far right */
+.home-grid .home-card-info{flex:0 1 auto!important}
+.home-grid .home-card-meta{margin-left:0!important}
+#homeAllGrid .home-card-meta{margin-left:0!important}
+.artist-row{justify-content:flex-start!important}
+.artist-row-count{margin-left:12px!important}
+.home-section-header{justify-content:flex-start!important;gap:12px!important}
+/* Aligned trailing column 2026-10-28: counts/Keys/buttons line up in a straight column on the right */
+.home-grid .home-card-info{flex:1!important}
+.home-grid .home-card-meta{margin-left:auto!important}
+#homeAllGrid .home-card-meta{margin-left:auto!important}
+.artist-row{justify-content:space-between!important}
+.artist-row-count{margin-left:12px!important;min-width:80px;text-align:right;flex-shrink:0}
+.home-section-header{justify-content:space-between!important;gap:12px!important}
+/* Table-like lists 2026-10-28: columns sized by their longest entry, not pushed to the far right */
+.home-grid{display:grid!important;grid-template-columns:minmax(0,320px) max-content max-content 36px!important;align-items:baseline!important;column-gap:0!important;row-gap:0!important}
+.home-grid .home-card{display:contents!important}
+.home-grid .home-card-info{display:contents!important}
+.home-grid .home-card-title,.home-grid .home-card-artist,.home-grid .home-card-meta{padding:12px 12px 12px 0!important;border-bottom:1px solid var(--border-subtle)!important}
+.home-grid .home-card-title{padding-left:8px!important}
+.home-grid .queue-add-btn{padding:0!important;align-self:center!important;margin-left:0!important}
+.home-grid .home-card:hover .home-card-title,.home-grid .home-card:hover .home-card-artist,.home-grid .home-card:hover .home-card-meta{background:#F8F9FA!important}
+#homeArtistsGrid{grid-template-columns:max-content 80px!important}
+#homeArtistsGrid.detail{grid-template-columns:minmax(0,320px) max-content max-content 36px!important}
+#homeArtistsGrid .artist-row{display:contents!important}
+#homeArtistsGrid .artist-row-name,#homeArtistsGrid .artist-row-count{padding:12px 12px 12px 0!important;border-bottom:1px solid var(--border-subtle)!important}
+#homeArtistsGrid .artist-row-name{padding-left:8px!important}
+#homeArtistsGrid .artist-row-count{margin-left:0!important;min-width:80px!important;text-align:right!important}
+#homeArtistsGrid .artist-row:hover .artist-row-name,#homeArtistsGrid .artist-row:hover .artist-row-count{background:#F8F9FA!important}
+/* All Songs 2-column table: left table, 32px gap, right table, sharing one grid */
+#homeAllGrid{grid-template-columns:minmax(0,220px) max-content max-content 36px 32px minmax(0,220px) max-content max-content 36px!important}
+#homeAllGrid .all-table-gap{padding:0!important;border:0!important}
+/* Apple compact rows 2026-10-28: fixed columns, one line per song, no display:contents */
+.home-grid{display:block!important;gap:0!important}
+.home-grid .home-card{display:flex!important;flex-direction:row!important;align-items:center!important;gap:12px!important;padding:8px!important;border:0!important;border-bottom:1px solid var(--border-subtle)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;min-width:0!important;max-width:none!important}
+.home-grid .home-card:hover{background:#F8F9FA!important;transform:none!important;box-shadow:none!important}
+.home-grid .home-card-info{display:flex!important;flex-direction:row!important;align-items:baseline!important;gap:12px!important;flex:1!important;min-width:0!important}
+.home-grid .home-card-title{flex:0 1 260px!important;min-width:0!important;font-size:.95rem!important;line-height:1.35!important;padding:0!important;border:0!important}
+.home-grid .home-card-artist{flex:0 1 160px!important;min-width:0!important;font-size:.82rem!important;line-height:1.35!important;padding:0!important;border:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.home-grid .home-card-meta{flex:0 0 110px!important;margin:0!important;margin-top:0!important;padding:0!important;border:0!important;white-space:nowrap!important;overflow:hidden!important}
+.home-grid .queue-add-btn{flex:0 0 30px!important;padding:0!important;margin:0!important;align-self:center!important}
+#homeRecentGrid{display:block!important;overflow:visible!important;gap:0!important;padding-bottom:0!important}
+#homeRecentGrid .home-card{min-width:0!important;max-width:none!important}
+#homeAllGrid{display:grid!important;grid-template-columns:1fr 1fr!important;column-gap:32px!important;align-items:start!important;flex-direction:row!important}
+#homeAllGrid .all-table-col{display:block!important;min-width:0!important}
+#homeAllGrid .home-card{padding:8px!important;border:0!important;border-bottom:1px solid var(--border-subtle)!important;border-radius:0!important;background:transparent!important}
+#homeAllGrid .home-card-info{flex:1!important;min-width:0!important}
+#homeAllGrid .home-card-meta{margin-left:0!important}
+#homeArtistsGrid{display:block!important}
+#homeArtistsGrid .artist-row{display:flex!important;justify-content:flex-start!important;align-items:baseline!important;gap:12px!important;padding:8px!important;border-bottom:1px solid var(--border-subtle)!important}
+#homeArtistsGrid .artist-row-name{flex:0 1 260px!important;min-width:0!important;padding:0!important;border:0!important}
+#homeArtistsGrid .artist-row-count{flex:0 0 80px!important;margin-left:0!important;min-width:80px!important;text-align:right!important;padding:0!important;border:0!important}
+#homeArtistsGrid .artist-row:hover{background:#F8F9FA!important}
+#homeArtistsGrid .artist-row:hover .artist-row-name,#homeArtistsGrid .artist-row:hover .artist-row-count{background:transparent!important}
+/* Artists table like All Songs: 2 columns, 30 per side */
+#homeArtistsGrid{display:grid!important;grid-template-columns:1fr 1fr!important;column-gap:32px!important;align-items:start!important}
+#homeArtistsGrid.detail{grid-template-columns:1fr 1fr!important}
+#homeArtistsGrid .all-table-col{display:block!important;min-width:0!important}
+/* Lyric snippet in search results */
+.home-grid .home-card.has-snippet{align-items:flex-start!important}
+.home-grid .home-card.has-snippet .home-card-info{flex-wrap:wrap!important}
+.home-grid .home-card.has-snippet .queue-add-btn{align-self:flex-start!important;margin-top:2px!important}
+.home-card-snippet{flex:0 0 100%!important;font-size:.8rem!important;line-height:1.45!important;color:var(--ink-muted)!important;padding:2px 0 0!important;border:0!important}
+.home-card-snippet .snippet-line{white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.home-card-snippet mark{background:#FFE9A8!important;color:inherit!important;padding:0 1px!important;border-radius:2px!important;font-weight:600!important}
+/* Search clear button */
+#searchClearBtn{border:0;background:transparent;color:var(--ink-muted);font-size:1.1rem;line-height:1;cursor:pointer;padding:2px 6px;flex-shrink:0}
+#searchClearBtn:hover{color:var(--ink-primary)}
+@media (max-width:900px){#homeAllGrid{grid-template-columns:1fr!important}#homeArtistsGrid{grid-template-columns:1fr!important}}
+@media (max-width:1100px){.app-container,.app-container.home-mode,.app-container.tools-collapsed{grid-template-columns:220px minmax(0,1fr)!important}.right-sidebar{display:none!important}}
+/* V2 Apple-level tokens 2026-10-28: one flat accent, system greys, hierarchy by size/weight */
+:root{--ink-primary:#1C1C1E!important;--ink-secondary:#8A8A8E!important;--ink-muted:#8A8A8E!important;--brand:#3E6B8F!important;--brand-hover:#335A7A!important;--brand-light:#EAF0F6!important;--brand-border:#D8E2EC!important}
+.home-title{font-size:2rem!important;letter-spacing:-.04em!important}
+.home-subtitle{color:#8A8A8E!important;font-size:.82rem!important}
+.home-section-title{font-size:.94rem!important;letter-spacing:-.01em!important;text-transform:none!important;color:#1C1C1E!important;font-weight:600!important}
+.search-box{background:#E8E8EA!important;border:0!important;border-radius:8px!important}
+.search-box:focus-within{box-shadow:0 0 0 3px rgba(62,107,143,.15)!important}
+.nav-item.active,.song-item-btn.active{background:#E2E2E5!important;color:#1C1C1E!important}
+#homeCatalogSortBox,#homeArtistsSortBox,#homeArtistDetailSortBox{background:rgba(120,120,128,.12)!important;border-radius:8px!important;padding:2px!important;gap:2px!important;display:inline-flex!important}
+#homeCatalogSortBox .btn,#homeArtistsSortBox .btn,#homeArtistDetailSortBox .btn{border:0!important;background:transparent!important;border-radius:6px!important;box-shadow:none!important}
+#homeCatalogNavBox .btn,#homeArtistsNavBox .btn{border:0!important;background:transparent!important;box-shadow:none!important}
+#homeCatalogNavBox .btn:hover,#homeArtistsNavBox .btn:hover{background:#F0F0F2!important}
+.home-grid .home-card-title{font-size:.94rem!important;font-weight:600!important;letter-spacing:-.01em!important}
+.home-grid .home-card-artist{font-size:.81rem!important;color:#8A8A8E!important}
+.home-meta-badge{background:transparent!important;color:#8A8A8E!important;font-weight:400!important;font-size:.75rem!important}
+.home-card-meta .home-meta-badge + .home-meta-badge::before{content:"\00B7 ";color:#AEAEB2}
+.queue-add-btn{background:#F0F0F2!important;border:0!important;color:#3E6B8F!important}
+.queue-add-btn:hover{background:#E8E8EA!important;color:#3E6B8F!important}
+.add-song-gradient-btn{background:#3E6B8F!important;border-radius:10px!important}
+.circle-btn.play-action{background:#3E6B8F!important;border-color:#3E6B8F!important}
+.chord-tag{color:#3E6B8F!important;font-weight:600!important}
+.hero-title{font-size:1.375rem!important;letter-spacing:-.02em!important}
+.hero-artist{color:#8A8A8E!important;font-size:.94rem!important}
+.lyrics-line{line-height:2.15!important;font-size:.94rem!important}
+.artist-row{padding:11px 8px!important}
+.artist-row-name{font-size:.94rem!important;font-weight:600!important}
+.artist-row-count{color:#8A8A8E!important;font-size:.75rem!important}
+.home-grid .home-card{border-bottom:1px solid #F0F0F2!important}
+.home-grid .home-card:hover{background:#F7F7F8!important}
+#homeArtistsGrid .artist-row{border-bottom:1px solid #F0F0F2!important}
+#homeArtistsGrid .artist-row:hover{background:#F7F7F8!important}
+/* Artist detail groups: Solo vs Collaborations */
+.artist-group{grid-column:1/-1!important}
+.artist-group-tables{display:grid!important;grid-template-columns:1fr 1fr!important;column-gap:32px!important;align-items:start!important}
+.artist-group-tables .all-table-col{display:block!important;min-width:0!important}
+.artist-group-title{font-size:.82rem!important;font-weight:600!important;color:#8A8A8E!important;padding:18px 8px 6px!important}
+.artist-group:first-child .artist-group-title{padding-top:4px!important}
+@media (max-width:900px){.artist-group-tables{grid-template-columns:1fr!important}}
