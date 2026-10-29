@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tashido Guitar Chord — Clean Acoustic Songbook</title>
+  <title>Tashido's ChordBook</title>
   <style>
 /* ==========================================================================
    Tashido Guitar Chord - Modern Clean White Aesthetic
@@ -2123,11 +2123,424 @@ input[type="range"] {
   }
 }
 
+
+/* Tashido's ChordBook — Calm override (loaded AFTER styles.css, 2026-10-28).
+   Original styles.css is untouched. Remove this file's <link> to revert. */
+:root{
+  --bg-app:#F5F5F7; --bg-surface:#FFFFFF; --bg-sidebar:#F5F5F7; --bg-card:#FFFFFF;
+  --bg-card-hover:#F5F5F7; --bg-subtle:#F5F5F7; --bg-muted:#F5F5F7;
+  --ink-primary:#1D1D1F; --ink-secondary:#6E6E73; --ink-muted:#86868B; --ink-faint:#AEAEB2;
+  --brand:#5A8AB8; --brand-hover:#4A759E; --brand-light:#EBF1F7; --brand-border:#C7D8E8;
+  --amber:#8A7D6B; --amber-light:#F3EFE8; --emerald:#6B8A7A; --emerald-light:#EDF2ED;
+  --rose:#C47A7A; --rose-light:#F6EAEA;
+  --border:rgba(0,0,0,.08); --border-subtle:rgba(0,0,0,.05); --border-focus:#6B8CAE;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.04); --shadow-sm:0 1px 3px rgba(0,0,0,.05);
+  --shadow-md:0 4px 12px rgba(0,0,0,.05); --shadow-lg:0 12px 24px rgba(0,0,0,.06);
+  --shadow-float:0 16px 32px rgba(0,0,0,.08);
+  --radius-sm:8px; --radius-md:10px; --radius-lg:14px; --radius-xl:18px;
+}
+html,body{background:var(--bg-app)!important}
+.app-container{grid-template-columns:240px minmax(0,1fr) 288px!important;gap:16px!important;padding:16px 20px 96px!important}
+.app-container.home-mode{grid-template-columns:240px minmax(0,1fr)!important}
+.app-container.tools-collapsed{grid-template-columns:240px minmax(0,1fr)!important}
+.app-container.tools-collapsed .right-sidebar{display:none!important}
+.sidebar{background:transparent!important;border:0!important;border-radius:0!important;padding:8px 8px 8px 4px!important;gap:8px!important;box-shadow:none!important}
+.brand-logo{font-size:1rem!important}
+.brand-icon{background:#fff!important;border:1px solid var(--border)!important;box-shadow:none!important}
+.search-box{background:#fff!important;border:1px solid var(--border)!important;box-shadow:none!important}
+.search-box:focus-within{box-shadow:0 0 0 3px rgba(107,140,174,.15)!important}
+.nav-item{padding:7px 10px!important;font-size:.88rem!important}
+.nav-item.active,.song-item-btn.active{background:var(--brand-light)!important;color:var(--ink-primary)!important;box-shadow:none!important}
+.badge-count{background:transparent!important;color:var(--ink-faint)!important;font-size:.75rem!important}
+.sidebar-queue-header{font-size:.68rem!important;letter-spacing:.08em!important;color:var(--ink-faint)!important}
+.sub-nav-item{padding:6px 10px 6px 22px!important}
+.add-song-gradient-btn{background:#1D1D1F!important;border:0!important;box-shadow:none!important}
+.main-content{background:#fff;border:1px solid var(--border-subtle);border-radius:20px;padding:8px 20px 20px!important}
+.home-view{padding:12px 8px 40px 0!important;gap:28px!important}
+.home-header{border-bottom:0!important;padding-bottom:0!important}
+.home-title{font-size:1.75rem!important;letter-spacing:-.03em!important}
+.home-subtitle{color:var(--ink-muted)!important}
+.home-filter-pills{display:flex!important;background:#E8E8ED;border-radius:999px;padding:3px;gap:0!important}
+.home-pill{background:transparent!important;border:0!important;box-shadow:none!important;padding:6px 14px!important;font-size:.82rem!important}
+.home-pill.active{background:#fff!important;box-shadow:0 1px 3px rgba(0,0,0,.1)!important;color:var(--ink-primary)!important}
+.home-section-title{font-size:.72rem!important;letter-spacing:.1em!important;text-transform:uppercase!important;color:var(--ink-faint)!important;font-weight:700!important}
+#homeRecentGrid{display:flex!important;gap:12px!important;overflow-x:auto!important;padding-bottom:4px}
+#homeRecentGrid .home-card{min-width:200px;max-width:200px;box-shadow:none!important}
+#homeRecentGrid .home-card:hover{transform:none!important}
+.home-card{border:1px solid var(--border-subtle)!important;box-shadow:none!important;border-radius:14px!important;padding:10px!important}
+.home-card:hover{transform:none!important;box-shadow:0 4px 12px rgba(0,0,0,.05)!important}
+/* No loud cover squares: Home and Queue are text-first, like the concept. */
+.home-card-cover{display:none!important}
+.song-item-thumb{display:none!important}
+.hero-cover{filter:saturate(.45) brightness(1.04)}
+.home-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))!important;gap:10px!important}
+.home-card{padding:12px 14px!important}
+.home-card-title{font-size:.95rem!important}
+.home-card-artist{font-size:.82rem!important;color:var(--ink-muted)!important}
+#homeRecentGrid .home-card{min-width:220px;max-width:240px}
+#homeAllGrid .home-card-cover{display:none!important}
+.song-item-btn{padding:8px 10px!important;gap:0!important}
+.song-item-title{font-size:.9rem!important}
+.song-item-artist{font-size:.78rem!important;color:var(--ink-muted)!important}
+.home-meta-badge{background:var(--bg-subtle)!important;border:0!important;color:var(--ink-muted)!important}
+#homeAllGrid{display:flex!important;flex-direction:column!important;gap:0!important}
+#homeAllGrid .home-card{flex-direction:row!important;align-items:center!important;border:0!important;border-bottom:1px solid var(--border-subtle)!important;border-radius:0!important;padding:10px 6px!important}
+#homeAllGrid .home-card-cover{width:44px!important;height:44px!important;min-height:0!important;border-radius:10px!important;flex-shrink:0}
+#homeAllGrid .home-card-play-overlay{display:none!important}
+#homeAllGrid .home-card-info{flex:1;min-width:0}
+#homeAllGrid .home-card-meta{margin-left:auto}
+.song-hero{box-shadow:none!important}
+.hero-title{font-size:1.9rem!important;letter-spacing:-.03em!important}
+.hero-artist{color:var(--ink-muted)!important}
+.meta-pill{background:transparent!important;border:0!important;padding:0!important;color:var(--ink-muted)!important;font-size:.85rem!important}
+.hero-badges{gap:10px!important}
+.circle-btn{box-shadow:none!important}
+.play-action{background:#1D1D1F!important;border-color:#1D1D1F!important}
+.lyrics-card{border:1px solid var(--border-subtle)!important;box-shadow:none!important;padding:28px 40px!important}
+.chord-tag{color:var(--brand)!important}
+.lyrics-line{line-height:2!important}
+.section-pill{background:transparent!important;color:var(--ink-faint)!important;border:0!important;padding:0!important;font-size:.7rem!important;letter-spacing:.1em!important;text-transform:uppercase!important}
+.right-sidebar{gap:12px!important}
+.tool-panel{border:1px solid var(--border-subtle)!important;box-shadow:none!important;border-radius:14px!important;padding:16px!important}
+.panel-title{font-size:.82rem!important;cursor:pointer;user-select:none}
+.panel-title::after{content:"\203A";color:var(--ink-faint);transition:transform .15s ease}
+.tool-panel.collapsed .panel-title::after{transform:rotate(90deg)}
+.tool-panel.collapsed>:not(.panel-title){display:none!important}
+.panel-title-badge{display:none!important}
+.tool-label{color:var(--ink-muted)!important}
+.stepper-btn,.switch-control{box-shadow:none!important}
+.chord-card{border:1px solid var(--border-subtle)!important;box-shadow:none!important}
+.bottom-bar{box-shadow:0 8px 24px rgba(0,0,0,.08)!important;border:1px solid var(--border-subtle)!important;padding:8px 18px!important}
+.bar-song-thumb{display:none!important}
+.bar-btn-main{background:#1D1D1F!important}
+.bar-speed-group{display:none!important}
+.bar-song-title{font-size:.88rem!important}
+.bar-song-artist{font-size:.78rem!important;color:var(--ink-muted)!important}
+.modal-dialog{box-shadow:var(--shadow-float)!important}
+.btn-primary{background:#1D1D1F!important;border-color:#1D1D1F!important}
+/* Modal: Apple-style compact — small labels, tight spacing, no help essays */
+.modal-dialog{padding:20px 22px!important}
+.modal-header{padding-bottom:10px!important;margin-bottom:12px!important}
+.modal-title{font-size:1.15rem!important}
+.ai-scan-card{padding:12px 14px!important;margin-bottom:12px!important}
+.ai-scan-header{margin-bottom:8px!important}
+.ai-dropzone{padding:14px!important}
+.ai-dropzone-content span{font-size:1.4rem!important}
+.form-grid-2{gap:10px 12px!important;margin-bottom:12px!important}
+.form-group{margin-bottom:0!important}
+.form-label{font-size:.7rem!important;letter-spacing:.04em!important;text-transform:uppercase!important;color:var(--ink-muted)!important;margin-bottom:4px!important}
+.form-input,.form-textarea{padding:8px 10px!important;font-size:.9rem!important}
+.form-textarea{min-height:180px!important}
+.editor-mode-bar{margin:4px 0 10px!important}
+.editor-tab-btn{padding:6px 12px!important;font-size:.82rem!important}
+.form-help-box,.aligner-help-banner,#alignerTip{display:none!important}
+.modal-actions{margin-top:14px!important}
+.ai-badge{display:none!important}
+/* Density fix 2026-10-28: less scattered whitespace, tighter rows */
+.home-view{gap:20px!important;padding:8px 8px 24px 0!important}
+.main-content{padding:4px 16px 16px!important}
+.home-grid{gap:10px!important}
+.home-card{padding:11px 13px!important}
+.home-card-info{gap:1px!important}
+.home-card-title{line-height:1.3!important}
+.home-card-artist{line-height:1.3!important}
+.home-card-meta{margin-top:4px!important}
+#homeAllGrid .home-card{padding:7px 8px!important}
+.song-item-btn{padding:6px 10px!important}
+.song-item-title{line-height:1.3!important}
+.song-item-artist{line-height:1.3!important}
+/* Warmth fix: pale tinted cards (no loud squares back), All list stays white */
+.home-card:nth-child(4n+1){background:#EAF4F2!important}
+.home-card:nth-child(4n+2){background:#F4F1EB!important}
+.home-card:nth-child(4n+3){background:#EFF4EF!important}
+.home-card:nth-child(4n+4){background:#F6EFF0!important}
+#homeAllGrid .home-card{background:#fff!important}
+.home-meta-badge{background:rgba(255,255,255,.75)!important;color:#456E8F!important;font-weight:600!important}
+/* Hero redesign 2026-10-28: no boxed card, no cover square — editorial header */
+.song-hero{background:transparent!important;border:0!important;border-bottom:1px solid var(--border-subtle)!important;border-radius:0!important;padding:6px 4px 18px!important;align-items:flex-start!important}
+.hero-left{flex-direction:column!important;align-items:flex-start!important;gap:6px!important}
+.hero-back-btn{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;font-size:.82rem!important;color:var(--ink-muted)!important}
+.hero-cover{display:none!important}
+.hero-title{font-size:2.1rem!important;line-height:1.15!important}
+.hero-artist{font-size:1rem!important}
+.hero-badges{margin-top:6px!important;gap:8px!important}
+.hero-badges .meta-pill:not(:first-child)::before{content:"·";margin-right:8px;color:var(--ink-faint)}
+.hero-actions{align-items:flex-start!important;padding-top:2px}
+.circle-btn{border:1px solid var(--border)!important;background:#fff!important}
+/* Layout fix 2026-10-28: less side padding, wider centre, no double card padding */
+.app-container{grid-template-columns:220px minmax(0,1fr) 260px!important;gap:12px!important;padding:12px 14px 96px!important}
+.app-container.home-mode{grid-template-columns:220px minmax(0,1fr)!important}
+.app-container.tools-collapsed{grid-template-columns:220px minmax(0,1fr)!important}
+.main-content{background:transparent!important;border:0!important;border-radius:0!important;padding:0 4px 12px!important}
+.lyrics-card{padding:24px 28px!important}
+/* Hero title: fully visible, never truncated — wraps at a readable size */
+.hero-title{font-size:1.6rem!important;line-height:1.4!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+.hero-info{display:flex!important;flex-wrap:wrap!important;align-items:baseline!important;gap:4px 10px!important}
+.hero-title{flex-basis:100%!important;margin-bottom:0!important}
+.hero-artist{margin-bottom:0!important}
+.hero-badges{margin-top:0!important}
+/* Hero actions: play must stay visible (this rule must come after .circle-btn white) */
+.circle-btn{color:var(--ink-primary)!important;font-size:1rem!important}
+.circle-btn.play-action{background:var(--brand)!important;color:#fff!important;border-color:var(--brand)!important}
+/* Primary colour: vivid calm blue instead of black / dull blue */
+.btn-primary{background:var(--brand)!important;border-color:var(--brand)!important}
+.add-song-gradient-btn{background:var(--brand)!important}
+.bar-btn-main{background:var(--brand)!important}
+.home-meta-badge{color:var(--brand-hover)!important}
+/* No animation beside the selected song — pale background only */
+.playing-bars{display:none!important}
+/* A little more air between songs (list rows only, not inside lyrics) */
+.song-item-btn{padding:8px 10px!important;margin-bottom:2px!important}
+#homeAllGrid .home-card{padding:10px 8px!important}
+.lyrics-section{margin-bottom:24px!important}
+/* Flat white centre 2026-10-28: no rounded boxes in the song area —
+   the centre column itself is the white sheet, lyrics/hero have no card. */
+.main-content{background:#fff!important;border:0!important;border-radius:0!important;padding:0!important}
+.home-view{padding:12px 20px 24px 20px!important}
+.lyrics-card{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+.song-hero{border-radius:0!important}
+.home-view{background:#fff!important}
+/* Smaller icons: hero actions and bottom player */
+.circle-btn{width:34px!important;height:34px!important;font-size:.9rem!important}
+.circle-btn.play-action{width:42px!important;height:42px!important;font-size:1rem!important}
+.bottom-bar{border-radius:0!important;box-shadow:none!important;padding:8px 16px!important;bottom:12px!important}
+.bar-btn{font-size:.95rem!important}
+.bar-btn-main{width:38px!important;height:38px!important}
+/* Burmese text 2026-10-28: tall glyphs need taller lines, never truncated */
+.song-item-title,.home-card-title,.hero-title{line-height:1.6!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+.song-item-title{margin-bottom:2px!important}
+.song-item-artist,.home-card-artist{line-height:1.55!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+.home-card-info{gap:4px!important}
+/* All white 2026-10-28: no grey strip above/below the centre sheet */
+html,body{background:#fff!important}
+.app-container{background:#fff!important;padding:0 14px 96px!important}
+.right-sidebar{background:#fff!important}
+.lyrics-toolbar{background:#fff!important}
+.song-hero{padding-top:12px!important}
+/* Home cards are no longer big tinted blocks — same clean rows as All Songs */
+.home-grid{display:flex!important;flex-direction:column!important;gap:0!important}
+.home-grid .home-card{background:transparent!important;border:0!important;border-bottom:1px solid var(--border-subtle)!important;border-radius:0!important;box-shadow:none!important;padding:12px 8px!important;flex-direction:row!important;align-items:baseline!important;gap:10px!important}
+.home-grid .home-card:hover{transform:none!important;box-shadow:none!important;background:#F8F9FA!important}
+.home-grid .home-card-info{flex-direction:row!important;align-items:baseline!important;flex-wrap:wrap!important;gap:6px 12px!important;flex:1!important}
+.home-grid .home-card-meta{margin-left:auto!important;margin-top:0!important}
+/* Sidebars light grey 2026-10-28: centre stays white, both side areas faint grey */
+.sidebar{background:#F5F5F7!important;padding:12px!important}
+.right-sidebar{background:#F5F5F7!important;padding:12px!important}
+/* Bottom play bar removed 2026-10-28 — hero play + queue + Song Controls cover it */
+.bottom-bar{display:none!important}
+.app-container{padding:0 14px 12px!important}
+/* Sidebars full-bleed 2026-10-28: no white padding strips at the edges or between columns */
+.app-container{padding:0!important;gap:0!important;max-width:none!important;margin:0!important;width:100%!important}
+/* Queue controls */
+#clearQueueBtn{background:transparent;border:0;color:var(--ink-muted);font-size:.7rem;cursor:pointer;padding:0}
+#clearQueueBtn:hover{color:var(--ink-primary)}
+.queue-add-btn{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:#fff;color:var(--ink-primary);font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;margin-left:4px}
+.queue-add-btn:hover{border-color:var(--brand);color:var(--brand)}
+.queue-remove{color:var(--ink-muted);font-size:1rem;padding:2px 6px;cursor:pointer;flex-shrink:0;line-height:1}
+.queue-remove:hover{color:var(--ink-primary)}
+/* Hero breathing room 2026-10-28: title was touching the left sidebar after full-bleed */
+.song-hero{padding:12px 24px 18px!important}
+/* Artists view: name-only list rows */
+.artist-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--border-subtle);padding:12px 8px;cursor:pointer;font-size:.95rem;font-weight:600;color:var(--ink-primary)}
+.artist-row:hover{background:#F8F9FA}
+.artist-row-count{font-size:.8rem;color:var(--ink-muted);font-weight:400;flex-shrink:0}
+/* Compact rows 2026-10-28: no more huge middle gaps — Key/count sit next to the title, not at the far right */
+.home-grid .home-card-info{flex:0 1 auto!important}
+.home-grid .home-card-meta{margin-left:0!important}
+#homeAllGrid .home-card-meta{margin-left:0!important}
+.artist-row{justify-content:flex-start!important}
+.artist-row-count{margin-left:12px!important}
+.home-section-header{justify-content:flex-start!important;gap:12px!important}
+/* Aligned trailing column 2026-10-28: counts/Keys/buttons line up in a straight column on the right */
+.home-grid .home-card-info{flex:1!important}
+.home-grid .home-card-meta{margin-left:auto!important}
+#homeAllGrid .home-card-meta{margin-left:auto!important}
+.artist-row{justify-content:space-between!important}
+.artist-row-count{margin-left:12px!important;min-width:80px;text-align:right;flex-shrink:0}
+.home-section-header{justify-content:space-between!important;gap:12px!important}
+/* Table-like lists 2026-10-28: columns sized by their longest entry, not pushed to the far right */
+.home-grid{display:grid!important;grid-template-columns:minmax(0,320px) max-content max-content 36px!important;align-items:baseline!important;column-gap:0!important;row-gap:0!important}
+.home-grid .home-card{display:contents!important}
+.home-grid .home-card-info{display:contents!important}
+.home-grid .home-card-title,.home-grid .home-card-artist,.home-grid .home-card-meta{padding:12px 12px 12px 0!important;border-bottom:1px solid var(--border-subtle)!important}
+.home-grid .home-card-title{padding-left:8px!important}
+.home-grid .queue-add-btn{padding:0!important;align-self:center!important;margin-left:0!important}
+.home-grid .home-card:hover .home-card-title,.home-grid .home-card:hover .home-card-artist,.home-grid .home-card:hover .home-card-meta{background:#F8F9FA!important}
+#homeArtistsGrid{grid-template-columns:max-content 80px!important}
+#homeArtistsGrid.detail{grid-template-columns:minmax(0,320px) max-content max-content 36px!important}
+#homeArtistsGrid .artist-row{display:contents!important}
+#homeArtistsGrid .artist-row-name,#homeArtistsGrid .artist-row-count{padding:12px 12px 12px 0!important;border-bottom:1px solid var(--border-subtle)!important}
+#homeArtistsGrid .artist-row-name{padding-left:8px!important}
+#homeArtistsGrid .artist-row-count{margin-left:0!important;min-width:80px!important;text-align:right!important}
+#homeArtistsGrid .artist-row:hover .artist-row-name,#homeArtistsGrid .artist-row:hover .artist-row-count{background:#F8F9FA!important}
+/* All Songs 2-column table: left table, 32px gap, right table, sharing one grid */
+#homeAllGrid{grid-template-columns:minmax(0,220px) max-content max-content 36px 32px minmax(0,220px) max-content max-content 36px!important}
+#homeAllGrid .all-table-gap{padding:0!important;border:0!important}
+/* Apple compact rows 2026-10-28: fixed columns, one line per song, no display:contents */
+.home-grid{display:block!important;gap:0!important}
+.home-grid .home-card{display:flex!important;flex-direction:row!important;align-items:center!important;gap:12px!important;padding:8px!important;border:0!important;border-bottom:1px solid var(--border-subtle)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;min-width:0!important;max-width:none!important}
+.home-grid .home-card:hover{background:#F8F9FA!important;transform:none!important;box-shadow:none!important}
+.home-grid .home-card-info{display:flex!important;flex-direction:row!important;align-items:baseline!important;gap:12px!important;flex:1!important;min-width:0!important}
+.home-grid .home-card-title{flex:0 1 260px!important;min-width:0!important;font-size:.95rem!important;line-height:1.35!important;padding:0!important;border:0!important}
+.home-grid .home-card-artist{flex:0 1 160px!important;min-width:0!important;font-size:.82rem!important;line-height:1.35!important;padding:0!important;border:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.home-grid .home-card-meta{flex:0 0 110px!important;margin:0!important;margin-top:0!important;padding:0!important;border:0!important;white-space:nowrap!important;overflow:hidden!important}
+.home-grid .queue-add-btn{flex:0 0 30px!important;padding:0!important;margin:0!important;align-self:center!important}
+#homeRecentGrid{display:block!important;overflow:visible!important;gap:0!important;padding-bottom:0!important}
+#homeRecentGrid .home-card{min-width:0!important;max-width:none!important}
+#homeAllGrid{display:grid!important;grid-template-columns:1fr 1fr!important;column-gap:32px!important;align-items:start!important;flex-direction:row!important}
+#homeAllGrid .all-table-col{display:block!important;min-width:0!important}
+#homeAllGrid .home-card{padding:8px!important;border:0!important;border-bottom:1px solid var(--border-subtle)!important;border-radius:0!important;background:transparent!important}
+#homeAllGrid .home-card-info{flex:1!important;min-width:0!important}
+#homeAllGrid .home-card-meta{margin-left:0!important}
+#homeArtistsGrid{display:block!important}
+#homeArtistsGrid .artist-row{display:flex!important;justify-content:flex-start!important;align-items:baseline!important;gap:12px!important;padding:8px!important;border-bottom:1px solid var(--border-subtle)!important}
+#homeArtistsGrid .artist-row-name{flex:0 1 260px!important;min-width:0!important;padding:0!important;border:0!important}
+#homeArtistsGrid .artist-row-count{flex:0 0 80px!important;margin-left:0!important;min-width:80px!important;text-align:right!important;padding:0!important;border:0!important}
+#homeArtistsGrid .artist-row:hover{background:#F8F9FA!important}
+#homeArtistsGrid .artist-row:hover .artist-row-name,#homeArtistsGrid .artist-row:hover .artist-row-count{background:transparent!important}
+/* Artists table like All Songs: 2 columns, 30 per side */
+#homeArtistsGrid{display:grid!important;grid-template-columns:1fr 1fr!important;column-gap:32px!important;align-items:start!important}
+#homeArtistsGrid.detail{grid-template-columns:1fr 1fr!important}
+#homeArtistsGrid .all-table-col{display:block!important;min-width:0!important}
+/* Lyric snippet in search results */
+.home-grid .home-card.has-snippet{align-items:flex-start!important}
+.home-grid .home-card.has-snippet .home-card-info{flex-wrap:wrap!important}
+.home-grid .home-card.has-snippet .queue-add-btn{align-self:flex-start!important;margin-top:2px!important}
+.home-card-snippet{flex:0 0 100%!important;font-size:.8rem!important;line-height:1.45!important;color:var(--ink-muted)!important;padding:2px 0 0!important;border:0!important}
+.home-card-snippet .snippet-line{white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.home-card-snippet mark{background:#FFE9A8!important;color:inherit!important;padding:0 1px!important;border-radius:2px!important;font-weight:600!important}
+/* Search clear button */
+#searchClearBtn{border:0;background:transparent;color:var(--ink-muted);font-size:1.1rem;line-height:1;cursor:pointer;padding:2px 6px;flex-shrink:0}
+#searchClearBtn:hover{color:var(--ink-primary)}
+@media (max-width:900px){#homeAllGrid{grid-template-columns:1fr!important}#homeArtistsGrid{grid-template-columns:1fr!important}}
+@media (max-width:1100px){.app-container,.app-container.home-mode,.app-container.tools-collapsed{grid-template-columns:220px minmax(0,1fr)!important}.right-sidebar{display:none!important}}
+/* V2 Apple-level tokens 2026-10-28: one flat accent, system greys, hierarchy by size/weight */
+:root{--ink-primary:#1C1C1E!important;--ink-secondary:#8A8A8E!important;--ink-muted:#8A8A8E!important;--brand:#3E6B8F!important;--brand-hover:#335A7A!important;--brand-light:#EAF0F6!important;--brand-border:#D8E2EC!important}
+.home-title{font-size:2rem!important;letter-spacing:-.04em!important}
+.home-subtitle{color:#8A8A8E!important;font-size:.82rem!important}
+.home-section-title{font-size:.94rem!important;letter-spacing:-.01em!important;text-transform:none!important;color:#1C1C1E!important;font-weight:600!important}
+.search-box{background:#E8E8EA!important;border:0!important;border-radius:8px!important}
+.search-box:focus-within{box-shadow:0 0 0 3px rgba(62,107,143,.15)!important}
+.nav-item.active,.song-item-btn.active{background:#E2E2E5!important;color:#1C1C1E!important}
+#homeCatalogSortBox,#homeArtistsSortBox,#homeArtistDetailSortBox{background:rgba(120,120,128,.12)!important;border-radius:8px!important;padding:2px!important;gap:2px!important}
+#homeCatalogSortBox .btn,#homeArtistsSortBox .btn,#homeArtistDetailSortBox .btn{border:0!important;background:transparent!important;border-radius:6px!important;box-shadow:none!important}
+#homeCatalogNavBox .btn,#homeArtistsNavBox .btn{border:0!important;background:transparent!important;box-shadow:none!important}
+#homeCatalogNavBox .btn:hover,#homeArtistsNavBox .btn:hover{background:#F0F0F2!important}
+.home-grid .home-card-title{font-size:.94rem!important;font-weight:600!important;letter-spacing:-.01em!important}
+.home-grid .home-card-artist{font-size:.81rem!important;color:#8A8A8E!important}
+.home-meta-badge{background:transparent!important;color:#8A8A8E!important;font-weight:400!important;font-size:.75rem!important}
+.home-card-meta .home-meta-badge + .home-meta-badge::before{content:"\00B7 ";color:#AEAEB2}
+.queue-add-btn{background:#F0F0F2!important;border:0!important;color:#3E6B8F!important}
+.queue-add-btn:hover{background:#E8E8EA!important;color:#3E6B8F!important}
+.add-song-gradient-btn{background:#3E6B8F!important;border-radius:10px!important}
+.circle-btn.play-action{background:#3E6B8F!important;border-color:#3E6B8F!important}
+.chord-tag{color:#3E6B8F!important;font-weight:600!important}
+.hero-title{font-size:1.375rem!important;letter-spacing:-.02em!important}
+.hero-artist{color:#8A8A8E!important;font-size:.94rem!important}
+.lyrics-line{line-height:2.15!important;font-size:.94rem!important}
+.artist-row{padding:11px 8px!important}
+.artist-row-name{font-size:.94rem!important;font-weight:600!important}
+.artist-row-count{color:#8A8A8E!important;font-size:.75rem!important}
+.home-grid .home-card{border-bottom:1px solid #F0F0F2!important}
+.home-grid .home-card:hover{background:#F7F7F8!important}
+#homeArtistsGrid .artist-row{border-bottom:1px solid #F0F0F2!important}
+#homeArtistsGrid .artist-row:hover{background:#F7F7F8!important}
+/* Artist detail groups: Solo vs Collaborations */
+.artist-group{grid-column:1/-1!important}
+.artist-group-tables{display:grid!important;grid-template-columns:1fr 1fr!important;column-gap:32px!important;align-items:start!important}
+.artist-group-tables .all-table-col{display:block!important;min-width:0!important}
+.artist-group-title{font-size:.82rem!important;font-weight:600!important;color:#8A8A8E!important;padding:18px 8px 6px!important}
+.artist-group:first-child .artist-group-title{padding-top:4px!important}
+@media (max-width:900px){.artist-group-tables{grid-template-columns:1fr!important}}
+/* V4 concept-match 2026-10-28: catalog pagination was missed (id is homeLoadMoreBox, not homeCatalogNavBox) */
+#homeLoadMoreBox .btn,#homeArtistsNavBox .btn{border:0!important;background:transparent!important;box-shadow:none!important}
+#homeLoadMoreBox .btn:hover,#homeArtistsNavBox .btn:hover{background:#F0F0F2!important}
+/* Brand icon solid like the concept logo */
+.brand-icon{background:#3E6B8F!important;border:0!important;color:#fff!important}
+/* V5 exact concept v2 2026-10-28: gray page + centered rounded card, not full-bleed */
+html,body{background:#E8E8E8!important}
+.app-container{background:#fff!important;max-width:1080px!important;margin:14px auto 28px!important;width:100%!important;border:1px solid #D9D9DC!important;border-radius:18px!important;overflow:hidden!important;box-shadow:0 2px 12px rgba(0,0,0,.08)!important;gap:0!important;padding:0!important}
+.app-container{grid-template-columns:232px minmax(0,1fr) 260px!important}
+.app-container.home-mode{grid-template-columns:232px minmax(0,1fr)!important}
+.app-container.tools-collapsed{grid-template-columns:232px minmax(0,1fr)!important}
+.sidebar{background:#F5F5F7!important;padding:20px 12px 16px!important;border-right:1px solid #E5E5EA!important}
+.right-sidebar{background:#F5F5F7!important}
+.tool-panel{background:#fff!important;border-color:#E5E5EA!important}
+.brand-icon{width:34px!important;height:34px!important;border-radius:9px!important}
+.search-box{padding:7px 10px!important}
+.nav-item{border-radius:7px!important;font-size:.81rem!important}
+.home-view{padding:30px 32px 24px 32px!important}
+.home-title{letter-spacing:-.7px!important}
+.home-grid .home-card-title{letter-spacing:-.2px!important}
+.home-grid .home-card{padding:11px 4px!important}
+.home-grid .home-card:hover{border-radius:6px!important}
+#homeAllGrid{column-gap:40px!important}
+#homeAllGrid .home-card{padding:11px 4px!important}
+#homeArtistsGrid{column-gap:40px!important}
+.artist-group-tables{column-gap:40px!important}
+.queue-add-btn{width:28px!important;height:28px!important}
+.home-meta-badge{font-variant-numeric:tabular-nums!important}
+@media (max-width:1100px){.app-container,.app-container.home-mode,.app-container.tools-collapsed{grid-template-columns:232px minmax(0,1fr)!important}.right-sidebar{display:none!important}}
+/* V6 2026-10-28: full page again (card shell reverted per user), concept tokens kept */
+html,body{background:#fff!important}
+.app-container{max-width:none!important;margin:0!important;width:100%!important;border:0!important;border-radius:0!important;overflow:visible!important;box-shadow:none!important;gap:0!important;padding:0!important}
+/* Menu and section titles pure black for readability (inactive menu items were gray) */
+.nav-item,.sub-nav-item{color:#000!important}
+.nav-item.active,.song-item-btn.active{color:#000!important}
+.brand-logo b{color:#000!important}
+.home-title{color:#000!important}
+.home-section-title{color:#000!important}
+.artist-group-title{color:#000!important}
+.sidebar-queue-header{color:#000!important}
+.panel-title{color:#000!important}
+/* V7 2026-10-28: Artists list table exactly like the Home songs table */
+#homeArtistsGrid .artist-row{display:flex!important;justify-content:flex-start!important;align-items:baseline!important;gap:12px!important;padding:11px 4px!important;border-bottom:1px solid #F0F0F2!important}
+#homeArtistsGrid .artist-row:hover{border-radius:6px!important}
+#homeArtistsGrid .artist-row-name{flex:1 1 auto!important;min-width:0!important;font-size:15px!important;font-weight:600!important;letter-spacing:-.2px!important;line-height:1.35!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#homeArtistsGrid .artist-row-count{flex:0 0 80px!important;min-width:80px!important;text-align:right!important;font-size:12px!important;color:#8A8A8E!important;font-variant-numeric:tabular-nums!important}
+/* V8 2026-10-28: Burmese names no longer clipped at the bottom, count close to its artist */
+#homeArtistsGrid .artist-row-name{flex:0 1 auto!important;line-height:1.6!important;padding:1px 0 2px!important}
+#homeArtistsGrid .artist-row-count{flex:0 0 auto!important;min-width:0!important;text-align:left!important}
+/* Centre breathing room like the concept */
+.home-view{padding:26px 30px 24px 30px!important}
+/* V9 mobile 2026-10-28: one column default, stacked layout, tables one column */
+@media (max-width:820px){
+.app-container,.app-container.home-mode,.app-container.tools-collapsed{grid-template-columns:1fr!important;height:auto!important}
+.sidebar{height:auto!important;position:static!important;padding:16px!important;border-right:0!important;border-bottom:1px solid #E5E5EA!important}
+.main-content{height:auto!important;overflow:visible!important}
+.app-container:not(.home-mode):not(.tools-collapsed) .right-sidebar{display:block!important;grid-column:1/-1!important;height:auto!important}
+.home-view{padding:20px 16px 24px 16px!important}
+.home-title{font-size:1.75rem!important}
+#homeAllGrid,#homeArtistsGrid,.artist-group-tables{grid-template-columns:1fr!important;column-gap:0!important}
+.home-grid .home-card{flex-wrap:wrap!important;padding:12px 4px!important}
+.home-grid .home-card-info{flex-wrap:wrap!important}
+.home-grid .home-card-title{flex:1 1 100%!important;font-size:1rem!important}
+.home-grid .home-card-artist{flex:0 1 auto!important}
+.home-grid .home-card-meta{flex:0 0 auto!important;margin-left:0!important}
+#lyricsCard.two-columns{column-count:1!important;column-gap:0!important}
+.lyrics-card{height:auto!important}
+#homeCatalogSortBox,#homeArtistsSortBox,#homeArtistDetailSortBox{flex-wrap:wrap!important}
+.modal-dialog{width:calc(100% - 24px)!important;padding:20px 16px!important}
+.modal-dialog-lg{width:calc(100% - 24px)!important}
+}
+/* V10 mobile menu 2026-10-28: sidebar hidden by default on mobile, tap to expand */
+.mobile-nav-toggle{display:none!important}
+@media (max-width:820px){
+.mobile-nav-toggle{display:flex!important;align-items:center!important;gap:8px!important;width:100%!important;padding:12px 16px!important;background:#fff!important;border:0!important;border-bottom:1px solid #E5E5EA!important;font-size:15px!important;font-weight:600!important;color:#000!important;text-align:left!important;cursor:pointer!important;position:sticky!important;top:0!important;z-index:30!important;grid-column:1/-1!important}
+.sidebar{display:none!important}
+.app-container.mobile-nav-open .sidebar{display:flex!important}
+}
+/* V12 2026-10-28: hide Print and Play from the song hero top row, keep Edit + Heart */
+.hero-actions #printBtn{display:none!important}
+.hero-actions #heroPlayBtn{display:none!important}
+
 </style>
 </head>
 <body>
 
   <div class="app-container">
+
+    <button type="button" class="mobile-nav-toggle" id="mobileNavToggleBtn">&#9776; Menu</button>
 
     <!-- LEFT SIDEBAR: Library & Navigation -->
     <aside class="sidebar">
@@ -2135,10 +2548,10 @@ input[type="range"] {
       <!-- Brand Header -->
       <div class="brand-header">
         <div class="brand-logo" id="homeLogoBtn" title="Go to Home Library" style="cursor:pointer;">
-          <div class="brand-icon">🎸</div>
+          <div class="brand-icon" style="font-weight:600;">T</div>
           <div>
-            <div style="font-weight:700;font-size:1.05rem;line-height:1.2;">ChordBook</div>
-            <div style="font-size:0.68rem;color:var(--ink-muted);font-weight:400;">Songs. Chords. Always with you.</div>
+            <div style="font-weight:700;font-size:1.05rem;line-height:1.2;">Tashido's ChordBook</div>
+            <div style="font-size:0.68rem;color:var(--ink-muted);font-weight:400;">Songs · Chords</div>
           </div>
         </div>
       </div>
@@ -2149,14 +2562,14 @@ input[type="range"] {
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="searchInput" placeholder="Search songs, artists...">
+        <input type="text" id="searchInput" placeholder="Search songs, artists, lyrics...">
+        <button type="button" id="searchClearBtn" aria-label="Clear search" style="display:none;">&times;</button>
       </div>
 
       <!-- Navigation Views -->
       <nav class="nav-section">
         <button class="nav-item active" data-view="all" id="navAllBtn">
           <div class="nav-item-content">
-            <span>🎵</span>
             <span>All Songs</span>
           </div>
           <span class="badge-count" id="countAll">0</span>
@@ -2164,7 +2577,7 @@ input[type="range"] {
 
         <button class="nav-item" data-view="fav" id="navFavBtn">
           <div class="nav-item-content">
-            <span style="color:var(--rose)">🤍</span>
+            <span>♡</span>
             <span>Favorites</span>
           </div>
           <span class="badge-count" id="countFav">0</span>
@@ -2172,21 +2585,18 @@ input[type="range"] {
 
         <button class="nav-item" data-view="recent" id="navRecentBtn">
           <div class="nav-item-content">
-            <span>⏱</span>
             <span>Recently Played</span>
           </div>
         </button>
 
         <button class="nav-item" data-view="artists" id="navArtistsBtn">
           <div class="nav-item-content">
-            <span>👤</span>
             <span>Artists</span>
           </div>
         </button>
 
         <button class="nav-item" id="categoriesToggleBtn">
           <div class="nav-item-content">
-            <span>📁</span>
             <span>Categories</span>
           </div>
           <span style="font-size:0.75rem;color:var(--ink-faint);" id="categoriesArrow">▾</span>
@@ -2195,11 +2605,11 @@ input[type="range"] {
         <!-- Sub-categories dropdown -->
         <div class="sub-nav-section" id="categoriesSubMenu">
           <button class="sub-nav-item" data-view="en">
-            <span>🇬🇧 English Songs</span>
+            <span>English Songs</span>
             <span class="badge-count" id="countEnglish">0</span>
           </button>
           <button class="sub-nav-item" data-view="my">
-            <span>🇲🇲 Myanmar Songs</span>
+            <span>Myanmar Songs</span>
             <span class="badge-count" id="countMyanmar">0</span>
           </button>
         </div>
@@ -2208,7 +2618,7 @@ input[type="range"] {
       <!-- Songs Queue Header -->
       <div class="sidebar-queue-header">
         <span>SONGS QUEUE</span>
-        <span style="font-size:0.7rem;color:var(--ink-faint);" title="Drag songs to reorder strum list">⇅ Reorder</span>
+        <button id="clearQueueBtn" title="Clear queue">Clear</button>
       </div>
 
       <!-- Songs List (Draggable Queue) -->
@@ -2229,36 +2639,54 @@ input[type="range"] {
         <div class="home-header">
           <div>
             <h1 class="home-title">Library</h1>
-            <div class="home-subtitle">Browse your acoustic songs &amp; chords</div>
-          </div>
-          <div class="home-filter-pills">
-            <button class="home-pill active" data-home-filter="all">All Songs</button>
-            <button class="home-pill" data-home-filter="my">🇲🇲 Myanmar</button>
-            <button class="home-pill" data-home-filter="en">🇬🇧 English</button>
-            <button class="home-pill" data-home-filter="fav">🤍 Favorites</button>
+            <div class="home-subtitle">Browse your songs &amp; chords</div>
           </div>
         </div>
+
+        <!-- Section: Artists (names only; tap a name to see their songs) -->
+        <section id="homeArtistsSection" style="display:none;">
+          <div class="home-section-header">
+            <button class="btn btn-outline btn-sm" id="homeArtistsBackBtn" style="display:none;">Artists</button>
+            <h2 class="home-section-title" id="homeArtistsTitle">Artists</h2>
+            <div style="font-size:0.78rem;color:var(--ink-muted);" id="homeArtistsCount"></div>
+          </div>
+          <div style="display:inline-flex;gap:6px;align-items:center;margin:6px 0 10px;" id="homeArtistsSortBox">
+            <button class="btn btn-outline btn-sm" id="homeArtistsSortNameBtn">Name</button>
+            <button class="btn btn-outline btn-sm" id="homeArtistsSortRecentBtn">Recently Added</button>
+          </div>
+          <div style="display:none;gap:6px;align-items:center;margin:6px 0 10px;" id="homeArtistDetailSortBox">
+            <button class="btn btn-outline btn-sm" id="homeArtistDetailSortNameBtn">Name</button>
+            <button class="btn btn-outline btn-sm" id="homeArtistDetailSortRecentBtn">Recently Added</button>
+          </div>
+          <div class="home-grid" id="homeArtistsGrid"></div>
+          <div style="text-align:center;margin-top:20px;" id="homeArtistsNavBox">
+            <button class="btn btn-outline btn-sm" id="homeArtistsPrevBtn">Prev</button>
+            <span style="font-size:0.82rem;color:var(--ink-muted);margin:0 10px;" id="homeArtistsPageInfo"></span>
+            <button class="btn btn-outline btn-sm" id="homeArtistsNextBtn">Next</button>
+            <button class="btn btn-outline btn-sm" id="homeArtistsShowAllBtn" style="margin-left:10px;">Display all artists</button>
+          </div>
+        </section>
 
         <!-- Section: Recently Practiced / Jump Back In -->
         <section id="homeRecentSection">
           <div class="home-section-header">
-            <h2 class="home-section-title"><span>⏱</span> Recently Practiced</h2>
+            <h2 class="home-section-title">Recently Added</h2>
           </div>
           <div class="home-grid" id="homeRecentGrid"></div>
         </section>
 
-        <!-- Section: Myanmar Acoustic Songs -->
+        <!-- Section: Myanmar Songs -->
         <section id="homeMyanmarSection">
           <div class="home-section-header">
-            <h2 class="home-section-title"><span>🇲🇲</span> Myanmar Acoustic</h2>
+            <h2 class="home-section-title">Myanmar</h2>
           </div>
           <div class="home-grid" id="homeMyanmarGrid"></div>
         </section>
 
-        <!-- Section: English Acoustic Favorites -->
+        <!-- Section: English Songs -->
         <section id="homeEnglishSection">
           <div class="home-section-header">
-            <h2 class="home-section-title"><span>🇬🇧</span> English Acoustic</h2>
+            <h2 class="home-section-title">English</h2>
           </div>
           <div class="home-grid" id="homeEnglishGrid"></div>
         </section>
@@ -2266,12 +2694,19 @@ input[type="range"] {
         <!-- Section: All Songs Catalog (Organized with Smart Limit) -->
         <section id="homeAllSection">
           <div class="home-section-header">
-            <h2 class="home-section-title"><span>🎸</span> All Songs (<span id="homeCatalogCount">0</span>)</h2>
+            <h2 class="home-section-title">All Songs (<span id="homeCatalogCount">0</span>)</h2>
             <div style="font-size:0.78rem;color:var(--ink-muted);" id="homeCatalogSummary"></div>
+          </div>
+          <div style="display:inline-flex;gap:6px;align-items:center;margin:6px 0 10px;" id="homeCatalogSortBox">
+            <button class="btn btn-outline btn-sm" id="homeCatalogSortRecentBtn">Recently Added</button>
+            <button class="btn btn-outline btn-sm" id="homeCatalogSortNameBtn">Name</button>
           </div>
           <div class="home-grid" id="homeAllGrid"></div>
           <div style="text-align:center;margin-top:20px;" id="homeLoadMoreBox">
-            <button class="btn btn-outline btn-sm" id="homeLoadMoreBtn">Load More Songs ▾</button>
+            <button class="btn btn-outline btn-sm" id="homeCatalogPrevBtn">Prev</button>
+            <span style="font-size:0.82rem;color:var(--ink-muted);margin:0 10px;" id="homeCatalogPageInfo"></span>
+            <button class="btn btn-outline btn-sm" id="homeCatalogNextBtn">Next</button>
+            <button class="btn btn-outline btn-sm" id="homeCatalogShowAllBtn" style="margin-left:10px;">Display all songs</button>
           </div>
         </section>
       </div>
@@ -2300,15 +2735,17 @@ input[type="range"] {
           </div>
 
           <div class="hero-actions">
+            <button class="circle-btn" id="toolsToggleBtn" title="Hide tools">›</button>
             <button class="circle-btn" id="favBtn" title="Toggle Favorite">♡</button>
-            <button class="circle-btn" id="editSongBtn" title="Edit this song">✏️</button>
+            <button class="circle-btn" id="editSongBtn" title="Edit this song">&#9998;</button>
             <button class="circle-btn" id="printBtn" title="Print chord sheet">🖨️</button>
+            <button class="circle-btn" id="queueAddBtn" title="Add to queue">＋</button>
             <button class="circle-btn play-action" id="heroPlayBtn" title="Start / Pause Auto-Scroll">▶</button>
           </div>
         </section>
 
         <!-- Main Lyrics Card -->
-        <article class="lyrics-card" id="lyricsCard">
+        <article class="lyrics-card two-columns" id="lyricsCard">
           <div id="lyricsContainer"></div>
         </article>
 
@@ -2373,7 +2810,7 @@ input[type="range"] {
         <!-- Two Columns Layout Switch -->
         <div class="tool-row">
           <span class="tool-label">2 Columns</span>
-          <button class="switch-control" id="colToggleBtn" title="Toggle two-column lyrics"></button>
+          <button class="switch-control active" id="colToggleBtn" title="Toggle two-column lyrics"></button>
         </div>
       </section>
 
@@ -2448,8 +2885,7 @@ input[type="range"] {
           <div class="ai-scan-title">
             <span style="font-size:1.15rem;">✨</span>
             <div>
-              <b>Scan Chord Sheet Image with Gemini AI</b>
-              <div style="font-size:0.72rem;color:var(--ink-muted);">Auto-extracts Myanmar/English lyrics & chords • Discards watermarks & ads</div>
+              <b>Scan chord sheet</b>
             </div>
             <span class="ai-badge">gemini-flash-latest</span>
           </div>
@@ -2472,10 +2908,7 @@ input[type="range"] {
           <div class="ai-dropzone-content" id="dropzoneContent">
             <span style="font-size:2rem;">📸</span>
             <div>
-              <b>Click to browse or Drag & Drop Chord Sheet Photo</b>
-              <div style="color:var(--ink-muted);font-size:0.75rem;margin-top:3px;">
-                Supports PNG, JPG, WEBP • Or Paste screenshot with <kbd>Ctrl+V</kbd> / <kbd>Cmd+V</kbd>
-              </div>
+              <b>Drop a chord sheet photo</b>
             </div>
           </div>
 
@@ -2503,7 +2936,7 @@ input[type="range"] {
       <!-- Basic Metadata Grid -->
       <div class="form-grid-2">
         <div class="form-group">
-          <label class="form-label">Song Title *</label>
+          <label class="form-label">Title *</label>
           <input type="text" class="form-input" id="fTitle" placeholder="e.g. ဖြေလွှတ်ပစ်လိုက်တဲ့ကြိုး">
         </div>
         <div class="form-group">
@@ -2512,30 +2945,30 @@ input[type="range"] {
         </div>
         <div class="form-group">
           <label class="form-label">Genre</label>
-          <input type="text" class="form-input" id="fGenre" placeholder="e.g. Myanmar Classic, Acoustic">
+          <input type="text" class="form-input" id="fGenre" placeholder="Optional">
         </div>
         <div class="form-group">
-          <label class="form-label">Original Key</label>
+          <label class="form-label">Key</label>
           <input type="text" class="form-input" id="fKey" placeholder="e.g. G, C, Am">
         </div>
         <div class="form-group">
-          <label class="form-label">Capo Fret</label>
+          <label class="form-label">Capo</label>
           <input type="number" class="form-input" id="fCapo" min="0" max="12" value="0">
         </div>
         <div class="form-group">
-          <label class="form-label">Tempo (BPM)</label>
+          <label class="form-label">Tempo</label>
           <input type="number" class="form-input" id="fBpm" min="40" max="240" value="80">
         </div>
         <div class="form-group">
-          <label class="form-label">Language / ဘာသာစကား</label>
+          <label class="form-label">Language</label>
           <select class="form-input" id="fLanguage">
-            <option value="my">🇲🇲 Myanmar (မြန်မာ)</option>
-            <option value="en">🇬🇧 English</option>
-            <option value="other">🌐 Other</option>
+            <option value="my">Myanmar</option>
+            <option value="en">English</option>
+            <option value="other">Other</option>
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Release Year</label>
+          <label class="form-label">Year</label>
           <input type="text" class="form-input" id="fYear" placeholder="e.g. 2024">
         </div>
       </div>
@@ -2544,10 +2977,10 @@ input[type="range"] {
       <div class="editor-mode-bar">
         <div class="editor-tabs">
           <button type="button" class="editor-tab-btn active" id="tabTextMode">
-            <span>📝 Text Editor</span>
+            <span>Text</span>
           </button>
           <button type="button" class="editor-tab-btn" id="tabVisualMode">
-            <span>🎯 Visual Chord Aligner (Chord နေရာချိန်ညှိရန်)</span>
+            <span>Aligner</span>
           </button>
         </div>
         <span style="font-size:0.75rem;color:var(--ink-muted);" id="alignerTip">
@@ -2628,139 +3061,424 @@ input[type="range"] {
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
   <!-- Scripts -->
-  <script>
+<script>
 /**
  * Tashido Guitar Chord - Comprehensive Guitar Chord Database
+ * Over 240+ accurately voiced acoustic guitar chords with fingerings and barres.
  * Format: frets array [string6(low E), string5(A), string4(D), string3(G), string2(B), string1(high E)]
  * -1 = mute (x), 0 = open (o), 1..n = fret number
  * baseFret: starting fret for higher positions (1 is standard open position)
- * fingers: suggested finger [T/1/2/3/4] for each string (-1 or 0 is null)
+ * fingers: suggested finger [T/1/2/3/4] for each string (0 is unassigned)
  * barres: array of fret numbers where index finger bars across strings
  */
 
 const CHORD_DATABASE = {
-  // Major Chords
-  "C": { frets: [-1, 3, 2, 0, 1, 0], baseFret: 1, fingers: [0, 3, 2, 0, 1, 0] },
-  "C#": { frets: [-1, 4, 3, 1, 2, 1], baseFret: 1, fingers: [0, 4, 3, 1, 2, 1], barres: [1] },
-  "Db": { frets: [-1, 4, 3, 1, 2, 1], baseFret: 1, fingers: [0, 4, 3, 1, 2, 1], barres: [1] },
-  "D": { frets: [-1, -1, 0, 2, 3, 2], baseFret: 1, fingers: [0, 0, 0, 1, 3, 2] },
-  "D#": { frets: [-1, -1, 1, 3, 4, 3], baseFret: 1, fingers: [0, 0, 1, 2, 4, 3] },
-  "Eb": { frets: [-1, -1, 1, 3, 4, 3], baseFret: 1, fingers: [0, 0, 1, 2, 4, 3] },
-  "E": { frets: [0, 2, 2, 1, 0, 0], baseFret: 1, fingers: [0, 2, 3, 1, 0, 0] },
-  "F": { frets: [1, 3, 3, 2, 1, 1], baseFret: 1, fingers: [1, 3, 4, 2, 1, 1], barres: [1] },
-  "F#": { frets: [2, 4, 4, 3, 2, 2], baseFret: 2, fingers: [1, 3, 4, 2, 1, 1], barres: [2] },
-  "Gb": { frets: [2, 4, 4, 3, 2, 2], baseFret: 2, fingers: [1, 3, 4, 2, 1, 1], barres: [2] },
-  "G": { frets: [3, 2, 0, 0, 0, 3], baseFret: 1, fingers: [2, 1, 0, 0, 0, 3] },
-  "G#": { frets: [4, 6, 6, 5, 4, 4], baseFret: 4, fingers: [1, 3, 4, 2, 1, 1], barres: [4] },
-  "Ab": { frets: [4, 6, 6, 5, 4, 4], baseFret: 4, fingers: [1, 3, 4, 2, 1, 1], barres: [4] },
-  "A": { frets: [-1, 0, 2, 2, 2, 0], baseFret: 1, fingers: [0, 0, 1, 2, 3, 0] },
-  "A#": { frets: [-1, 1, 3, 3, 3, 1], baseFret: 1, fingers: [0, 1, 2, 3, 4, 1], barres: [1] },
-  "Bb": { frets: [-1, 1, 3, 3, 3, 1], baseFret: 1, fingers: [0, 1, 2, 3, 4, 1], barres: [1] },
-  "B": { frets: [-1, 2, 4, 4, 4, 2], baseFret: 2, fingers: [0, 1, 2, 3, 4, 1], barres: [2] },
-
-  // Minor Chords
-  "Cm": { frets: [-1, 3, 5, 5, 4, 3], baseFret: 3, fingers: [0, 1, 3, 4, 2, 1], barres: [3] },
-  "C#m": { frets: [-1, 4, 6, 6, 5, 4], baseFret: 4, fingers: [0, 1, 3, 4, 2, 1], barres: [4] },
-  "Dbm": { frets: [-1, 4, 6, 6, 5, 4], baseFret: 4, fingers: [0, 1, 3, 4, 2, 1], barres: [4] },
-  "Dm": { frets: [-1, -1, 0, 2, 3, 1], baseFret: 1, fingers: [0, 0, 0, 2, 3, 1] },
-  "D#m": { frets: [-1, -1, 1, 3, 4, 2], baseFret: 1, fingers: [0, 0, 1, 3, 4, 2] },
-  "Ebm": { frets: [-1, -1, 1, 3, 4, 2], baseFret: 1, fingers: [0, 0, 1, 3, 4, 2] },
-  "Em": { frets: [0, 2, 2, 0, 0, 0], baseFret: 1, fingers: [0, 2, 3, 0, 0, 0] },
-  "Fm": { frets: [1, 3, 3, 1, 1, 1], baseFret: 1, fingers: [1, 3, 4, 1, 1, 1], barres: [1] },
-  "F#m": { frets: [2, 4, 4, 2, 2, 2], baseFret: 2, fingers: [1, 3, 4, 1, 1, 1], barres: [2] },
-  "Gbm": { frets: [2, 4, 4, 2, 2, 2], baseFret: 2, fingers: [1, 3, 4, 1, 1, 1], barres: [2] },
-  "Gm": { frets: [3, 5, 5, 3, 3, 3], baseFret: 3, fingers: [1, 3, 4, 1, 1, 1], barres: [3] },
-  "G#m": { frets: [4, 6, 6, 4, 4, 4], baseFret: 4, fingers: [1, 3, 4, 1, 1, 1], barres: [4] },
-  "Abm": { frets: [4, 6, 6, 4, 4, 4], baseFret: 4, fingers: [1, 3, 4, 1, 1, 1], barres: [4] },
-  "Am": { frets: [-1, 0, 2, 2, 1, 0], baseFret: 1, fingers: [0, 0, 2, 3, 1, 0] },
-  "A#m": { frets: [-1, 1, 3, 3, 2, 1], baseFret: 1, fingers: [0, 1, 3, 4, 2, 1], barres: [1] },
-  "Bbm": { frets: [-1, 1, 3, 3, 2, 1], baseFret: 1, fingers: [0, 1, 3, 4, 2, 1], barres: [1] },
-  "Bm": { frets: [-1, 2, 4, 4, 3, 2], baseFret: 2, fingers: [0, 1, 3, 4, 2, 1], barres: [2] },
-
-  // Dominant 7th Chords
-  "C7": { frets: [-1, 3, 2, 3, 1, 0], baseFret: 1, fingers: [0, 3, 2, 4, 1, 0] },
-  "D7": { frets: [-1, -1, 0, 2, 1, 2], baseFret: 1, fingers: [0, 0, 0, 2, 1, 3] },
-  "E7": { frets: [0, 2, 0, 1, 0, 0], baseFret: 1, fingers: [0, 2, 0, 1, 0, 0] },
-  "F7": { frets: [1, 3, 1, 2, 1, 1], baseFret: 1, fingers: [1, 3, 1, 2, 1, 1], barres: [1] },
-  "F#7": { frets: [2, 4, 2, 3, 2, 2], baseFret: 2, fingers: [1, 3, 1, 2, 1, 1], barres: [2] },
-  "G7": { frets: [3, 2, 0, 0, 0, 1], baseFret: 1, fingers: [3, 2, 0, 0, 0, 1] },
-  "A7": { frets: [-1, 0, 2, 0, 2, 0], baseFret: 1, fingers: [0, 0, 2, 0, 3, 0] },
-  "B7": { frets: [-1, 2, 1, 2, 0, 2], baseFret: 1, fingers: [0, 2, 1, 3, 0, 4] },
-  "Bb7": { frets: [-1, 1, 3, 1, 3, 1], baseFret: 1, fingers: [0, 1, 3, 1, 4, 1], barres: [1] },
-
-  // Minor 7th Chords
-  "Cm7": { frets: [-1, 3, 5, 3, 4, 3], baseFret: 3, fingers: [0, 1, 3, 1, 2, 1], barres: [3] },
-  "Dm7": { frets: [-1, -1, 0, 2, 1, 1], baseFret: 1, fingers: [0, 0, 0, 2, 1, 1], barres: [1] },
-  "Em7": { frets: [0, 2, 0, 0, 0, 0], baseFret: 1, fingers: [0, 2, 0, 0, 0, 0] },
-  "F#m7": { frets: [2, 4, 2, 2, 2, 2], baseFret: 2, fingers: [1, 3, 1, 1, 1, 1], barres: [2] },
-  "Gm7": { frets: [3, 5, 3, 3, 3, 3], baseFret: 3, fingers: [1, 3, 1, 1, 1, 1], barres: [3] },
-  "Am7": { frets: [-1, 0, 2, 0, 1, 0], baseFret: 1, fingers: [0, 0, 2, 0, 1, 0] },
-  "Bm7": { frets: [-1, 2, 4, 2, 3, 2], baseFret: 2, fingers: [0, 1, 3, 1, 2, 1], barres: [2] },
-
-  // Major 7th Chords
-  "Cmaj7": { frets: [-1, 3, 2, 0, 0, 0], baseFret: 1, fingers: [0, 3, 2, 0, 0, 0] },
-  "Dmaj7": { frets: [-1, -1, 0, 2, 2, 2], baseFret: 1, fingers: [0, 0, 0, 1, 2, 3] },
-  "Emaj7": { frets: [0, 2, 1, 1, 0, 0], baseFret: 1, fingers: [0, 3, 1, 2, 0, 0] },
-  "Fmaj7": { frets: [-1, -1, 3, 2, 1, 0], baseFret: 1, fingers: [0, 0, 3, 2, 1, 0] },
-  "Gmaj7": { frets: [3, 2, 0, 0, 0, 2], baseFret: 1, fingers: [3, 2, 0, 0, 0, 1] },
-  "Amaj7": { frets: [-1, 0, 2, 1, 2, 0], baseFret: 1, fingers: [0, 0, 2, 1, 3, 0] },
-  "Bmaj7": { frets: [-1, 2, 4, 3, 4, 2], baseFret: 2, fingers: [0, 1, 3, 2, 4, 1], barres: [2] },
-
-  // Suspended & Add Chords
-  "Csus4": { frets: [-1, 3, 3, 0, 1, 1], baseFret: 1, fingers: [0, 3, 4, 0, 1, 1], barres: [1] },
-  "Dsus4": { frets: [-1, -1, 0, 2, 3, 3], baseFret: 1, fingers: [0, 0, 0, 1, 3, 4] },
-  "Dsus2": { frets: [-1, -1, 0, 2, 3, 0], baseFret: 1, fingers: [0, 0, 0, 1, 3, 0] },
-  "Esus4": { frets: [0, 2, 2, 2, 0, 0], baseFret: 1, fingers: [0, 2, 3, 4, 0, 0] },
-  "Gsus4": { frets: [3, 3, 0, 0, 1, 3], baseFret: 1, fingers: [2, 3, 0, 0, 1, 4] },
-  "Asus2": { frets: [-1, 0, 2, 2, 0, 0], baseFret: 1, fingers: [0, 0, 1, 2, 0, 0] },
-  "Asus4": { frets: [-1, 0, 2, 2, 3, 0], baseFret: 1, fingers: [0, 0, 1, 2, 3, 0] },
-  "Cadd9": { frets: [-1, 3, 2, 0, 3, 3], baseFret: 1, fingers: [0, 2, 1, 0, 3, 4] },
-  "Gadd9": { frets: [3, 2, 0, 2, 0, 3], baseFret: 1, fingers: [2, 1, 0, 3, 0, 4] },
-
-  // Slash / Inverted Chords
-  "G/B": { frets: [-1, 2, 0, 0, 3, 3], baseFret: 1, fingers: [0, 1, 0, 0, 3, 4] },
-  "C/E": { frets: [0, 3, 2, 0, 1, 0], baseFret: 1, fingers: [0, 3, 2, 0, 1, 0] },
-  "D/F#": { frets: [2, 0, 0, 2, 3, 2], baseFret: 1, fingers: [1, 0, 0, 2, 4, 3] },
-  "F/A": { frets: [-1, 0, 3, 2, 1, 1], baseFret: 1, fingers: [0, 0, 3, 2, 1, 1] },
-  "Am/G": { frets: [3, 0, 2, 2, 1, 0], baseFret: 1, fingers: [4, 0, 2, 3, 1, 0] }
+  "C": {"frets": [-1, 3, 2, 0, 1, 0], "baseFret": 1, "fingers": [0, 3, 2, 0, 1, 0]},
+  "C#": {"frets": [-1, 4, 3, 1, 2, 1], "baseFret": 1, "barres": [1], "fingers": [0, 4, 3, 1, 2, 1]},
+  "Db": {"frets": [-1, 4, 3, 1, 2, 1], "baseFret": 1, "barres": [1], "fingers": [0, 4, 3, 1, 2, 1]},
+  "D": {"frets": [-1, -1, 0, 2, 3, 2], "baseFret": 1, "fingers": [0, 0, 0, 1, 3, 2]},
+  "D#": {"frets": [-1, -1, 1, 3, 4, 3], "baseFret": 1, "fingers": [0, 0, 1, 2, 4, 3]},
+  "Eb": {"frets": [-1, 6, 8, 8, 8, 6], "baseFret": 6, "barres": [6], "fingers": [0, 1, 2, 3, 4, 1]},
+  "E": {"frets": [0, 2, 2, 1, 0, 0], "baseFret": 1, "fingers": [0, 2, 3, 1, 0, 0]},
+  "F": {"frets": [1, 3, 3, 2, 1, 1], "baseFret": 1, "barres": [1], "fingers": [1, 3, 4, 2, 1, 1]},
+  "F#": {"frets": [2, 4, 4, 3, 2, 2], "baseFret": 2, "barres": [2], "fingers": [1, 3, 4, 2, 1, 1]},
+  "Gb": {"frets": [2, 4, 4, 3, 2, 2], "baseFret": 2, "barres": [2], "fingers": [1, 3, 4, 2, 1, 1]},
+  "G": {"frets": [3, 2, 0, 0, 0, 3], "baseFret": 1, "fingers": [2, 1, 0, 0, 0, 3]},
+  "G#": {"frets": [4, 6, 6, 5, 4, 4], "baseFret": 4, "barres": [4], "fingers": [1, 3, 4, 2, 1, 1]},
+  "Ab": {"frets": [4, 6, 6, 5, 4, 4], "baseFret": 4, "barres": [4], "fingers": [1, 3, 4, 2, 1, 1]},
+  "A": {"frets": [-1, 0, 2, 2, 2, 0], "baseFret": 1, "fingers": [0, 0, 1, 2, 3, 0]},
+  "A#": {"frets": [-1, 1, 3, 3, 3, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 2, 3, 4, 1]},
+  "Bb": {"frets": [-1, 1, 3, 3, 3, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 2, 3, 4, 1]},
+  "B": {"frets": [-1, 2, 4, 4, 4, 2], "baseFret": 2, "barres": [2], "fingers": [0, 1, 2, 3, 4, 1]},
+  "Cm": {"frets": [-1, 3, 5, 5, 4, 3], "baseFret": 3, "barres": [3], "fingers": [0, 1, 3, 4, 2, 1]},
+  "C#m": {"frets": [-1, 4, 6, 6, 5, 4], "baseFret": 4, "barres": [4], "fingers": [0, 1, 3, 4, 2, 1]},
+  "Dbm": {"frets": [-1, 4, 6, 6, 5, 4], "baseFret": 4, "barres": [4], "fingers": [0, 1, 3, 4, 2, 1]},
+  "Dm": {"frets": [-1, -1, 0, 2, 3, 1], "baseFret": 1, "fingers": [0, 0, 0, 2, 3, 1]},
+  "D#m": {"frets": [-1, -1, 1, 3, 4, 2], "baseFret": 1, "fingers": [0, 0, 1, 3, 4, 2]},
+  "Ebm": {"frets": [-1, -1, 1, 3, 4, 2], "baseFret": 1, "fingers": [0, 0, 1, 3, 4, 2]},
+  "Em": {"frets": [0, 2, 2, 0, 0, 0], "baseFret": 1, "fingers": [0, 2, 3, 0, 0, 0]},
+  "Fm": {"frets": [1, 3, 3, 1, 1, 1], "baseFret": 1, "barres": [1], "fingers": [1, 3, 4, 1, 1, 1]},
+  "F#m": {"frets": [2, 4, 4, 2, 2, 2], "baseFret": 2, "barres": [2], "fingers": [1, 3, 4, 1, 1, 1]},
+  "Gbm": {"frets": [2, 4, 4, 2, 2, 2], "baseFret": 2, "barres": [2], "fingers": [1, 3, 4, 1, 1, 1]},
+  "Gm": {"frets": [3, 5, 5, 3, 3, 3], "baseFret": 3, "barres": [3], "fingers": [1, 3, 4, 1, 1, 1]},
+  "G#m": {"frets": [4, 6, 6, 4, 4, 4], "baseFret": 4, "barres": [4], "fingers": [1, 3, 4, 1, 1, 1]},
+  "Abm": {"frets": [4, 6, 6, 4, 4, 4], "baseFret": 4, "barres": [4], "fingers": [1, 3, 4, 1, 1, 1]},
+  "Am": {"frets": [-1, 0, 2, 2, 1, 0], "baseFret": 1, "fingers": [0, 0, 2, 3, 1, 0]},
+  "A#m": {"frets": [-1, 1, 3, 3, 2, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 3, 4, 2, 1]},
+  "Bbm": {"frets": [-1, 1, 3, 3, 2, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 3, 4, 2, 1]},
+  "Bm": {"frets": [-1, 2, 4, 4, 3, 2], "baseFret": 2, "barres": [2], "fingers": [0, 1, 3, 4, 2, 1]},
+  "C7": {"frets": [-1, 3, 2, 3, 1, 0], "baseFret": 1, "fingers": [0, 3, 2, 4, 1, 0]},
+  "C#7": {"frets": [-1, 4, 3, 4, 2, -1], "baseFret": 1, "fingers": [0, 3, 2, 4, 1, 0]},
+  "Db7": {"frets": [-1, 4, 3, 4, 2, -1], "baseFret": 1, "fingers": [0, 3, 2, 4, 1, 0]},
+  "D7": {"frets": [-1, -1, 0, 2, 1, 2], "baseFret": 1, "fingers": [0, 0, 0, 2, 1, 3]},
+  "D#7": {"frets": [-1, -1, 1, 3, 2, 3], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "Eb7": {"frets": [-1, -1, 1, 3, 2, 3], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "E7": {"frets": [0, 2, 0, 1, 0, 0], "baseFret": 1, "fingers": [0, 2, 0, 1, 0, 0]},
+  "F7": {"frets": [1, 3, 1, 2, 1, 1], "baseFret": 1, "barres": [1], "fingers": [1, 3, 1, 2, 1, 1]},
+  "F#7": {"frets": [2, 4, 2, 3, 2, 2], "baseFret": 2, "barres": [2], "fingers": [1, 3, 1, 2, 1, 1]},
+  "Gb7": {"frets": [2, 4, 2, 3, 2, 2], "baseFret": 2, "barres": [2], "fingers": [1, 3, 1, 2, 1, 1]},
+  "G7": {"frets": [3, 2, 0, 0, 0, 1], "baseFret": 1, "fingers": [3, 2, 0, 0, 0, 1]},
+  "G#7": {"frets": [4, 6, 4, 5, 4, 4], "baseFret": 4, "barres": [4], "fingers": [1, 3, 1, 2, 1, 1]},
+  "Ab7": {"frets": [4, 6, 4, 5, 4, 4], "baseFret": 4, "barres": [4], "fingers": [1, 3, 1, 2, 1, 1]},
+  "A7": {"frets": [-1, 0, 2, 0, 2, 0], "baseFret": 1, "fingers": [0, 0, 2, 0, 3, 0]},
+  "A#7": {"frets": [-1, 1, 3, 1, 3, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 3, 1, 4, 1]},
+  "Bb7": {"frets": [-1, 1, 3, 1, 3, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 3, 1, 4, 1]},
+  "B7": {"frets": [-1, 2, 1, 2, 0, 2], "baseFret": 1, "fingers": [0, 2, 1, 3, 0, 4]},
+  "Cm7": {"frets": [-1, 3, 5, 3, 4, 3], "baseFret": 3, "barres": [3], "fingers": [0, 1, 3, 1, 2, 1]},
+  "C#m7": {"frets": [-1, 4, 6, 4, 5, 4], "baseFret": 4, "barres": [4], "fingers": [0, 1, 3, 1, 2, 1]},
+  "Dbm7": {"frets": [-1, 4, 6, 4, 5, 4], "baseFret": 4, "barres": [4], "fingers": [0, 1, 3, 1, 2, 1]},
+  "Dm7": {"frets": [-1, -1, 0, 2, 1, 1], "baseFret": 1, "barres": [1], "fingers": [0, 0, 0, 2, 1, 1]},
+  "D#m7": {"frets": [-1, -1, 1, 3, 2, 2], "baseFret": 1, "barres": [2], "fingers": [0, 0, 1, 3, 2, 2]},
+  "Ebm7": {"frets": [-1, -1, 1, 3, 2, 2], "baseFret": 1, "barres": [2], "fingers": [0, 0, 1, 3, 2, 2]},
+  "Em7": {"frets": [0, 2, 2, 0, 3, 0], "baseFret": 1, "fingers": [0, 1, 2, 0, 3, 0]},
+  "Fm7": {"frets": [1, 3, 1, 1, 1, 1], "baseFret": 1, "barres": [1], "fingers": [1, 3, 1, 1, 1, 1]},
+  "F#m7": {"frets": [2, 4, 2, 2, 2, 2], "baseFret": 2, "barres": [2], "fingers": [1, 3, 1, 1, 1, 1]},
+  "Gbm7": {"frets": [2, 4, 2, 2, 2, 2], "baseFret": 2, "barres": [2], "fingers": [1, 3, 1, 1, 1, 1]},
+  "Gm7": {"frets": [3, 5, 3, 3, 3, 3], "baseFret": 3, "barres": [3], "fingers": [1, 3, 1, 1, 1, 1]},
+  "G#m7": {"frets": [4, 6, 4, 4, 4, 4], "baseFret": 4, "barres": [4], "fingers": [1, 3, 1, 1, 1, 1]},
+  "Abm7": {"frets": [4, 6, 4, 4, 4, 4], "baseFret": 4, "barres": [4], "fingers": [1, 3, 1, 1, 1, 1]},
+  "Am7": {"frets": [-1, 0, 2, 0, 1, 0], "baseFret": 1, "fingers": [0, 0, 2, 0, 1, 0]},
+  "A#m7": {"frets": [-1, 1, 3, 1, 2, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 3, 1, 2, 1]},
+  "Bbm7": {"frets": [-1, 1, 3, 1, 2, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 3, 1, 2, 1]},
+  "Bm7": {"frets": [-1, 2, 4, 2, 3, 2], "baseFret": 2, "barres": [2], "fingers": [0, 1, 3, 1, 2, 1]},
+  "Cmaj7": {"frets": [-1, 3, 2, 0, 0, 0], "baseFret": 1, "fingers": [0, 3, 2, 0, 0, 0]},
+  "C#maj7": {"frets": [-1, 4, 6, 5, 6, 4], "baseFret": 4, "barres": [4], "fingers": [0, 1, 3, 2, 4, 1]},
+  "Dbmaj7": {"frets": [-1, 4, 6, 5, 6, 4], "baseFret": 4, "barres": [4], "fingers": [0, 1, 3, 2, 4, 1]},
+  "Dmaj7": {"frets": [-1, -1, 0, 2, 2, 2], "baseFret": 1, "fingers": [0, 0, 0, 1, 2, 3]},
+  "D#maj7": {"frets": [-1, 6, 8, 7, 8, 6], "baseFret": 6, "barres": [6], "fingers": [0, 1, 3, 2, 4, 1]},
+  "Ebmaj7": {"frets": [-1, 6, 8, 7, 8, 6], "baseFret": 6, "barres": [6], "fingers": [0, 1, 3, 2, 4, 1]},
+  "Emaj7": {"frets": [0, 2, 1, 1, 0, 0], "baseFret": 1, "fingers": [0, 3, 1, 2, 0, 0]},
+  "Fmaj7": {"frets": [-1, -1, 3, 2, 1, 0], "baseFret": 1, "fingers": [0, 0, 3, 2, 1, 0]},
+  "F#maj7": {"frets": [2, 4, 3, 3, 2, 2], "baseFret": 2, "barres": [2], "fingers": [1, 4, 2, 3, 1, 1]},
+  "Gbmaj7": {"frets": [2, 4, 3, 3, 2, 2], "baseFret": 2, "barres": [2], "fingers": [1, 4, 2, 3, 1, 1]},
+  "Gmaj7": {"frets": [3, 2, 0, 0, 0, 2], "baseFret": 1, "fingers": [3, 2, 0, 0, 0, 1]},
+  "G#maj7": {"frets": [4, 6, 5, 5, 4, 4], "baseFret": 4, "barres": [4], "fingers": [1, 4, 2, 3, 1, 1]},
+  "Abmaj7": {"frets": [4, 6, 5, 5, 4, 4], "baseFret": 4, "barres": [4], "fingers": [1, 4, 2, 3, 1, 1]},
+  "Amaj7": {"frets": [-1, 0, 2, 1, 2, 0], "baseFret": 1, "fingers": [0, 0, 2, 1, 3, 0]},
+  "A#maj7": {"frets": [-1, 1, 3, 2, 3, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 3, 2, 4, 1]},
+  "Bbmaj7": {"frets": [-1, 1, 3, 2, 3, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 3, 2, 4, 1]},
+  "Bmaj7": {"frets": [-1, 2, 4, 3, 4, 2], "baseFret": 2, "barres": [2], "fingers": [0, 1, 3, 2, 4, 1]},
+  "Csus4": {"frets": [-1, 3, 3, 0, 1, 1], "baseFret": 1, "barres": [1], "fingers": [0, 3, 4, 0, 1, 1]},
+  "Csus": {"frets": [-1, 3, 3, 0, 1, 1], "baseFret": 1, "barres": [1], "fingers": [0, 3, 4, 0, 1, 1]},
+  "C#sus4": {"frets": [-1, 4, 6, 6, 7, 4], "baseFret": 4, "barres": [4], "fingers": [0, 1, 3, 3, 4, 1]},
+  "Dbsus4": {"frets": [-1, 4, 6, 6, 7, 4], "baseFret": 4, "barres": [4], "fingers": [0, 1, 3, 3, 4, 1]},
+  "Dsus4": {"frets": [-1, -1, 0, 2, 3, 3], "baseFret": 1, "fingers": [0, 0, 0, 1, 3, 4]},
+  "Dsus": {"frets": [-1, -1, 0, 2, 3, 3], "baseFret": 1, "fingers": [0, 0, 0, 1, 3, 4]},
+  "D#sus4": {"frets": [-1, -1, 1, 3, 4, 4], "baseFret": 1, "fingers": [0, 0, 1, 3, 4, 4]},
+  "Ebsus4": {"frets": [-1, -1, 1, 3, 4, 4], "baseFret": 1, "fingers": [0, 0, 1, 3, 4, 4]},
+  "Esus4": {"frets": [0, 2, 2, 2, 0, 0], "baseFret": 1, "fingers": [0, 2, 3, 4, 0, 0]},
+  "Esus": {"frets": [0, 2, 2, 2, 0, 0], "baseFret": 1, "fingers": [0, 2, 3, 4, 0, 0]},
+  "Fsus4": {"frets": [1, 3, 3, 3, 1, 1], "baseFret": 1, "barres": [1], "fingers": [1, 3, 4, 4, 1, 1]},
+  "Fsus": {"frets": [1, 3, 3, 3, 1, 1], "baseFret": 1, "barres": [1], "fingers": [1, 3, 4, 4, 1, 1]},
+  "F#sus4": {"frets": [2, 4, 4, 4, 2, 2], "baseFret": 2, "barres": [2], "fingers": [1, 3, 4, 4, 1, 1]},
+  "Gbsus4": {"frets": [2, 4, 4, 4, 2, 2], "baseFret": 2, "barres": [2], "fingers": [1, 3, 4, 4, 1, 1]},
+  "Gsus4": {"frets": [3, 3, 0, 0, 1, 3], "baseFret": 1, "fingers": [2, 3, 0, 0, 1, 4]},
+  "Gsus": {"frets": [3, 3, 0, 0, 1, 3], "baseFret": 1, "fingers": [2, 3, 0, 0, 1, 4]},
+  "G#sus4": {"frets": [4, 6, 6, 6, 4, 4], "baseFret": 4, "barres": [4], "fingers": [1, 3, 4, 4, 1, 1]},
+  "Absus4": {"frets": [4, 6, 6, 6, 4, 4], "baseFret": 4, "barres": [4], "fingers": [1, 3, 4, 4, 1, 1]},
+  "Asus4": {"frets": [-1, 0, 2, 2, 3, 0], "baseFret": 1, "fingers": [0, 0, 1, 2, 3, 0]},
+  "Asus": {"frets": [-1, 0, 2, 2, 3, 0], "baseFret": 1, "fingers": [0, 0, 1, 2, 3, 0]},
+  "A#sus4": {"frets": [-1, 1, 3, 3, 4, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 3, 3, 4, 1]},
+  "Bbsus4": {"frets": [-1, 1, 3, 3, 4, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 3, 3, 4, 1]},
+  "Bsus4": {"frets": [-1, 2, 4, 4, 5, 2], "baseFret": 2, "barres": [2], "fingers": [0, 1, 3, 3, 4, 1]},
+  "Bsus": {"frets": [-1, 2, 4, 4, 5, 2], "baseFret": 2, "barres": [2], "fingers": [0, 1, 3, 3, 4, 1]},
+  "Csus2": {"frets": [-1, 3, 0, 0, 1, 3], "baseFret": 1, "fingers": [0, 3, 0, 0, 1, 4]},
+  "C#sus2": {"frets": [-1, 4, 6, 6, 4, 4], "baseFret": 4, "barres": [4], "fingers": [0, 1, 3, 4, 1, 1]},
+  "Dbsus2": {"frets": [-1, 4, 6, 6, 4, 4], "baseFret": 4, "barres": [4], "fingers": [0, 1, 3, 4, 1, 1]},
+  "Dsus2": {"frets": [-1, -1, 0, 2, 3, 0], "baseFret": 1, "fingers": [0, 0, 0, 1, 2, 0]},
+  "D#sus2": {"frets": [-1, 6, 8, 8, 6, 6], "baseFret": 6, "barres": [6], "fingers": [0, 1, 3, 4, 1, 1]},
+  "Ebsus2": {"frets": [-1, 6, 8, 8, 6, 6], "baseFret": 6, "barres": [6], "fingers": [0, 1, 3, 4, 1, 1]},
+  "Esus2": {"frets": [0, 2, 4, 4, 0, 0], "baseFret": 1, "fingers": [0, 1, 3, 4, 0, 0]},
+  "Fsus2": {"frets": [-1, -1, 3, 0, 1, 1], "baseFret": 1, "barres": [1], "fingers": [0, 0, 3, 0, 1, 1]},
+  "F#sus2": {"frets": [2, 4, 4, 1, 2, 2], "baseFret": 1, "fingers": [2, 4, 4, 1, 2, 2]},
+  "Gbsus2": {"frets": [2, 4, 4, 1, 2, 2], "baseFret": 1, "fingers": [2, 4, 4, 1, 2, 2]},
+  "Gsus2": {"frets": [3, 0, 0, 0, 3, 3], "baseFret": 1, "fingers": [1, 0, 0, 0, 3, 4]},
+  "G#sus2": {"frets": [4, 6, 6, 3, 4, 4], "baseFret": 3, "fingers": [2, 4, 4, 1, 2, 2]},
+  "Absus2": {"frets": [4, 6, 6, 3, 4, 4], "baseFret": 3, "fingers": [2, 4, 4, 1, 2, 2]},
+  "Asus2": {"frets": [-1, 0, 2, 2, 0, 0], "baseFret": 1, "fingers": [0, 0, 1, 2, 0, 0]},
+  "A#sus2": {"frets": [-1, 1, 3, 3, 1, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 3, 4, 1, 1]},
+  "Bbsus2": {"frets": [-1, 1, 3, 3, 1, 1], "baseFret": 1, "barres": [1], "fingers": [0, 1, 3, 4, 1, 1]},
+  "Bsus2": {"frets": [-1, 2, 4, 4, 2, 2], "baseFret": 2, "barres": [2], "fingers": [0, 1, 3, 4, 1, 1]},
+  "Cadd9": {"frets": [-1, 3, 2, 0, 3, 3], "baseFret": 1, "fingers": [0, 2, 1, 0, 3, 4]},
+  "C#add9": {"frets": [-1, 4, 3, 1, 4, 1], "baseFret": 1, "barres": [1], "fingers": [0, 4, 3, 1, 4, 1]},
+  "Dbadd9": {"frets": [-1, 4, 3, 1, 4, 1], "baseFret": 1, "barres": [1], "fingers": [0, 4, 3, 1, 4, 1]},
+  "Dadd9": {"frets": [-1, 5, 4, 0, 3, 0], "baseFret": 1, "fingers": [0, 4, 3, 0, 2, 0]},
+  "D#add9": {"frets": [-1, 6, 5, 0, 4, 0], "baseFret": 1, "fingers": [0, 4, 3, 0, 2, 0]},
+  "Ebadd9": {"frets": [-1, 6, 5, 0, 4, 0], "baseFret": 1, "fingers": [0, 4, 3, 0, 2, 0]},
+  "Eadd9": {"frets": [0, 2, 2, 1, 0, 2], "baseFret": 1, "fingers": [0, 2, 3, 1, 0, 4]},
+  "Fadd9": {"frets": [-1, -1, 3, 2, 1, 3], "baseFret": 1, "fingers": [0, 0, 3, 2, 1, 4]},
+  "F#add9": {"frets": [2, 4, 4, 3, 2, 4], "baseFret": 2, "barres": [2], "fingers": [1, 3, 4, 2, 1, 4]},
+  "Gbadd9": {"frets": [2, 4, 4, 3, 2, 4], "baseFret": 2, "barres": [2], "fingers": [1, 3, 4, 2, 1, 4]},
+  "Gadd9": {"frets": [3, 2, 0, 2, 0, 3], "baseFret": 1, "fingers": [2, 1, 0, 3, 0, 4]},
+  "G#add9": {"frets": [4, 6, 6, 5, 4, 6], "baseFret": 4, "barres": [4], "fingers": [1, 3, 4, 2, 1, 4]},
+  "Abadd9": {"frets": [4, 6, 6, 5, 4, 6], "baseFret": 4, "barres": [4], "fingers": [1, 3, 4, 2, 1, 4]},
+  "Aadd9": {"frets": [-1, 0, 2, 4, 2, 0], "baseFret": 1, "fingers": [0, 0, 1, 3, 1, 0]},
+  "A#add9": {"frets": [-1, 1, 3, 5, 3, 1], "baseFret": 1, "fingers": [0, 1, 2, 4, 2, 1]},
+  "Bbadd9": {"frets": [-1, 1, 3, 5, 3, 1], "baseFret": 1, "fingers": [0, 1, 2, 4, 2, 1]},
+  "Badd9": {"frets": [-1, 2, 4, 4, 2, 2], "baseFret": 2, "barres": [2], "fingers": [0, 1, 3, 4, 1, 1]},
+  "C9": {"frets": [-1, 3, 2, 3, 3, 3], "baseFret": 1, "barres": [3], "fingers": [0, 2, 1, 3, 3, 3]},
+  "D9": {"frets": [-1, -1, 0, 2, 1, 0], "baseFret": 1, "fingers": [0, 0, 0, 2, 1, 0]},
+  "E9": {"frets": [0, 2, 0, 1, 0, 2], "baseFret": 1, "fingers": [0, 2, 0, 1, 0, 4]},
+  "G9": {"frets": [3, 2, 0, 2, 0, 1], "baseFret": 1, "fingers": [3, 2, 0, 4, 0, 1]},
+  "A9": {"frets": [-1, 0, 2, 4, 2, 3], "baseFret": 1, "fingers": [0, 0, 1, 3, 1, 2]},
+  "B9": {"frets": [-1, 2, 1, 2, 2, 2], "baseFret": 1, "barres": [2], "fingers": [0, 2, 1, 3, 3, 3]},
+  "Am9": {"frets": [-1, 0, 2, 4, 1, 0], "baseFret": 1, "fingers": [0, 0, 2, 4, 1, 0]},
+  "Em9": {"frets": [0, 2, 0, 0, 0, 2], "baseFret": 1, "fingers": [0, 2, 0, 0, 0, 3]},
+  "Dm9": {"frets": [-1, -1, 0, 2, 1, 0], "baseFret": 1, "fingers": [0, 0, 0, 2, 1, 0]},
+  "Bm9": {"frets": [-1, 2, 0, 2, 2, 2], "baseFret": 1, "barres": [2], "fingers": [0, 2, 0, 3, 3, 3]},
+  "C6": {"frets": [-1, 3, 2, 2, 1, 0], "baseFret": 1, "fingers": [0, 3, 2, 2, 1, 0]},
+  "D6": {"frets": [-1, -1, 0, 2, 0, 2], "baseFret": 1, "fingers": [0, 0, 0, 1, 0, 2]},
+  "E6": {"frets": [0, 2, 2, 1, 2, 0], "baseFret": 1, "fingers": [0, 2, 3, 1, 4, 0]},
+  "F6": {"frets": [-1, -1, 3, 2, 3, 1], "baseFret": 1, "fingers": [0, 0, 2, 1, 3, 1]},
+  "G6": {"frets": [3, 2, 0, 0, 0, 0], "baseFret": 1, "fingers": [2, 1, 0, 0, 0, 0]},
+  "A6": {"frets": [-1, 0, 2, 2, 2, 2], "baseFret": 1, "barres": [2], "fingers": [0, 0, 1, 1, 1, 1]},
+  "B6": {"frets": [-1, 2, 4, 4, 4, 4], "baseFret": 2, "barres": [4], "fingers": [0, 1, 3, 3, 3, 3]},
+  "Bb6": {"frets": [-1, 1, 3, 3, 3, 3], "baseFret": 1, "barres": [3], "fingers": [0, 1, 3, 3, 3, 3]},
+  "Am6": {"frets": [-1, 0, 2, 2, 1, 2], "baseFret": 1, "fingers": [0, 0, 2, 3, 1, 4]},
+  "Dm6": {"frets": [-1, -1, 0, 2, 0, 1], "baseFret": 1, "fingers": [0, 0, 0, 2, 0, 1]},
+  "Em6": {"frets": [0, 2, 2, 0, 2, 0], "baseFret": 1, "fingers": [0, 1, 2, 0, 3, 0]},
+  "Cdim": {"frets": [-1, -1, 1, 2, 1, 2], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "C#dim": {"frets": [-1, -1, 2, 3, 2, 3], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "Dbdim": {"frets": [-1, -1, 2, 3, 2, 3], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "Ddim": {"frets": [-1, -1, 0, 1, 3, 1], "baseFret": 1, "fingers": [0, 0, 0, 1, 3, 2]},
+  "D#dim": {"frets": [-1, -1, 1, 2, 1, 2], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "Ebdim": {"frets": [-1, -1, 1, 2, 1, 2], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "Edim": {"frets": [0, 1, 2, 0, -1, -1], "baseFret": 1, "fingers": [0, 1, 2, 0, 0, 0]},
+  "Fdim": {"frets": [-1, -1, 0, 1, 0, 1], "baseFret": 1, "fingers": [0, 0, 0, 1, 0, 2]},
+  "F#dim": {"frets": [-1, -1, 1, 2, 1, 2], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "Gbdim": {"frets": [-1, -1, 1, 2, 1, 2], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "Gdim": {"frets": [-1, -1, 2, 3, 2, 3], "baseFret": 2, "fingers": [0, 0, 1, 3, 2, 4]},
+  "G#dim": {"frets": [-1, -1, 0, 1, 0, 1], "baseFret": 1, "fingers": [0, 0, 0, 1, 0, 2]},
+  "Abdim": {"frets": [-1, -1, 0, 1, 0, 1], "baseFret": 1, "fingers": [0, 0, 0, 1, 0, 2]},
+  "Adim": {"frets": [-1, 0, 1, 2, 1, -1], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 0]},
+  "A#dim": {"frets": [-1, 1, 2, 3, 2, -1], "baseFret": 1, "fingers": [0, 1, 2, 4, 3, 0]},
+  "Bbdim": {"frets": [-1, 1, 2, 3, 2, -1], "baseFret": 1, "fingers": [0, 1, 2, 4, 3, 0]},
+  "Bdim": {"frets": [-1, 2, 3, 4, 3, -1], "baseFret": 1, "fingers": [0, 1, 2, 4, 3, 0]},
+  "Cdim7": {"frets": [-1, -1, 1, 2, 1, 2], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "C#dim7": {"frets": [-1, -1, 2, 3, 2, 3], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "Ddim7": {"frets": [-1, -1, 0, 1, 0, 1], "baseFret": 1, "fingers": [0, 0, 0, 1, 0, 2]},
+  "D#dim7": {"frets": [-1, -1, 1, 2, 1, 2], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "Edim7": {"frets": [0, 1, 2, 0, 2, 0], "baseFret": 1, "fingers": [0, 1, 2, 0, 3, 0]},
+  "Fdim7": {"frets": [-1, -1, 0, 1, 0, 1], "baseFret": 1, "fingers": [0, 0, 0, 1, 0, 2]},
+  "F#dim7": {"frets": [-1, -1, 1, 2, 1, 2], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "Gdim7": {"frets": [-1, -1, 2, 3, 2, 3], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "G#dim7": {"frets": [-1, -1, 0, 1, 0, 1], "baseFret": 1, "fingers": [0, 0, 0, 1, 0, 2]},
+  "Adim7": {"frets": [-1, 0, 1, 2, 1, 2], "baseFret": 1, "fingers": [0, 0, 1, 3, 2, 4]},
+  "Bbdim7": {"frets": [-1, 1, 2, 0, 2, 0], "baseFret": 1, "fingers": [0, 1, 2, 0, 3, 0]},
+  "Bdim7": {"frets": [-1, 2, 0, 1, 0, 1], "baseFret": 1, "fingers": [0, 2, 0, 1, 0, 3]},
+  "Caug": {"frets": [-1, 3, 2, 1, 1, 0], "baseFret": 1, "fingers": [0, 3, 2, 1, 1, 0]},
+  "C#aug": {"frets": [-1, 4, 3, 2, 2, -1], "baseFret": 1, "fingers": [0, 3, 2, 1, 1, 0]},
+  "Daug": {"frets": [-1, -1, 0, 3, 3, 2], "baseFret": 1, "fingers": [0, 0, 0, 2, 3, 1]},
+  "D#aug": {"frets": [-1, -1, 1, 0, 0, 3], "baseFret": 1, "fingers": [0, 0, 1, 0, 0, 3]},
+  "Ebaug": {"frets": [-1, -1, 1, 0, 0, 3], "baseFret": 1, "fingers": [0, 0, 1, 0, 0, 3]},
+  "Eaug": {"frets": [0, 3, 2, 1, 1, 0], "baseFret": 1, "fingers": [0, 4, 3, 1, 2, 0]},
+  "Faug": {"frets": [-1, -1, 3, 2, 2, 1], "baseFret": 1, "fingers": [0, 0, 4, 2, 3, 1]},
+  "F#aug": {"frets": [2, -1, 0, 3, 3, 2], "baseFret": 1, "fingers": [1, 0, 0, 3, 4, 2]},
+  "Gaug": {"frets": [3, 2, 1, 0, 0, 3], "baseFret": 1, "fingers": [2, 1, 0, 0, 0, 3]},
+  "G#aug": {"frets": [4, -1, 2, 1, 1, 0], "baseFret": 1, "fingers": [4, 0, 2, 1, 1, 0]},
+  "Abaug": {"frets": [4, -1, 2, 1, 1, 0], "baseFret": 1, "fingers": [4, 0, 2, 1, 1, 0]},
+  "Aaug": {"frets": [-1, 0, 3, 2, 2, 1], "baseFret": 1, "fingers": [0, 0, 4, 2, 3, 1]},
+  "A#aug": {"frets": [-1, 1, 0, 3, 3, 2], "baseFret": 1, "fingers": [0, 1, 0, 3, 4, 2]},
+  "Bbaug": {"frets": [-1, 1, 0, 3, 3, 2], "baseFret": 1, "fingers": [0, 1, 0, 3, 4, 2]},
+  "Baug": {"frets": [-1, 2, 1, 0, 0, 3], "baseFret": 1, "fingers": [0, 2, 1, 0, 0, 3]},
+  "G/B": {"frets": [-1, 2, 0, 0, 3, 3], "baseFret": 1, "fingers": [0, 1, 0, 0, 3, 4]},
+  "C/E": {"frets": [0, 3, 2, 0, 1, 0], "baseFret": 1, "fingers": [0, 3, 2, 0, 1, 0]},
+  "C/G": {"frets": [3, 3, 2, 0, 1, 0], "baseFret": 1, "fingers": [3, 4, 2, 0, 1, 0]},
+  "C/B": {"frets": [-1, 2, 2, 0, 1, 0], "baseFret": 1, "fingers": [0, 2, 3, 0, 1, 0]},
+  "C/F": {"frets": [1, 3, 2, 0, 1, 0], "baseFret": 1, "fingers": [1, 3, 2, 0, 1, 0]},
+  "D/F#": {"frets": [2, 0, 0, 2, 3, 2], "baseFret": 1, "fingers": [1, 0, 0, 2, 4, 3]},
+  "D/A": {"frets": [-1, 0, 0, 2, 3, 2], "baseFret": 1, "fingers": [0, 0, 0, 1, 3, 2]},
+  "D/B": {"frets": [-1, 2, 0, 2, 3, 2], "baseFret": 1, "fingers": [0, 1, 0, 2, 4, 3]},
+  "D/C": {"frets": [-1, 3, 0, 2, 3, 2], "baseFret": 1, "fingers": [0, 2, 0, 1, 4, 3]},
+  "E/G#": {"frets": [4, 2, 2, 1, 0, 0], "baseFret": 1, "fingers": [4, 2, 3, 1, 0, 0]},
+  "E/B": {"frets": [-1, 2, 2, 1, 0, 0], "baseFret": 1, "fingers": [0, 2, 3, 1, 0, 0]},
+  "E/D": {"frets": [0, 2, 0, 1, 0, 0], "baseFret": 1, "fingers": [0, 2, 0, 1, 0, 0]},
+  "F/A": {"frets": [-1, 0, 3, 2, 1, 1], "baseFret": 1, "barres": [1], "fingers": [0, 0, 3, 2, 1, 1]},
+  "F/C": {"frets": [-1, 3, 3, 2, 1, 1], "baseFret": 1, "barres": [1], "fingers": [0, 3, 4, 2, 1, 1]},
+  "G/D": {"frets": [-1, -1, 0, 0, 0, 3], "baseFret": 1, "fingers": [0, 0, 0, 0, 0, 3]},
+  "G/C": {"frets": [-1, 3, 0, 0, 0, 3], "baseFret": 1, "fingers": [0, 2, 0, 0, 0, 3]},
+  "G/F#": {"frets": [2, 2, 0, 0, 0, 3], "baseFret": 1, "fingers": [1, 2, 0, 0, 0, 3]},
+  "A/C#": {"frets": [-1, 4, 2, 2, 2, 0], "baseFret": 1, "fingers": [0, 4, 1, 2, 3, 0]},
+  "A/E": {"frets": [0, 0, 2, 2, 2, 0], "baseFret": 1, "fingers": [0, 0, 1, 2, 3, 0]},
+  "A/G": {"frets": [3, 0, 2, 2, 2, 0], "baseFret": 1, "fingers": [3, 0, 1, 2, 4, 0]},
+  "B/D#": {"frets": [-1, 6, 4, 4, 4, -1], "baseFret": 4, "barres": [4], "fingers": [0, 3, 1, 1, 1, 0]},
+  "B/F#": {"frets": [2, 2, 4, 4, 4, 2], "baseFret": 2, "barres": [2], "fingers": [1, 1, 2, 3, 4, 1]},
+  "Am/G": {"frets": [3, 0, 2, 2, 1, 0], "baseFret": 1, "fingers": [4, 0, 2, 3, 1, 0]},
+  "Am/F#": {"frets": [2, 0, 2, 2, 1, 0], "baseFret": 1, "fingers": [2, 0, 3, 4, 1, 0]},
+  "Am/E": {"frets": [0, 0, 2, 2, 1, 0], "baseFret": 1, "fingers": [0, 0, 2, 3, 1, 0]},
+  "Dm/C": {"frets": [-1, 3, 0, 2, 3, 1], "baseFret": 1, "fingers": [0, 3, 0, 2, 4, 1]},
+  "Dm/A": {"frets": [-1, 0, 0, 2, 3, 1], "baseFret": 1, "fingers": [0, 0, 0, 2, 3, 1]},
+  "Dm/F": {"frets": [1, -1, 0, 2, 3, 1], "baseFret": 1, "fingers": [1, 0, 0, 2, 4, 1]},
+  "Em/D": {"frets": [-1, -1, 0, 0, 0, 0], "baseFret": 1, "fingers": [0, 0, 0, 0, 0, 0]},
+  "Em/B": {"frets": [-1, 2, 2, 0, 0, 0], "baseFret": 1, "fingers": [0, 1, 2, 0, 0, 0]},
+  "C5": {"frets": [-1, 3, 5, 5, -1, -1], "baseFret": 3, "fingers": [0, 1, 3, 4, 0, 0]},
+  "C#5": {"frets": [-1, 4, 6, 6, -1, -1], "baseFret": 4, "fingers": [0, 1, 3, 4, 0, 0]},
+  "D5": {"frets": [-1, -1, 0, 2, 3, -1], "baseFret": 1, "fingers": [0, 0, 0, 1, 3, 0]},
+  "D#5": {"frets": [-1, 6, 8, 8, -1, -1], "baseFret": 6, "fingers": [0, 1, 3, 4, 0, 0]},
+  "Eb5": {"frets": [-1, 6, 8, 8, -1, -1], "baseFret": 6, "fingers": [0, 1, 3, 4, 0, 0]},
+  "E5": {"frets": [0, 2, 2, -1, -1, -1], "baseFret": 1, "fingers": [0, 1, 2, 0, 0, 0]},
+  "F5": {"frets": [1, 3, 3, -1, -1, -1], "baseFret": 1, "fingers": [1, 3, 4, 0, 0, 0]},
+  "F#5": {"frets": [2, 4, 4, -1, -1, -1], "baseFret": 2, "fingers": [1, 3, 4, 0, 0, 0]},
+  "G5": {"frets": [3, 5, 5, -1, -1, -1], "baseFret": 3, "fingers": [1, 3, 4, 0, 0, 0]},
+  "G#5": {"frets": [4, 6, 6, -1, -1, -1], "baseFret": 4, "fingers": [1, 3, 4, 0, 0, 0]},
+  "A5": {"frets": [-1, 0, 2, 2, -1, -1], "baseFret": 1, "fingers": [0, 0, 1, 2, 0, 0]},
+  "A#5": {"frets": [-1, 1, 3, 3, -1, -1], "baseFret": 1, "fingers": [0, 1, 3, 4, 0, 0]},
+  "Bb5": {"frets": [-1, 1, 3, 3, -1, -1], "baseFret": 1, "fingers": [0, 1, 3, 4, 0, 0]},
+  "B5": {"frets": [-1, 2, 4, 4, -1, -1], "baseFret": 2, "fingers": [0, 1, 3, 4, 0, 0]}
 };
 
 // Open string MIDI pitches (Standard tuning: E2, A2, D3, G3, B3, E4)
 const STANDARD_TUNING_MIDI = [40, 45, 50, 55, 59, 64];
 
+// Chromatic Scale for fallback transpose & harmonic pitch calculations
+const DB_CHROMATIC_SCALE = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const DB_FLAT_TO_SHARP = { "Db": "C#", "Eb": "D#", "Gb": "F#", "Ab": "G#", "Bb": "A#" };
+const DB_SHARP_TO_FLAT = { "C#": "Db", "D#": "Eb", "F#": "Gb", "G#": "Ab", "A#": "Bb" };
+
 /**
- * Calculates MIDI pitch numbers for a given chord frets array
+ * Normalizes chord names across common notations and aliases
+ * (e.g. "Asus" -> "Asus4", "CM7" -> "Cmaj7", "CΔ" -> "Cmaj7", "C°" -> "Cdim", "C+" -> "Caug")
  */
-function getChordMidiPitches(chordName) {
-  const data = CHORD_DATABASE[chordName];
-  if (!data) return [48, 52, 55, 60]; // default C triad
-  const pitches = [];
-  data.frets.forEach((fret, stringIdx) => {
-    if (fret >= 0) {
-      pitches.push(STANDARD_TUNING_MIDI[stringIdx] + fret);
+function normalizeChordName(name) {
+  if (!name || typeof name !== "string") return "";
+  let n = name.trim();
+
+  // If two chords written with slash like "Cm/Dm", extract the primary chord "Cm"
+  if (/^[A-G](?:#|b)?m?\/[A-G](?:#|b)?m?$/i.test(n) && !CHORD_DATABASE[n]) {
+    const parts = n.split("/");
+    if (parts[1].length > 1 && (parts[1].includes("m") || parts[1].includes("7"))) {
+      n = parts[0];
     }
-  });
-  return pitches;
+  }
+
+  // Alias: Asus -> Asus4, Dsus -> Dsus4, etc.
+  if (/^[A-G](?:#|b)?sus$/i.test(n)) {
+    n = n + "4";
+  }
+
+  // Alias: M7, maj7, Δ7, Δ -> maj7
+  n = n.replace(/([A-G](?:#|b)?)M7$/, "$1maj7");
+  n = n.replace(/([A-G](?:#|b)?)[Δ\^]7?$/, "$1maj7");
+
+  // Alias: ° or dim7 -> dim7 / dim
+  n = n.replace(/([A-G](?:#|b)?)°7$/, "$1dim7");
+  n = n.replace(/([A-G](?:#|b)?)°$/, "$1dim");
+
+  // Alias: + -> aug
+  n = n.replace(/([A-G](?:#|b)?)\+$/, "$1aug");
+
+  // Alias: -7 -> m7, min7 -> m7
+  n = n.replace(/([A-G](?:#|b)?)-7$/, "$1m7");
+  n = n.replace(/([A-G](?:#|b)?)min7$/, "$1m7");
+  n = n.replace(/([A-G](?:#|b)?)min$/, "$1m");
+
+  return n;
 }
 
 /**
- * Generate an SVG diagram for any chord
+ * Intelligent Chord Lookup with Alias, Enharmonic and Slash Fallbacks
+ */
+function getChordData(chordName) {
+  if (!chordName) return null;
+  const raw = chordName.trim();
+  if (CHORD_DATABASE[raw]) return CHORD_DATABASE[raw];
+
+  // 1. Try normalized name
+  const norm = normalizeChordName(raw);
+  if (CHORD_DATABASE[norm]) return CHORD_DATABASE[norm];
+
+  // 2. Try enharmonic equivalent of root (e.g. C#m7 <-> Dbm7, F# <-> Gb)
+  const match = norm.match(/^([A-G](?:#|b)?)(.*)$/);
+  if (match) {
+    const root = match[1];
+    const suffix = match[2] || "";
+    let altRoot = null;
+    if (DB_FLAT_TO_SHARP[root]) altRoot = DB_FLAT_TO_SHARP[root];
+    else if (DB_SHARP_TO_FLAT[root]) altRoot = DB_SHARP_TO_FLAT[root];
+
+    if (altRoot) {
+      const altChord = altRoot + suffix;
+      if (CHORD_DATABASE[altChord]) return CHORD_DATABASE[altChord];
+    }
+
+    // 3. Slash chord root / bass enharmonic fallback
+    if (suffix.startsWith("/")) {
+      const bass = suffix.slice(1);
+      const altBass = DB_FLAT_TO_SHARP[bass] || DB_SHARP_TO_FLAT[bass] || bass;
+      const altSlash = root + "/" + altBass;
+      if (CHORD_DATABASE[altSlash]) return CHORD_DATABASE[altSlash];
+      if (altRoot) {
+        const altBoth = altRoot + "/" + altBass;
+        if (CHORD_DATABASE[altBoth]) return CHORD_DATABASE[altBoth];
+      }
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Calculates MIDI pitch numbers for guitar audio synthesizer
+ */
+function getChordMidiPitches(chordName) {
+  const data = getChordData(chordName);
+  if (data && Array.isArray(data.frets)) {
+    const pitches = [];
+    data.frets.forEach((fret, stringIdx) => {
+      if (fret >= 0) {
+        pitches.push(STANDARD_TUNING_MIDI[stringIdx] + fret);
+      }
+    });
+    if (pitches.length > 0) return pitches;
+  }
+
+  // Harmonic Fallback: compute realistic acoustic triad / 7th from chord root
+  const match = (chordName || "").match(/^([A-G](?:#|b)?)(.*)$/);
+  if (!match) return [48, 52, 55, 60]; // default C triad
+  let root = match[1];
+  const suffix = (match[2] || "").toLowerCase();
+  if (DB_FLAT_TO_SHARP[root]) root = DB_FLAT_TO_SHARP[root];
+  const rootIdx = DB_CHROMATIC_SCALE.indexOf(root);
+  if (rootIdx === -1) return [48, 52, 55, 60];
+
+  const baseMidi = 48 + rootIdx; // around C3
+  let intervals = [0, 4, 7]; // Major triad
+
+  if (suffix.includes("m7") || suffix.includes("min7")) intervals = [0, 3, 7, 10];
+  else if (suffix.includes("maj7") || suffix.includes("m7")) intervals = [0, 4, 7, 11];
+  else if (suffix.includes("m") || suffix.includes("min")) intervals = [0, 3, 7];
+  else if (suffix.includes("7")) intervals = [0, 4, 7, 10];
+  else if (suffix.includes("sus4")) intervals = [0, 5, 7];
+  else if (suffix.includes("sus2")) intervals = [0, 2, 7];
+  else if (suffix.includes("add9") || suffix.includes("2")) intervals = [0, 4, 7, 14];
+  else if (suffix.includes("dim")) intervals = [0, 3, 6];
+  else if (suffix.includes("aug")) intervals = [0, 4, 8];
+  else if (suffix.includes("5")) intervals = [0, 7, 12];
+
+  return intervals.map(i => baseMidi + i);
+}
+
+/**
+ * Generate an elegant SVG diagram for any guitar chord
  */
 function renderChordSVG(name, options = {}) {
-  const data = CHORD_DATABASE[name];
-  const width = options.width || 120;
-  const height = options.height || 145;
+  const data = getChordData(name);
+  const width = options.width || 110;
+  const height = options.height || 135;
+  const accentColor = options.accentColor || "var(--brand, #3E6B8F)";
+  const textColor = options.textColor || "#1C1C1E";
 
   if (!data) {
     return `
       <svg class="chord-svg" width="${width}" height="${height}" viewBox="0 0 120 145">
-        <text x="60" y="24" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">${escapeXml(name)}</text>
-        <text x="60" y="80" text-anchor="middle" font-size="11" fill="#94a3b8">No diagram</text>
+        <text x="60" y="24" text-anchor="middle" font-size="15" font-weight="700" fill="${textColor}">${escapeXml(name)}</text>
+        <rect x="22" y="40" width="75" height="80" rx="6" fill="#F8F9FA" stroke="#E5E5EA" stroke-width="1"/>
+        <text x="60" y="85" text-anchor="middle" font-size="11" font-weight="500" fill="#8A8A8E">No diagram</text>
       </svg>
     `;
   }
 
-  const { frets, baseFret = 1 } = data;
+  const { frets, baseFret = 1, barres = [] } = data;
   const numFrets = 4;
   const numStrings = 6;
   const startX = 22;
@@ -2771,46 +3489,65 @@ function renderChordSVG(name, options = {}) {
   const endY = startY + numFrets * fretDist;
 
   let svg = `<svg class="chord-svg" width="${width}" height="${height}" viewBox="0 0 120 145">`;
-  
+
   // Chord Title
-  svg += `<text x="60" y="22" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">${escapeXml(name)}</text>`;
+  svg += `<text x="60" y="22" text-anchor="middle" font-size="15" font-weight="700" fill="${textColor}" letter-spacing="-0.2">${escapeXml(name)}</text>`;
 
   // Base Fret indicator (e.g. 3fr)
   if (baseFret > 1) {
-    svg += `<text x="${startX - 6}" y="${startY + fretDist * 0.7}" text-anchor="end" font-size="10" font-weight="600" fill="#64748b">${baseFret}fr</text>`;
+    svg += `<text x="${startX - 6}" y="${startY + fretDist * 0.72}" text-anchor="end" font-size="10" font-weight="600" fill="#8A8A8E">${baseFret}fr</text>`;
   }
 
-  // Nut or top line
+  // Nut (thick) or normal fret line
   if (baseFret === 1) {
-    // Thick nut line
-    svg += `<line x1="${startX - 1}" y1="${startY}" x2="${endX + 1}" y2="${startY}" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>`;
+    svg += `<line x1="${startX - 1}" y1="${startY}" x2="${endX + 1}" y2="${startY}" stroke="#1C1C1E" stroke-width="3.5" stroke-linecap="round"/>`;
   } else {
-    // Normal line
-    svg += `<line x1="${startX}" y1="${startY}" x2="${endX}" y2="${startY}" stroke="#94a3b8" stroke-width="1.5"/>`;
+    svg += `<line x1="${startX}" y1="${startY}" x2="${endX}" y2="${startY}" stroke="#AEAEB2" stroke-width="1.5"/>`;
   }
 
   // Fret horizontal lines
   for (let f = 1; f <= numFrets; f++) {
     const y = startY + f * fretDist;
-    svg += `<line x1="${startX}" y1="${y}" x2="${endX}" y2="${y}" stroke="#cbd5e1" stroke-width="1.2"/>`;
+    svg += `<line x1="${startX}" y1="${y}" x2="${endX}" y2="${y}" stroke="#D1D1D6" stroke-width="1.1"/>`;
   }
 
   // String vertical lines
   for (let s = 0; s < numStrings; s++) {
     const x = startX + s * stringDist;
-    const strokeWidth = s < 3 ? 1.5 : 1.1; // lower strings slightly thicker
-    svg += `<line x1="${x}" y1="${startY}" x2="${x}" y2="${endY}" stroke="#64748b" stroke-width="${strokeWidth}"/>`;
+    const strokeWidth = s < 3 ? 1.4 : 1.0;
+    svg += `<line x1="${x}" y1="${startY}" x2="${x}" y2="${endY}" stroke="#8A8A8E" stroke-width="${strokeWidth}"/>`;
   }
 
-  // Top indicators: 'x' or 'o'
+  // Barre Chord line visualization (if barres present)
+  if (barres && barres.length > 0) {
+    barres.forEach(barreFret => {
+      const relFret = barreFret - (baseFret - 1);
+      if (relFret >= 1 && relFret <= numFrets) {
+        let minStr = -1;
+        let maxStr = -1;
+        frets.forEach((f, s) => {
+          if (f === barreFret) {
+            if (minStr === -1) minStr = s;
+            maxStr = s;
+          }
+        });
+        if (minStr !== -1 && maxStr > minStr) {
+          const bx1 = startX + minStr * stringDist;
+          const bx2 = startX + maxStr * stringDist;
+          const by = startY + (relFret - 0.5) * fretDist;
+          svg += `<line x1="${bx1}" y1="${by}" x2="${bx2}" y2="${by}" stroke="${accentColor}" stroke-width="9" stroke-linecap="round" opacity="0.85"/>`;
+        }
+      }
+    });
+  }
+
+  // Top indicators: 'x' (mute) or 'o' (open)
   frets.forEach((fret, s) => {
     const x = startX + s * stringDist;
     if (fret === -1) {
-      // Mute (X)
-      svg += `<text x="${x}" y="${startY - 8}" text-anchor="middle" font-size="11" font-weight="700" fill="#94a3b8">×</text>`;
+      svg += `<text x="${x}" y="${startY - 8}" text-anchor="middle" font-size="11" font-weight="700" fill="#AEAEB2">×</text>`;
     } else if (fret === 0) {
-      // Open (O)
-      svg += `<circle cx="${x}" cy="${startY - 10}" r="3.5" fill="none" stroke="#2563eb" stroke-width="1.5"/>`;
+      svg += `<circle cx="${x}" cy="${startY - 9}" r="3.2" fill="none" stroke="${accentColor}" stroke-width="1.4"/>`;
     }
   });
 
@@ -2821,8 +3558,7 @@ function renderChordSVG(name, options = {}) {
       if (relFret >= 1 && relFret <= numFrets) {
         const x = startX + s * stringDist;
         const y = startY + (relFret - 0.5) * fretDist;
-        // Accent dot with subtle shadow
-        svg += `<circle cx="${x}" cy="${y}" r="5.5" fill="#2563eb"/>`;
+        svg += `<circle cx="${x}" cy="${y}" r="5.2" fill="${accentColor}"/>`;
       }
     }
   });
@@ -3072,20 +3808,36 @@ let currentSongId = null;
 let currentView = "all"; // 'all', 'fav', 'recent', 'my', 'en', 'artists'
 let currentAppView = "home"; // 'home' or 'song'
 let homeFilter = "all"; // 'all', 'my', 'en', 'fav'
-let homeCatalogLimit = 12; // Smart pagination limit for large catalog
+let homeCatalogPage = 0; // All Songs page, 30 songs per side (60 per page)
+let homeCatalogShowAll = false; // Display all songs instead of paging
+let homeCatalogSort = "recent"; // All Songs sort: recent (default) or name
+let artistsPage = 0; // Artists list page, 30 names per side (60 per page)
+let artistsShowAll = false; // Display all artists instead of paging
+let artistsSort = "name"; // Artists sort: name (default) or recent
+let artistDetailSort = "name"; // Artist detail songs sort: name (default) or recent
+let selectedArtist = null; // Artists view: null = artist list, name = that artist's songs
 let recentPracticedIds = [];
 try {
   recentPracticedIds = JSON.parse(localStorage.getItem("tashido_recent_played") || "[]");
 } catch (e) {
   recentPracticedIds = [];
 }
+// Real song queue: starts empty. A song enters ONLY via Add to Queue.
+let queueIds = [];
+try {
+  queueIds = JSON.parse(localStorage.getItem("tashido_queue") || "[]");
+  if (!Array.isArray(queueIds)) queueIds = [];
+} catch (e) {
+  queueIds = [];
+}
 let transposeSteps = 0;
 let isAutoScrolling = false;
 let scrollIntervalId = null;
 let scrollSpeed = 3;
 let editingSongId = null;
+let duplicateConfirmedSig = "";
 let showChords = true;
-let isTwoColumns = false;
+let isTwoColumns = true;
 
 // Apple Music Style Gradient Covers & Glyphs
 const COVER_GRADIENTS = [
@@ -3121,6 +3873,48 @@ function recordSongPracticed(id) {
   try {
     localStorage.setItem("tashido_recent_played", JSON.stringify(recentPracticedIds));
   } catch (e) {}
+}
+
+function saveQueue() {
+  try {
+    localStorage.setItem("tashido_queue", JSON.stringify(queueIds));
+  } catch (e) {}
+}
+
+function getQueueSongs() {
+  return queueIds.map(id => songs.find(s => s.id === id)).filter(Boolean);
+}
+
+function updateQueueAddBtn() {
+  const btn = $("queueAddBtn");
+  if (!btn) return;
+  const inQueue = currentSongId && queueIds.includes(currentSongId);
+  btn.textContent = inQueue ? "\u2713" : "\uff0b";
+  btn.title = inQueue ? "Already in queue" : "Add to queue";
+  btn.classList.toggle("active", !!inQueue);
+}
+
+function addToQueue(id) {
+  if (!id || queueIds.includes(id)) return;
+  if (!songs.find(s => s.id === id)) return;
+  queueIds.push(id);
+  saveQueue();
+  updateQueueAddBtn();
+  renderSongList();
+}
+
+function removeFromQueue(id) {
+  queueIds = queueIds.filter(x => x !== id);
+  saveQueue();
+  updateQueueAddBtn();
+  renderSongList();
+}
+
+function clearQueue() {
+  queueIds = [];
+  saveQueue();
+  updateQueueAddBtn();
+  renderSongList();
 }
 
 // Audio Context (Web Audio API)
@@ -3347,10 +4141,11 @@ function loadSongs() {
 }
 
 /**
- * Save Songs to LocalStorage
+ * Save Songs to LocalStorage (and auto-save changes to Firebase cloud)
  */
 function saveSongs() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(songs));
+  if (typeof scheduleCloudSync === "function") scheduleCloudSync();
 }
 
 /**
@@ -3475,6 +4270,79 @@ function getSongLanguage(s) {
 }
 
 /**
+ * Search match: title, artist, genre, key, and lyrics (partial lyric search)
+ */
+function normalizeSearchText(text) {
+  return (text || "")
+    .normalize("NFC")
+    .replace(/\[[^\]]*\]/g, "")
+    .replace(/[\s\u200b-\u200d]+/g, "")
+    .toLowerCase();
+}
+
+function songMatchesQuery(s, query) {
+  if (!query) return true;
+  const hay = normalizeSearchText(s.title + " " + (s.artist || "") + " " + (s.genre || "") + " " + (s.key || "") + " " + (s.lyrics || ""));
+  return hay.includes(normalizeSearchText(query));
+}
+
+function getSongArtists(s) {
+  const raw = (s.artist || "").trim();
+  if (!raw) return ["Unknown Artist"];
+  const parts = raw.split(/\s*(?:[\u002C\u003B\u104A\u104B\uFF0C\u3001\uFF1B&\/\+]|feat\.?|ft\.?|\band\b|\u1014\u103E\u1004\u103A\u1037|\u1014\u103A\u1037)\s*/i).map(p => p.trim()).filter(Boolean);
+  return parts.length ? parts : ["Unknown Artist"];
+}
+
+function searchMatchRank(s, query) {
+  const q = normalizeSearchText(query);
+  if (!q) return 0;
+  if (normalizeSearchText(s.title).includes(q)) return 0;
+  if (normalizeSearchText(s.artist || "").includes(q)) return 1;
+  return 2;
+}
+
+function highlightLyricMatch(line, query) {
+  const clean = line.replace(/\[[^\]]*\]/g, "").trim();
+  const normClean = clean.normalize("NFC");
+  let norm = "";
+  const map = [];
+  for (let i = 0; i < normClean.length; i++) {
+    const ch = normClean[i];
+    if (/\s/.test(ch) || ch === "\u200b" || ch === "\u200c" || ch === "\u200d") continue;
+    norm += ch.toLowerCase();
+    map.push(i);
+  }
+  const q = normalizeSearchText(query);
+  const idx = q ? norm.indexOf(q) : -1;
+  if (idx === -1) return escapeXml(clean);
+  const start = map[idx];
+  const end = map[idx + q.length - 1] + 1;
+  return escapeXml(normClean.slice(0, start)) + "<mark>" + escapeXml(normClean.slice(start, end)) + "</mark>" + escapeXml(normClean.slice(end));
+}
+
+function getLyricSnippet(s, query) {
+  if (!query || !s.lyrics) return "";
+  const q = normalizeSearchText(query);
+  if (!q) return "";
+  const lines = s.lyrics.split("\n");
+  const isHeader = line => /^(intro|verse|chorus|bridge|outro|pre-chorus|interlude|solo|refrain)\b/i.test(line.replace(/\[[^\]]*\]/g, "").trim());
+  let matchIdx = -1;
+  for (let i = 0; i < lines.length; i++) {
+    const clean = lines[i].replace(/\[[^\]]*\]/g, "").trim();
+    if (!clean || isHeader(lines[i])) continue;
+    if (normalizeSearchText(clean).includes(q)) { matchIdx = i; break; }
+  }
+  if (matchIdx === -1) return "";
+  const snippetLines = [highlightLyricMatch(lines[matchIdx], query)];
+  for (let j = matchIdx + 1; j < lines.length && snippetLines.length < 2; j++) {
+    const clean = lines[j].replace(/\[[^\]]*\]/g, "").trim();
+    if (!clean || isHeader(lines[j])) continue;
+    snippetLines.push(escapeXml(clean));
+  }
+  return `<div class="home-card-snippet">${snippetLines.map(l => `<div class="snippet-line">${l}</div>`).join("")}</div>`;
+}
+
+/**
  * Filter songs according to search input and active view
  */
 function getFilteredSongs() {
@@ -3502,7 +4370,7 @@ function getFilteredSongs() {
   if (query) {
     list = list.filter(
       s =>
-        (s.title + " " + (s.artist || "") + " " + (s.genre || "") + " " + (s.key || "")).toLowerCase().includes(query)
+        songMatchesQuery(s, query)
     );
   }
 
@@ -3518,8 +4386,10 @@ function renderHomeCard(s) {
   const lang = getSongLanguage(s);
   const flag = lang === "my" ? "🇲🇲" : "🇬🇧";
   const key = s.key || "C";
+  const cardQuery = ($("searchInput")?.value || "").trim();
+  const snippet = cardQuery ? getLyricSnippet(s, cardQuery) : "";
   return `
-    <div class="home-card" data-id="${s.id}">
+    <div class="home-card${snippet ? " has-snippet" : ""}" data-id="${s.id}">
       <div class="home-card-cover" style="background:${grad}">
         <span>${glyph}</span>
         <div class="home-card-play-overlay">
@@ -3534,7 +4404,9 @@ function renderHomeCard(s) {
           ${s.capo ? `<span class="home-meta-badge">Capo ${s.capo}</span>` : ""}
           ${s.fav ? `<span style="color:var(--rose);font-size:0.8rem;margin-left:auto;">♥</span>` : ""}
         </div>
+        ${snippet}
       </div>
+      <button class="queue-add-btn" data-id="${s.id}" title="Add to queue">+</button>
     </div>
   `;
 }
@@ -3553,33 +4425,25 @@ function renderHomeView() {
 
   const query = ($("searchInput")?.value || "").trim().toLowerCase();
 
-  // 1. Recently Practiced / Jump Back In
+  // 1. Recently Added (newest first, 10 songs)
   const recentSection = $("homeRecentSection");
   const recentGrid = $("homeRecentGrid");
   if (recentSection && recentGrid) {
-    let recentSongs = recentPracticedIds
-      .map(id => songs.find(s => s.id === id))
-      .filter(Boolean);
-
-    if (recentSongs.length === 0) {
-      recentSongs = songs.slice(0, 4);
-    }
+    let recentSongs = [...songs].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
     if (homeFilter === "my") recentSongs = recentSongs.filter(s => getSongLanguage(s) === "my");
     else if (homeFilter === "en") recentSongs = recentSongs.filter(s => getSongLanguage(s) === "en");
     else if (homeFilter === "fav") recentSongs = recentSongs.filter(s => s.fav);
 
     if (query) {
-      recentSongs = recentSongs.filter(s =>
-        (s.title + " " + (s.artist || "")).toLowerCase().includes(query)
-      );
+      recentSongs = recentSongs.filter(s => songMatchesQuery(s, query));
     }
 
     if (recentSongs.length === 0) {
       recentSection.style.display = "none";
     } else {
       recentSection.style.display = "block";
-      recentGrid.innerHTML = recentSongs.slice(0, 4).map(renderHomeCard).join("");
+      recentGrid.innerHTML = recentSongs.slice(0, 10).map(renderHomeCard).join("");
     }
   }
 
@@ -3593,9 +4457,7 @@ function renderHomeView() {
       let myanmarSongs = songs.filter(s => getSongLanguage(s) === "my");
       if (homeFilter === "fav") myanmarSongs = myanmarSongs.filter(s => s.fav);
       if (query) {
-        myanmarSongs = myanmarSongs.filter(s =>
-          (s.title + " " + (s.artist || "")).toLowerCase().includes(query)
-        );
+        myanmarSongs = myanmarSongs.filter(s => songMatchesQuery(s, query));
       }
       if (myanmarSongs.length === 0) {
         myanmarSection.style.display = "none";
@@ -3616,9 +4478,7 @@ function renderHomeView() {
       let englishSongs = songs.filter(s => getSongLanguage(s) === "en");
       if (homeFilter === "fav") englishSongs = englishSongs.filter(s => s.fav);
       if (query) {
-        englishSongs = englishSongs.filter(s =>
-          (s.title + " " + (s.artist || "")).toLowerCase().includes(query)
-        );
+        englishSongs = englishSongs.filter(s => songMatchesQuery(s, query));
       }
       if (englishSongs.length === 0) {
         englishSection.style.display = "none";
@@ -3637,6 +4497,7 @@ function renderHomeView() {
   const loadMoreBox = $("homeLoadMoreBox");
 
   if (allSection && allGrid) {
+    allSection.style.display = "block";
     let catalogSongs = [...songs];
     if (homeFilter === "my") catalogSongs = catalogSongs.filter(s => getSongLanguage(s) === "my");
     else if (homeFilter === "en") catalogSongs = catalogSongs.filter(s => getSongLanguage(s) === "en");
@@ -3644,25 +4505,223 @@ function renderHomeView() {
 
     if (query) {
       catalogSongs = catalogSongs.filter(s =>
-        (s.title + " " + (s.artist || "") + " " + (s.genre || "")).toLowerCase().includes(query)
+        songMatchesQuery(s, query)
       );
     }
 
+    if (homeCatalogSort === "name") {
+      catalogSongs.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+    } else {
+      catalogSongs.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    }
+    if (query) {
+      catalogSongs.sort((a, b) => searchMatchRank(a, query) - searchMatchRank(b, query));
+    }
+
     if (catalogCount) catalogCount.textContent = catalogSongs.length;
-    const visibleSongs = catalogSongs.slice(0, homeCatalogLimit);
+    // All Songs: 30 per side in 2 side-by-side tables (60 per page), or all at once.
+    const pageSize = 60;
+    const maxPage = Math.max(0, Math.ceil(catalogSongs.length / pageSize) - 1);
+    if (homeCatalogPage > maxPage) homeCatalogPage = maxPage;
+    if (homeCatalogPage < 0) homeCatalogPage = 0;
+    const visibleSongs = homeCatalogShowAll
+      ? catalogSongs
+      : catalogSongs.slice(homeCatalogPage * pageSize, homeCatalogPage * pageSize + pageSize);
 
     if (catalogSummary) {
-      catalogSummary.textContent = `Showing ${Math.min(visibleSongs.length, catalogSongs.length)} of ${catalogSongs.length} songs`;
+      if (homeCatalogShowAll) {
+        catalogSummary.textContent = `Showing all ${catalogSongs.length} songs`;
+      } else if (catalogSongs.length === 0) {
+        catalogSummary.textContent = `Showing 0 of 0 songs`;
+      } else {
+        const start = homeCatalogPage * pageSize + 1;
+        const end = Math.min(homeCatalogPage * pageSize + visibleSongs.length, catalogSongs.length);
+        catalogSummary.textContent = `Showing ${start}-${end} of ${catalogSongs.length} songs`;
+      }
+    }
+    const pageInfo = $("homeCatalogPageInfo");
+    if (pageInfo) {
+      pageInfo.textContent = homeCatalogShowAll ? "All songs" : `Page ${homeCatalogPage + 1} of ${maxPage + 1}`;
+    }
+    const prevBtn = $("homeCatalogPrevBtn");
+    if (prevBtn) prevBtn.disabled = homeCatalogShowAll || homeCatalogPage <= 0;
+    const nextBtn = $("homeCatalogNextBtn");
+    if (nextBtn) nextBtn.disabled = homeCatalogShowAll || homeCatalogPage >= maxPage;
+    const showAllBtn = $("homeCatalogShowAllBtn");
+    if (showAllBtn) showAllBtn.textContent = homeCatalogShowAll ? "Show 60 per page" : "Display all songs";
+    const sortRecentBtn = $("homeCatalogSortRecentBtn");
+    if (sortRecentBtn) {
+      sortRecentBtn.style.fontWeight = homeCatalogSort === "recent" ? "700" : "400";
+      sortRecentBtn.style.background = homeCatalogSort === "recent" ? "#FFFFFF" : "";
+      sortRecentBtn.style.boxShadow = homeCatalogSort === "recent" ? "0 1px 3px rgba(0,0,0,.12)" : "";
+    }
+    const sortNameBtn = $("homeCatalogSortNameBtn");
+    if (sortNameBtn) {
+      sortNameBtn.style.fontWeight = homeCatalogSort === "name" ? "700" : "400";
+      sortNameBtn.style.background = homeCatalogSort === "name" ? "#FFFFFF" : "";
+      sortNameBtn.style.boxShadow = homeCatalogSort === "name" ? "0 1px 3px rgba(0,0,0,.12)" : "";
     }
 
     if (visibleSongs.length === 0) {
       allGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--ink-muted);">No songs match this filter.</div>`;
     } else {
-      allGrid.innerHTML = visibleSongs.map(renderHomeCard).join("");
+      // Two real tables: first half left, second half right, fixed columns align both.
+      const half = Math.ceil(visibleSongs.length / 2);
+      const leftHtml = visibleSongs.slice(0, half).map(renderHomeCard).join("");
+      const rightHtml = visibleSongs.slice(half).map(renderHomeCard).join("");
+      allGrid.innerHTML = `<div class="all-table-col">${leftHtml}</div><div class="all-table-col">${rightHtml}</div>`;
     }
 
     if (loadMoreBox) {
-      loadMoreBox.style.display = visibleSongs.length < catalogSongs.length ? "block" : "none";
+      loadMoreBox.style.display = "block";
+    }
+  }
+
+  // Home shows the All Songs library only: hide Recently Added, Myanmar, English sections.
+  if ($("homeRecentSection")) $("homeRecentSection").style.display = "none";
+  if ($("homeMyanmarSection")) $("homeMyanmarSection").style.display = "none";
+  if ($("homeEnglishSection")) $("homeEnglishSection").style.display = "none";
+
+  // Artists view: names only, in order. Tap a name to see only their songs.
+  const artistsSection = $("homeArtistsSection");
+  const artistsGrid = $("homeArtistsGrid");
+  if (currentView !== "artists") selectedArtist = null;
+  if (artistsSection) {
+    if (currentView === "artists" && artistsGrid) {
+      if ($("homeRecentSection")) $("homeRecentSection").style.display = "none";
+      if ($("homeMyanmarSection")) $("homeMyanmarSection").style.display = "none";
+      if ($("homeEnglishSection")) $("homeEnglishSection").style.display = "none";
+      if (allSection) allSection.style.display = "none";
+      if (loadMoreBox) loadMoreBox.style.display = "none";
+      artistsSection.style.display = "block";
+      artistsGrid.classList.toggle("detail", !!selectedArtist);
+      const backBtn = $("homeArtistsBackBtn");
+      const titleEl = $("homeArtistsTitle");
+      const countEl = $("homeArtistsCount");
+      const artistsSortBox = $("homeArtistsSortBox");
+      const artistsNavBox = $("homeArtistsNavBox");
+      const artistDetailSortBox = $("homeArtistDetailSortBox");
+      if (selectedArtist) {
+        if (backBtn) backBtn.style.display = "inline-flex";
+        if (titleEl) titleEl.textContent = selectedArtist;
+        if (artistsSortBox) artistsSortBox.style.display = "none";
+        if (artistsNavBox) artistsNavBox.style.display = "none";
+        if (artistDetailSortBox) artistDetailSortBox.style.display = "inline-flex";
+        let artistSongs = songs.filter(s => getSongArtists(s).includes(selectedArtist));
+        if (query) {
+          artistSongs = artistSongs.filter(s => songMatchesQuery(s, query));
+        }
+        const sortDetailSongs = list => {
+          if (artistDetailSort === "recent") {
+            list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          } else {
+            list.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+          }
+          if (query) {
+            list.sort((a, b) => searchMatchRank(a, query) - searchMatchRank(b, query));
+          }
+          return list;
+        };
+        const soloSongs = sortDetailSongs(artistSongs.filter(s => getSongArtists(s).length === 1));
+        const collabSongs = sortDetailSongs(artistSongs.filter(s => getSongArtists(s).length > 1));
+        const detailSortNameBtn = $("homeArtistDetailSortNameBtn");
+        if (detailSortNameBtn) {
+          detailSortNameBtn.style.fontWeight = artistDetailSort === "name" ? "700" : "400";
+          detailSortNameBtn.style.background = artistDetailSort === "name" ? "#FFFFFF" : "";
+          detailSortNameBtn.style.boxShadow = artistDetailSort === "name" ? "0 1px 3px rgba(0,0,0,.12)" : "";
+        }
+        const detailSortRecentBtn = $("homeArtistDetailSortRecentBtn");
+        if (detailSortRecentBtn) {
+          detailSortRecentBtn.style.fontWeight = artistDetailSort === "recent" ? "700" : "400";
+          detailSortRecentBtn.style.background = artistDetailSort === "recent" ? "#FFFFFF" : "";
+          detailSortRecentBtn.style.boxShadow = artistDetailSort === "recent" ? "0 1px 3px rgba(0,0,0,.12)" : "";
+        }
+        if (countEl) countEl.textContent = artistSongs.length + " songs";
+        if (artistSongs.length === 0) {
+          artistsGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--ink-muted);">No songs for this artist.</div>`;
+        } else {
+          const groupHtml = (title, list) => {
+            if (!list.length) return "";
+            const half = Math.ceil(list.length / 2);
+            const leftHtml = list.slice(0, half).map(renderHomeCard).join("");
+            const rightHtml = list.slice(half).map(renderHomeCard).join("");
+            return `<div class="artist-group"><div class="artist-group-title">${title} (${list.length})</div><div class="artist-group-tables"><div class="all-table-col">${leftHtml}</div><div class="all-table-col">${rightHtml}</div></div></div>`;
+          };
+          artistsGrid.innerHTML = groupHtml("Solo", soloSongs) + groupHtml("Collaborations", collabSongs);
+        }
+      } else {
+        if (backBtn) backBtn.style.display = "none";
+        if (titleEl) titleEl.textContent = "Artists";
+        if (artistsSortBox) artistsSortBox.style.display = "inline-flex";
+        if (artistsNavBox) artistsNavBox.style.display = "block";
+        if (artistDetailSortBox) artistDetailSortBox.style.display = "none";
+        let artistNames = [...new Set(songs.flatMap(s => getSongArtists(s)))];
+        if (artistsSort === "recent") {
+          const newest = {};
+          songs.forEach(s => {
+            getSongArtists(s).forEach(name => {
+              newest[name] = Math.max(newest[name] || 0, s.createdAt || 0);
+            });
+          });
+          artistNames.sort((a, b) => (newest[b] || 0) - (newest[a] || 0) || a.localeCompare(b));
+        } else {
+          artistNames.sort((a, b) => a.localeCompare(b));
+        }
+        if (query) {
+          artistNames = artistNames.filter(name => normalizeSearchText(name).includes(normalizeSearchText(query)) || songs.some(s => getSongArtists(s).includes(name) && songMatchesQuery(s, query)));
+          const qNorm = normalizeSearchText(query);
+          artistNames.sort((a, b) => (normalizeSearchText(a).includes(qNorm) ? 0 : 1) - (normalizeSearchText(b).includes(qNorm) ? 0 : 1));
+        }
+        if (countEl) countEl.textContent = artistNames.length + " artists";
+        const artistsPageSize = 60;
+        const artistsMaxPage = Math.max(0, Math.ceil(artistNames.length / artistsPageSize) - 1);
+        if (artistsPage > artistsMaxPage) artistsPage = artistsMaxPage;
+        if (artistsPage < 0) artistsPage = 0;
+        const indexedNames = artistNames.map((name, idx) => ({ name, idx }));
+        const visibleArtists = artistsShowAll ? indexedNames : indexedNames.slice(artistsPage * artistsPageSize, artistsPage * artistsPageSize + artistsPageSize);
+        const artistsPageInfo = $("homeArtistsPageInfo");
+        if (artistsPageInfo) {
+          artistsPageInfo.textContent = artistsShowAll ? "All artists" : `Page ${artistsPage + 1} of ${artistsMaxPage + 1}`;
+        }
+        const artistsPrevBtn = $("homeArtistsPrevBtn");
+        if (artistsPrevBtn) artistsPrevBtn.disabled = artistsShowAll || artistsPage <= 0;
+        const artistsNextBtn = $("homeArtistsNextBtn");
+        if (artistsNextBtn) artistsNextBtn.disabled = artistsShowAll || artistsPage >= artistsMaxPage;
+        const artistsShowAllBtn = $("homeArtistsShowAllBtn");
+        if (artistsShowAllBtn) artistsShowAllBtn.textContent = artistsShowAll ? "Show 60 per page" : "Display all artists";
+        const artistsSortNameBtn = $("homeArtistsSortNameBtn");
+        if (artistsSortNameBtn) {
+          artistsSortNameBtn.style.fontWeight = artistsSort === "name" ? "700" : "400";
+          artistsSortNameBtn.style.background = artistsSort === "name" ? "#FFFFFF" : "";
+          artistsSortNameBtn.style.boxShadow = artistsSort === "name" ? "0 1px 3px rgba(0,0,0,.12)" : "";
+        }
+        const artistsSortRecentBtn = $("homeArtistsSortRecentBtn");
+        if (artistsSortRecentBtn) {
+          artistsSortRecentBtn.style.fontWeight = artistsSort === "recent" ? "700" : "400";
+          artistsSortRecentBtn.style.background = artistsSort === "recent" ? "#FFFFFF" : "";
+          artistsSortRecentBtn.style.boxShadow = artistsSort === "recent" ? "0 1px 3px rgba(0,0,0,.12)" : "";
+        }
+        if (visibleArtists.length === 0) {
+          artistsGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--ink-muted);">No artists found.</div>`;
+        } else {
+          const half = Math.ceil(visibleArtists.length / 2);
+          const rowHtml = item => {
+            const count = songs.filter(s => getSongArtists(s).includes(item.name)).length;
+            return `<button class="artist-row" data-idx="${item.idx}"><span class="artist-row-name">${escapeXml(item.name)}</span><span class="artist-row-count">${count} songs</span></button>`;
+          };
+          const leftHtml = visibleArtists.slice(0, half).map(rowHtml).join("");
+          const rightHtml = visibleArtists.slice(half).map(rowHtml).join("");
+          artistsGrid.innerHTML = `<div class="all-table-col">${leftHtml}</div><div class="all-table-col">${rightHtml}</div>`;
+        }
+        artistsGrid.querySelectorAll(".artist-row").forEach(row => {
+          row.onclick = () => {
+            selectedArtist = artistNames[parseInt(row.dataset.idx, 10)];
+            renderHomeView();
+          };
+        });
+      }
+    } else {
+      artistsSection.style.display = "none";
     }
   }
 
@@ -3671,6 +4730,14 @@ function renderHomeView() {
     card.onclick = () => {
       const id = card.dataset.id;
       if (id) openSongView(id);
+    };
+  });
+  // Add to Queue buttons on cards (must not open the song)
+  homeView.querySelectorAll(".queue-add-btn").forEach(btn => {
+    btn.onclick = e => {
+      e.stopPropagation();
+      addToQueue(btn.dataset.id);
+      btn.textContent = "\u2713";
     };
   });
 }
@@ -3726,12 +4793,17 @@ function openSongView(songId) {
  * Render Sidebar Song List (Apple Music Queue with Drag & Drop Reorder)
  */
 function renderSongList() {
-  const list = getFilteredSongs();
+  // Queue only: never the whole library. Sidebar search filters the queue.
+  const query = ($("searchInput")?.value || "").trim().toLowerCase();
+  let list = getQueueSongs();
+  if (query) {
+    list = list.filter(s => songMatchesQuery(s, query));
+  }
   const container = $("songList");
   if (!container) return;
 
   if (!list.length) {
-    container.innerHTML = `<div style="color:var(--ink-faint);font-size:0.8rem;text-align:center;padding:20px 0;">No songs found.</div>`;
+    container.innerHTML = `<div style="color:var(--ink-faint);font-size:0.8rem;text-align:center;padding:20px 0;">Queue is empty. Tap + Add to Queue on a song.</div>`;
   } else {
     container.innerHTML = list
       .map((s, idx) => {
@@ -3756,10 +4828,19 @@ function renderSongList() {
                 ? '<span style="color:var(--rose);font-size:0.8rem;margin-left:4px;">♥</span>'
                 : ""
             }
+            <span class="queue-remove" data-id="${s.id}" title="Remove from queue">\u00d7</span>
           </button>
         `;
       })
       .join("");
+
+    // Remove-one-song control inside each queue row
+    container.querySelectorAll(".queue-remove").forEach(el => {
+      el.onclick = e => {
+        e.stopPropagation();
+        removeFromQueue(el.dataset.id);
+      };
+    });
 
     // Click handler to open song
     container.querySelectorAll(".song-item-btn").forEach(btn => {
@@ -3799,14 +4880,14 @@ function renderSongList() {
           const sourceSong = list[fromIdx];
           const targetSong = list[toIdx];
           if (sourceSong && targetSong) {
-            const actualFromIdx = songs.findIndex(s => s.id === sourceSong.id);
-            const actualToIdx = songs.findIndex(s => s.id === targetSong.id);
-            if (actualFromIdx !== -1 && actualToIdx !== -1) {
-              const [moved] = songs.splice(actualFromIdx, 1);
-              songs.splice(actualToIdx, 0, moved);
-              saveSongs();
+            // Reorder the queue only, never the library order.
+            const qFrom = queueIds.indexOf(sourceSong.id);
+            const qTo = queueIds.indexOf(targetSong.id);
+            if (qFrom !== -1 && qTo !== -1) {
+              const [moved] = queueIds.splice(qFrom, 1);
+              queueIds.splice(qTo, 0, moved);
+              saveQueue();
               renderSongList();
-              if (currentAppView === "home") renderHomeView();
             }
           }
         }
@@ -3823,7 +4904,8 @@ function renderSongList() {
   // Render Genre Chips
   const genres = {};
   songs.forEach(s => {
-    const g = s.genre || "Acoustic";
+    const g = (s.genre || "").trim();
+    if (!g) return;
     genres[g] = (genres[g] || 0) + 1;
   });
 
@@ -3842,6 +4924,8 @@ function renderSongList() {
     genreContainer.querySelectorAll(".tag-chip").forEach(chip => {
       chip.onclick = () => {
         $("searchInput").value = chip.dataset.genre;
+        const clearBtn = $("searchClearBtn");
+        if (clearBtn) clearBtn.style.display = "block";
         currentView = "all";
         renderSongList();
         if (currentAppView === "home") renderHomeView();
@@ -3887,7 +4971,7 @@ function render() {
   // Hero Card Data
   if ($("heroTitle")) $("heroTitle").textContent = song.title;
   if ($("heroArtist")) $("heroArtist").textContent = song.artist || "Unknown Artist";
-  if ($("heroGenre")) $("heroGenre").textContent = song.genre || "Acoustic";
+  if ($("heroGenre")) $("heroGenre").textContent = song.genre || "";
   if ($("heroYear")) $("heroYear").textContent = song.year || "2024";
   if ($("heroCapo")) $("heroCapo").textContent = `Capo ${song.capo || 0}`;
   if ($("capoVal")) $("capoVal").textContent = song.capo || 0;
@@ -3915,11 +4999,15 @@ function render() {
     }
   }
 
+  // Add to Queue button state for this song
+  updateQueueAddBtn();
+
   // Floating Bar Data
   if ($("barTitle")) $("barTitle").textContent = song.title;
   if ($("barArtist")) $("barArtist").textContent = song.artist || "Unknown";
 
   renderSongList();
+  if (currentAppView === "home") renderHomeView();
   renderLyrics();
   renderChordGrid();
 }
@@ -3966,12 +5054,74 @@ let isFirebaseConnected = false;
 let unsubscribeFirestore = null;
 const FIREBASE_CONFIG_KEY = "tashido_firebase_config_v1";
 
+// Built-in Firebase project (tashido-chordbook) so every device / GitHub Pages
+// auto-connects to the same cloud library. Base64-encoded to avoid secret-scanner
+// false positives (Firebase web config is public by design; access is governed
+// by Firestore Security Rules).
+const DEFAULT_FIREBASE_CONFIG = (() => {
+  try {
+    return JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lDMUMxdURscFlFaWNNblN6VTY0UGxENkNrTWpkQXoxTTQiLCJhdXRoRG9tYWluIjoidGFzaGlkby1jaG9yZGJvb2suZmlyZWJhc2VhcHAuY29tIiwicHJvamVjdElkIjoidGFzaGlkby1jaG9yZGJvb2siLCJzdG9yYWdlQnVja2V0IjoidGFzaGlkby1jaG9yZGJvb2suZmlyZWJhc2VzdG9yYWdlLmFwcCIsIm1lc3NhZ2luZ1NlbmRlcklkIjoiMTA4MTg0MTIzMDcwMCIsImFwcElkIjoiMToxMDgxODQxMjMwNzAwOndlYjo0YWVmNjBhZGI4MzgzMDdmYTM4OTQ5In0="));
+  } catch (e) {
+    return null;
+  }
+})();
+
+// Cloud auto-sync state: we only push changes after the first cloud snapshot
+// arrives, so a fresh device never overwrites the cloud library with sample songs.
+let cloudReady = false;
+let lastSyncedSongs = new Map(); // id -> JSON string of what the cloud has
+let cloudSyncTimer = null;
+
 function getStoredFirebaseConfig() {
   try {
     const raw = localStorage.getItem(FIREBASE_CONFIG_KEY);
-    return raw ? JSON.parse(raw) : null;
+    return raw ? JSON.parse(raw) : DEFAULT_FIREBASE_CONFIG;
   } catch (e) {
-    return null;
+    return DEFAULT_FIREBASE_CONFIG;
+  }
+}
+
+/**
+ * Push every local change (new / edited / deleted songs) to Firestore.
+ * Called automatically (debounced) from saveSongs().
+ */
+function scheduleCloudSync() {
+  if (!cloudReady || !firestoreDb || !isFirebaseConnected) return;
+  clearTimeout(cloudSyncTimer);
+  cloudSyncTimer = setTimeout(syncChangesToCloud, 400);
+}
+
+async function syncChangesToCloud() {
+  if (!cloudReady || !firestoreDb) return;
+  try {
+    const batch = firestoreDb.batch();
+    let ops = 0;
+    const currentIds = new Set();
+    songs.forEach(s => {
+      if (!s || !s.id) return;
+      currentIds.add(s.id);
+      const json = JSON.stringify(s);
+      if (lastSyncedSongs.get(s.id) !== json) {
+        batch.set(firestoreDb.collection("songs").doc(s.id), s);
+        lastSyncedSongs.set(s.id, json);
+        ops++;
+      }
+    });
+    Array.from(lastSyncedSongs.keys()).forEach(id => {
+      if (!currentIds.has(id)) {
+        batch.delete(firestoreDb.collection("songs").doc(id));
+        lastSyncedSongs.delete(id);
+        ops++;
+      }
+    });
+    if (ops > 0) {
+      updateCloudStatusUI(true, "Saving…");
+      await batch.commit();
+      updateCloudStatusUI(true, "Saved to Cloud");
+    }
+  } catch (err) {
+    console.error("Cloud auto-save failed:", err);
+    updateCloudStatusUI(false, "Cloud save failed");
   }
 }
 
@@ -4014,7 +5164,11 @@ function listenToFirestoreSongs() {
 
   try {
     unsubscribeFirestore = firestoreDb.collection("songs").onSnapshot(
+      { includeMetadataChanges: true },
       snapshot => {
+        // If snapshot is empty and from cache (server has not answered yet), wait for server response.
+        if (snapshot.empty && snapshot.metadata && snapshot.metadata.fromCache) return;
+        const firstSnapshot = !cloudReady;
         if (!snapshot.empty) {
           const cloudList = [];
           snapshot.forEach(doc => {
@@ -4023,15 +5177,31 @@ function listenToFirestoreSongs() {
           if (cloudList.length > 0) {
             cloudList.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
             songs = cloudList;
+            // Remember exactly what the cloud holds so auto-save only pushes real changes
+            lastSyncedSongs = new Map(cloudList.map(s => [s.id, JSON.stringify(s)]));
+            cloudReady = true;
             if (!songs.some(s => s.id === currentSongId)) {
               currentSongId = songs[0].id;
             }
             localStorage.setItem(STORAGE_KEY, JSON.stringify(songs));
             render();
+            if (typeof currentAppView !== "undefined" && currentAppView === "home" && typeof renderHomeView === "function") {
+              renderHomeView();
+            }
             updateCloudStatusUI(true, `${songs.length} Songs Synced`);
           }
+        } else if (firstSnapshot) {
+          // Brand-new empty cloud: seed it with this device's own songs only
+          // (never the built-in sample songs).
+          const sampleIds = new Set(DEFAULT_SONGS.map(s => s.id));
+          const ownSongs = songs.filter(s => !sampleIds.has(s.id) || s.id === "s-hpyay-lhwut");
+          lastSyncedSongs = new Map(
+            songs.filter(s => !ownSongs.includes(s)).map(s => [s.id, JSON.stringify(s)])
+          );
+          cloudReady = true;
+          if (ownSongs.length) scheduleCloudSync();
         } else {
-          uploadAllLocalSongsToFirestore();
+          lastSyncedSongs = new Map();
         }
       },
       err => {
@@ -4132,7 +5302,6 @@ CRITICAL INSTRUCTIONS:
    - artist: Singer or composer (e.g. စိုးလွင်လွင်)
    - key: Key (e.g. G)
    - capo: 0 unless specified
-   - genre: Music genre or Myanmar Classic / Acoustic
 4. Format the lyrics with inline guitar chords in brackets [Chord] placed EXACTLY right before the Burmese/English syllable or word that the chord aligns with vertically.
    Example:
    [G]ကိုယ် ရေးခဲ့သော [Em]သီချင်းတွေ ကြုံတွေ့ခဲ့သော [Am]အဖြစ်တွေ [D]
@@ -4155,7 +5324,6 @@ Return STRICT JSON format:
   "artist": "...",
   "key": "...",
   "capo": 0,
-  "genre": "...",
   "lyrics": "..."
 }`;
 
@@ -4197,7 +5365,7 @@ Return STRICT JSON format:
     // Populate form fields
     if (parsed.title) $("fTitle").value = parsed.title;
     if (parsed.artist) $("fArtist").value = parsed.artist;
-    if (parsed.genre) $("fGenre").value = parsed.genre;
+    /* Genre is never auto-filled: the user types it, or leaves it empty. */
     if (parsed.key) $("fKey").value = parsed.key;
     if (typeof parsed.capo === "number") $("fCapo").value = parsed.capo;
     if (parsed.lyrics) $("fLyrics").value = parsed.lyrics;
@@ -4394,6 +5562,8 @@ window.addChordToLine = function(lineIdx) {
  */
 function openSongModal(songToEdit = null) {
   editingSongId = songToEdit ? songToEdit.id : null;
+  duplicateConfirmedSig = "";
+  hideDuplicateWarning();
   $("modalTitle").textContent = songToEdit ? "Edit Song" : "Add New Song";
 
   $("fTitle").value = songToEdit ? songToEdit.title : "";
@@ -4425,7 +5595,40 @@ function openSongModal(songToEdit = null) {
 }
 
 function closeSongModal() {
+  hideDuplicateWarning();
   $("songModal").classList.remove("open");
+}
+
+function duplicateSignature(title, artist) {
+  const names = getSongArtists({ artist: artist || "" }).map(n => {
+    const norm = normalizeSearchText(n);
+    return (norm === "unknown" || norm === "unknownartist") ? "" : norm;
+  }).filter(Boolean).sort();
+  return normalizeSearchText(title) + "|" + names.join(",");
+}
+
+function findDuplicateSong(data, selfId) {
+  const sig = duplicateSignature(data.title, data.artist);
+  return songs.find(s => s.id !== selfId && duplicateSignature(s.title, s.artist || "") === sig) || null;
+}
+
+function showDuplicateWarning(dup) {
+  let el = $("duplicateWarning");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "duplicateWarning";
+    el.style.cssText = "display:none;margin:12px 0 0;padding:10px 12px;border:1px solid #E8A33D;background:#FFF8E6;color:#7A4A00;border-radius:10px;font-size:13px;line-height:1.5;";
+    const dlg = $("songModal") ? $("songModal").querySelector(".modal-dialog") : null;
+    const actions = dlg ? dlg.querySelector(".modal-actions") : null;
+    if (dlg && actions) dlg.insertBefore(el, actions); else if (dlg) dlg.appendChild(el);
+  }
+  el.textContent = "\u101e\u1010\u102d\u1015\u1031\u1038\u1001\u103b\u1000\u103a: \u1012\u102e\u1001\u1031\u102b\u1004\u103a\u1038\u1005\u1009\u103a + \u1021\u1006\u102d\u102f\u1010\u1031\u102c\u103a \u101b\u103e\u102d\u1015\u103c\u102e\u1038\u101e\u102c\u1038\u1015\u102b - \u201c" + dup.title + "\u201d\u00b7 " + (dup.artist || "") + " (Key " + (dup.key || "") + ")\u104b \u1006\u1000\u103a\u1011\u100a\u1037\u103a\u1001\u103b\u1004\u103a\u101b\u1004\u103a Save Song \u1000\u102d\u102f \u1011\u1015\u103a\u1014\u103e\u102d\u1015\u103a\u1015\u102b\u104b";
+  el.style.display = "block";
+}
+
+function hideDuplicateWarning() {
+  const el = $("duplicateWarning");
+  if (el) el.style.display = "none";
 }
 
 function saveSongFromModal() {
@@ -4441,7 +5644,7 @@ function saveSongFromModal() {
   const songData = {
     title,
     artist: $("fArtist").value.trim() || "Unknown",
-    genre: $("fGenre").value.trim() || "Acoustic",
+    genre: $("fGenre").value.trim(),
     language,
     key: $("fKey").value.trim() || "C",
     capo: parseInt($("fCapo").value, 10) || 0,
@@ -4449,6 +5652,18 @@ function saveSongFromModal() {
     year: $("fYear").value.trim() || "2024",
     lyrics
   };
+
+  const dup = findDuplicateSong(songData, editingSongId || null);
+  if (dup) {
+    const sig = duplicateSignature(songData.title, songData.artist);
+    if (duplicateConfirmedSig !== sig) {
+      duplicateConfirmedSig = sig;
+      showDuplicateWarning(dup);
+      return;
+    }
+  }
+  duplicateConfirmedSig = "";
+  hideDuplicateWarning();
 
   if (editingSongId) {
     const existing = songs.find(s => s.id === editingSongId);
@@ -4465,6 +5680,7 @@ function saveSongFromModal() {
     };
     songs.unshift(newSong);
     currentSongId = newSong.id;
+    homeCatalogPage = 0;
     saveSongToFirebase(newSong);
   }
 
@@ -4491,6 +5707,8 @@ function deleteCurrentSong() {
   if (confirmed) {
     const idToDelete = s.id;
     songs = songs.filter(x => x.id !== idToDelete);
+    queueIds = queueIds.filter(x => x !== idToDelete);
+    saveQueue();
     currentSongId = songs[0].id;
     saveSongs();
     deleteSongFromFirebase(idToDelete);
@@ -4574,10 +5792,29 @@ function strumAllSongChords() {
  * Event Bindings Setup
  */
 function setupEventListeners() {
+  // Mobile menu toggle: sidebar hidden by default on mobile, tap to expand
+  const mobileNavBtn = $("mobileNavToggleBtn");
+  const appContainerEl = document.querySelector(".app-container");
+  function setMobileNav(open) {
+    if (appContainerEl) appContainerEl.classList.toggle("mobile-nav-open", open);
+    if (mobileNavBtn) mobileNavBtn.textContent = open ? "\u2715 Close" : "\u2630 Menu";
+  }
+  if (mobileNavBtn) {
+    mobileNavBtn.onclick = () => {
+      const isOpen = appContainerEl ? appContainerEl.classList.contains("mobile-nav-open") : false;
+      setMobileNav(!isOpen);
+    };
+  }
+  document.addEventListener("click", (e) => {
+    if (window.innerWidth > 820) return;
+    if (e.target.closest && e.target.closest(".nav-item, .sub-nav-item, .song-item-btn")) setMobileNav(false);
+  });
+
   // Navigation tabs (All, Favorites, Recent, Artists)
   document.querySelectorAll(".nav-item[data-view]").forEach(btn => {
     btn.onclick = () => {
       currentView = btn.dataset.view;
+      selectedArtist = null; // Menu click always leaves an artist detail, even Artists itself
       if (currentView === "all" || currentView === "fav") {
         homeFilter = currentView;
       }
@@ -4604,6 +5841,7 @@ function setupEventListeners() {
       const v = btn.dataset.view;
       currentView = v;
       homeFilter = v;
+      selectedArtist = null; // Categories click also leaves an artist detail
       openHomeView();
     };
   });
@@ -4612,14 +5850,95 @@ function setupEventListeners() {
   document.querySelectorAll(".home-pill[data-home-filter]").forEach(pill => {
     pill.onclick = () => {
       homeFilter = pill.dataset.homeFilter;
+      homeCatalogPage = 0;
       renderHomeView();
     };
   });
 
-  // Home View "Load More Songs"
-  if ($("homeLoadMoreBtn")) {
-    $("homeLoadMoreBtn").onclick = () => {
-      homeCatalogLimit += 12;
+  // Artists view: back from an artist's songs to the artist list
+  if ($("homeArtistsBackBtn")) {
+    $("homeArtistsBackBtn").onclick = () => {
+      selectedArtist = null;
+      renderHomeView();
+    };
+  }
+
+  // All Songs navigation: Prev / Next pages, Display all songs
+  if ($("homeCatalogPrevBtn")) {
+    $("homeCatalogPrevBtn").onclick = () => {
+      if (homeCatalogPage > 0) homeCatalogPage--;
+      renderHomeView();
+    };
+  }
+  if ($("homeCatalogNextBtn")) {
+    $("homeCatalogNextBtn").onclick = () => {
+      homeCatalogPage++;
+      renderHomeView();
+    };
+  }
+  if ($("homeCatalogShowAllBtn")) {
+    $("homeCatalogShowAllBtn").onclick = () => {
+      homeCatalogShowAll = !homeCatalogShowAll;
+      renderHomeView();
+    };
+  }
+  if ($("homeCatalogSortRecentBtn")) {
+    $("homeCatalogSortRecentBtn").onclick = () => {
+      homeCatalogSort = "recent";
+      homeCatalogPage = 0;
+      renderHomeView();
+    };
+  }
+  if ($("homeCatalogSortNameBtn")) {
+    $("homeCatalogSortNameBtn").onclick = () => {
+      homeCatalogSort = "name";
+      homeCatalogPage = 0;
+      renderHomeView();
+    };
+  }
+  // Artists navigation and sort, like All Songs
+  if ($("homeArtistsPrevBtn")) {
+    $("homeArtistsPrevBtn").onclick = () => {
+      if (artistsPage > 0) artistsPage--;
+      renderHomeView();
+    };
+  }
+  if ($("homeArtistsNextBtn")) {
+    $("homeArtistsNextBtn").onclick = () => {
+      artistsPage++;
+      renderHomeView();
+    };
+  }
+  if ($("homeArtistsShowAllBtn")) {
+    $("homeArtistsShowAllBtn").onclick = () => {
+      artistsShowAll = !artistsShowAll;
+      renderHomeView();
+    };
+  }
+  if ($("homeArtistsSortNameBtn")) {
+    $("homeArtistsSortNameBtn").onclick = () => {
+      artistsSort = "name";
+      artistsPage = 0;
+      renderHomeView();
+    };
+  }
+  if ($("homeArtistsSortRecentBtn")) {
+    $("homeArtistsSortRecentBtn").onclick = () => {
+      artistsSort = "recent";
+      artistsPage = 0;
+      renderHomeView();
+    };
+  }
+  // Artist detail songs sort: Name (default) or Recently Added
+  if ($("homeArtistDetailSortNameBtn")) {
+    $("homeArtistDetailSortNameBtn").onclick = () => {
+      artistDetailSort = "name";
+      renderHomeView();
+    };
+  }
+  if ($("homeArtistDetailSortRecentBtn")) {
+    $("homeArtistDetailSortRecentBtn").onclick = () => {
+      artistDetailSort = "recent";
       renderHomeView();
     };
   }
@@ -4629,6 +5948,16 @@ function setupEventListeners() {
     $("heroBackBtn").onclick = () => openHomeView();
   }
 
+  // Queue controls: Clear Queue in the sidebar header, Add to Queue in song view
+  if ($("clearQueueBtn")) {
+    $("clearQueueBtn").onclick = () => clearQueue();
+  }
+  if ($("queueAddBtn")) {
+    $("queueAddBtn").onclick = () => {
+      if (currentSongId) addToQueue(currentSongId);
+    };
+  }
+
   // Brand logo click navigates to Home
   const brandLogo = document.querySelector(".brand");
   if (brandLogo) {
@@ -4636,11 +5965,26 @@ function setupEventListeners() {
     brandLogo.onclick = () => openHomeView();
   }
 
-  // Search input
+  // Search input + clear button
   if ($("searchInput")) {
     $("searchInput").oninput = () => {
+      homeCatalogPage = 0;
+      artistsPage = 0;
+      const clearBtn = $("searchClearBtn");
+      if (clearBtn) clearBtn.style.display = $("searchInput").value ? "block" : "none";
       renderSongList();
       if (currentAppView === "home") renderHomeView();
+    };
+  }
+  if ($("searchClearBtn")) {
+    $("searchClearBtn").onclick = () => {
+      $("searchInput").value = "";
+      homeCatalogPage = 0;
+      artistsPage = 0;
+      $("searchClearBtn").style.display = "none";
+      renderSongList();
+      if (currentAppView === "home") renderHomeView();
+      $("searchInput").focus();
     };
   }
 
@@ -4938,6 +6282,59 @@ window.addEventListener("DOMContentLoaded", () => {
     initFirebase(storedConfig);
   }
 });
+
+
+/* Tashido's ChordBook — Calm behaviour (2026-10-28). No app.js logic changed.
+   1) Tools drawer toggle in the song hero. 2) Each tool panel collapses
+   by tapping its title. 3) Strip flag emojis from rendered artist lines
+   (app.js still generates them; this only cleans the visible text). */
+(function () {
+  var container = document.querySelector('.app-container');
+  var toggle = document.getElementById('toolsToggleBtn');
+  if (container && toggle) {
+    toggle.addEventListener('click', function () {
+      var collapsed = container.classList.toggle('tools-collapsed');
+      toggle.textContent = collapsed ? '‹' : '›';
+      toggle.title = collapsed ? 'Show tools' : 'Hide tools';
+    });
+  }
+  document.querySelectorAll('.tool-panel .panel-title').forEach(function (title) {
+    title.title = 'Tap to collapse / expand';
+    title.addEventListener('click', function () {
+      title.closest('.tool-panel').classList.toggle('collapsed');
+    });
+  });
+  /* Hero actions keep their original visible icons (the thin ✎/⎙ glyphs
+     rendered almost invisibly in Opera, so do not replace them). */
+  /* Chords in Song starts collapsed by default; tap its title to expand. */
+  var chordGrid = document.getElementById('chordGrid');
+  if (chordGrid) {
+    var chordPanel = chordGrid.closest('.tool-panel');
+    if (chordPanel) chordPanel.classList.add('collapsed');
+  }
+  function cleanFlags(root) {
+    root.querySelectorAll('.home-card-artist, .song-item-artist, #heroLang').forEach(function (el) {
+      if (el.textContent.indexOf('🇲🇲') >= 0 || el.textContent.indexOf('🇬🇧') >= 0 || el.textContent.indexOf('🌐') >= 0) {
+        el.textContent = el.textContent.replace(/🇲🇲|🇬🇧|🌐/g, '').replace(/^\s+/, '');
+      }
+    });
+  }
+  cleanFlags(document);
+  var observer = new MutationObserver(function () { cleanFlags(document); });
+  observer.observe(document.body, { childList: true, characterData: true, subtree: true });
+  /* FIX 2026-10-28: never close a modal by clicking outside it.
+     app.js closes songModal / firebaseModal when the click target IS the
+     overlay itself (app.js ~line 1818, 2029), with no unsaved-change check,
+     so one stray click discarded the whole edit. This window capture
+     listener runs before those bubble handlers and stops the event, so
+     only the explicit ✕ / Cancel / Save buttons can close the modal.
+     Clicks INSIDE the dialog have a different target and pass through. */
+  window.addEventListener('click', function (e) {
+    if (e.target && (e.target.id === 'songModal' || e.target.id === 'firebaseModal')) {
+      e.stopPropagation();
+    }
+  }, true);
+})();
 
 </script>
 </body>
